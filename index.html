@@ -356,6 +356,27 @@
     box-shadow: 0 0 30px var(--bright-yellow);
     transform: scale(0.9);
     animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+
+    /* --- LÍNEAS NUEVAS PARA EL SCROLL --- */
+    max-height: 85vh;       /* Nunca será más alta que el 85% de la pantalla */
+    overflow-y: auto;       /* Activa scroll vertical si se pasa de altura */
+    overscroll-behavior: contain; /* Evita que se mueva el fondo de atrás */
+}
+
+/* Scrollbar finito y bonito */
+.cedula-card::-webkit-scrollbar {
+    width: 6px;
+}
+.cedula-card::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+.cedula-card::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+.cedula-card::-webkit-scrollbar-thumb:hover {
+    background: var(--hot-pink); /* Un toque de color al hacer hover */
 }
 
 .siren-icon { font-size: 3rem; margin-bottom: 10px; animation: wobble 1s infinite; }
@@ -401,6 +422,65 @@
 @keyframes popIn { to { transform: scale(1); } }
 @keyframes wobble { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+
+/* --- ESTILOS PARA LA SECCIÓN "WEY POR QUÉ" --- */
+
+.why-section {
+    margin-top: 25px;
+    text-align: left;
+    font-size: 0.85rem;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.why-section summary {
+    cursor: pointer;
+    color: #666;
+    font-weight: 700;
+    list-style: none; /* Oculta el triángulo default en algunos navegadores */
+    text-align: center;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+.why-section summary:hover {
+    color: var(--hot-pink);
+}
+
+/* Ocultar el triángulo default en Chrome/Safari */
+.why-section summary::-webkit-details-marker {
+    display: none;
+}
+
+.why-content {
+    margin-top: 15px;
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    font-size: 0.8rem;
+    color: #444;
+    animation: fadeIn 0.3s ease;
+}
+
+.why-content p {
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.why-content p:last-child {
+    margin-bottom: 0;
+}
+
+.highlight-privacy {
+    background: #e8f5e9; /* Verde muy suave */
+    color: #1b5e20;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #c8e6c9;
+    font-weight: 500;
+}
     </style>
 </head>
 <body>
@@ -435,21 +515,41 @@
         <button class="btn-action btn-yes" onclick="triggerSwipe('right')">❤</button>
     </div>
 
-    <!-- MODAL DE LA CÉDULA -->
-    <div id="cedulaModal" class="cedula-modal">
-        <div class="cedula-card">
-            <div class="siren-icon">🚨</div>
-            <h2>¡Quieto en primera!</h2>
-            <p>El sistema detectó niveles peligrosos de opinión política.</p>
-            <p><strong>Entre la cédula ahí</strong> pa' confirmar que tú ere' dominicano y no un bot ruso.</p>
-            
-            <input type="tel" id="cedulaInput" maxlength="11" placeholder="Ej: 40212345678" autocomplete="off">
-            <small>Solo los numeritos, sin guiones, tigre.</small>
-            
-            <button class="btn-cedula" onclick="verificarCedula()">Continuamos</button>
-            <p id="cedulaFeedback" class="cedula-feedback"></p>
-        </div>
+<!-- MODAL DE LA CÉDULA -->
+<div id="cedulaModal" class="cedula-modal">
+    <div class="cedula-card">
+        <div class="siren-icon">🚨</div>
+        <h2>¡Quieto en primera!</h2>
+        <p>El sistema detectó niveles peligrosos de opinión política.</p>
+        <p><strong>Dame la cédula ahí</strong> pa' confirmar que tú ere' dominicano y no un bot ruso.</p>
+        
+        <input type="tel" id="cedulaInput" maxlength="11" placeholder="Ej: 40212345678" autocomplete="off">
+        <small>Solo los numeritos, sin guiones, tigre.</small>
+        
+        <button class="btn-cedula" onclick="verificarCedula()">Continuamos 🇩🇴</button>
+        <p id="cedulaFeedback" class="cedula-feedback"></p>
+
+        <!-- SECCIÓN NUEVA: WEY, POR QUÉ? -->
+        <details class="why-section">
+            <summary>Wey, ¿y pa' qué quieren eso? 🤔</summary>
+            <div class="why-content">
+                <p>
+                    <strong>Tranquilo, manín.</strong> Esto no es pa' chivatearte con nadie.
+                </p>
+                <p>
+                    Recopilamos esta data para descartar bots y crear <strong>tendencias generales de mercado</strong> para saber qué piensa el pueblo realmente sobre estas propuestas. 
+                </p>
+                <p class="highlight-privacy">
+                    🔒 <strong>100% ANÓNIMO:</strong><br>
+                    <strong>NUNCA</strong> guardamos tu nombre asociado a tus respuestas. 
+                    Tus opiniones se mezclan con las de miles de dominicanos para sacar estadísticas, nadie sabrá qué votaste tú.
+                </p>
+            </div>
+        </details>
+        <!-- FIN SECCIÓN NUEVA -->
+
     </div>
+</div>
 
     <script>
         // --- DATA ---

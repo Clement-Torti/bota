@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bo'ta 🇩🇴</title>
+    <title>Bo'ta 🗳️</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -481,12 +481,73 @@
     border: 1px solid #c8e6c9;
     font-weight: 500;
 }
+
+/* --- ESTILOS PARA LA VISTA DETALLADA (SABER MÁS) --- */
+.card-details {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--white);
+    z-index: 50; /* Por encima de la imagen */
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%); /* Oculto por defecto (abajo) */
+    transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    box-shadow: inset 0 10px 20px -10px rgba(0,0,0,0.1);
+}
+
+/* Clase que activa la vista */
+.card.show-info .card-details {
+    transform: translateY(0);
+}
+
+.details-title {
+    font-size: 1.3rem;
+    font-weight: 900;
+    margin-bottom: 15px;
+    color: var(--hot-pink);
+    text-transform: uppercase;
+    line-height: 1.2;
+    text-align: left;
+}
+
+.details-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    text-align: left;
+    color: #444;
+    overflow-y: auto;
+    flex: 1; /* Ocupa el espacio disponible */
+    padding-bottom: 20px;
+}
+
+.btn-close-details {
+    background: var(--text-dark);
+    color: var(--bright-yellow);
+    border: none;
+    padding: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: auto;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+}
+
+.btn-close-details:active {
+    transform: translateY(2px);
+    box-shadow: none;
+}
+
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Bo'Ta </h1>
+        <h1>Bo'Ta 🗳️</h1>
         <span>Presidenciales 2028 🇩🇴</span>
     </header>
 
@@ -561,69 +622,77 @@
     
         // UPDATED: Keywords optimized for Wikipedia Search
         const propositions = [
-            {
-                text: "¿Construir un muro fronterizo total con tecnología?",
-                category: "Seguridad",
-                keyword: "Border barrier", 
-                stances: { c1: 1, c2: 1, c3: 0 } 
-            },
-            {
-                text: "¿Apoyas las 3 causales para el aborto?",
-                category: "Salud / Derechos",
-                keyword: "Womens rights protest", 
-                stances: { c1: 0, c2: -1, c3: -1 } 
-            },
-            {
-                text: "¿Debemos seguir subsidiando los combustibles?",
-                category: "Economía",
-                keyword: "Gas station pump",
-                stances: { c1: 1, c2: 1, c3: 1 } 
-            },
-            {
-                text: "¿Más inversión en turismo en Pedernales?",
-                category: "Desarrollo",
-                keyword: "Caribbean beach",
-                stances: { c1: 1, c2: 0, c3: 0 } 
-            },
-            {
-                text: "¿Mano dura militar en los barrios calientes?",
-                category: "Seguridad",
-                keyword: "Military police",
-                stances: { c1: 0, c2: 1, c3: 1 } 
-            },
-            {
-                text: "¿Incrementar impuestos a las grandes empresas?",
-                category: "Economía",
-                keyword: "Corporate tax",
-                stances: { c1: -1, c2: 1, c3: 0 } 
-            },
-            {
-                text: "¿Legalizar la marihuana para uso recreativo?",
-                category: "Salud / Derechos",
-                keyword: "Cannabis leaf",
-                stances: { c1: 1, c2: -1, c3: 0 } 
-            },
-            {
-                text: "¿Construir más autopistas en el país?",
-                category: "Infraestructura",
-                keyword: "Highway road",
-                stances: { c1: 1, c2: 0, c3: 1 } 
-            },
-            {
-                text: "¿Subir el salario mínimo nacional?",
-                category: "Economía",
-                keyword: "Salary increase",
-                stances: { c1: 1, c2: 0, c3: 1 } 
-            },
-            {
-                text: "¿Proteger áreas naturales con leyes más estrictas?",
-                category: "Medio Ambiente",
-                keyword: "Forest protection",
-                stances: { c1: 1, c2: 1, c3: 0 } 
-            }
-        ];
-
-    
+    {
+        text: "¿Construir un muro fronterizo total con tecnología?",
+        category: "Seguridad",
+        keyword: "Border barrier", 
+        description: "Esta propuesta busca sellar la frontera por completo utilizando muros físicos de hormigón reforzado, sensores de movimiento, drones y cámaras térmicas para controlar la migración irregular y el contrabando.",
+        stances: { c1: 1, c2: 1, c3: 0 } 
+    },
+    {
+        text: "¿Apoyas las 3 causales para el aborto?",
+        category: "Salud / Derechos",
+        keyword: "Womens rights protest", 
+        description: "Permitir la interrupción del embarazo en tres situaciones específicas: riesgo para la vida de la madre, feto incompatible con la vida o embarazo producto de violación o incesto.",
+        stances: { c1: 0, c2: -1, c3: -1 } 
+    },
+    {
+        text: "¿Debemos seguir subsidiando los combustibles?",
+        category: "Economía",
+        keyword: "Gas station pump",
+        description: "El gobierno asume parte del costo de la gasolina y el gasoil para evitar que suban los precios del transporte y la comida, pero esto aumenta la deuda pública.",
+        stances: { c1: 1, c2: 1, c3: 1 } 
+    },
+    {
+        text: "¿Más inversión en turismo en Pedernales?",
+        category: "Desarrollo",
+        keyword: "Caribbean beach",
+        description: "Desarrollar hoteles y aeropuertos en la zona sur profunda. Generaría empleos pero podría afectar áreas protegidas como Bahía de las Águilas si no se controla.",
+        stances: { c1: 1, c2: 0, c3: 0 } 
+    },
+    {
+        text: "¿Mano dura militar en los barrios calientes?",
+        category: "Seguridad",
+        keyword: "Military police",
+        description: "Sacar a las fuerzas armadas a patrullar junto a la policía en sectores con altos índices de delincuencia, realizando operativos sorpresa y retenes constantes.",
+        stances: { c1: 0, c2: 1, c3: 1 } 
+    },
+    {
+        text: "¿Incrementar impuestos a las grandes empresas?",
+        category: "Economía",
+        keyword: "Corporate tax",
+        description: "Una reforma fiscal que cobre más a las corporaciones con mayores ganancias para financiar obras públicas, aunque los empresarios advierten que podría causar despidos.",
+        stances: { c1: -1, c2: 1, c3: 0 } 
+    },
+    {
+        text: "¿Legalizar la marihuana para uso recreativo?",
+        category: "Salud / Derechos",
+        keyword: "Cannabis leaf",
+        description: "Regular la venta y consumo de cannabis para adultos, cobrando impuestos y reduciendo el gasto policial en perseguir consumidores, similar a modelos en EE.UU.",
+        stances: { c1: 1, c2: -1, c3: 0 } 
+    },
+    {
+        text: "¿Construir más autopistas en el país?",
+        category: "Infraestructura",
+        keyword: "Highway road",
+        description: "Expandir la red vial con nuevas circunvalaciones y elevados para reducir tapones, priorizando el vehículo privado sobre el transporte público masivo.",
+        stances: { c1: 1, c2: 0, c3: 1 } 
+    },
+    {
+        text: "¿Subir el salario mínimo nacional?",
+        category: "Economía",
+        keyword: "Salary increase",
+        description: "Aumentar por ley el sueldo base en un 20% para combatir la inflación, aunque las PYMES argumentan que no podrían costearlo sin ayudas.",
+        stances: { c1: 1, c2: 0, c3: 1 } 
+    },
+    {
+        text: "¿Proteger áreas naturales con leyes más estrictas?",
+        category: "Medio Ambiente",
+        keyword: "Forest protection",
+        description: "Prohibir terminantemente la agricultura y minería en zonas de cuencas de ríos, castigando con cárcel a los depredadores ambientales sin excepciones.",
+        stances: { c1: 1, c2: 1, c3: 0 } 
+    }
+];
         let currentCardIndex = 0;
         const stackElement = document.getElementById('cardStack');
     
@@ -673,25 +742,41 @@
                 card.dataset.index = item.realIndex;
                 
                 card.innerHTML = `
-                    <div class="overlay overlay-yes">¡CLARO!</div>
-                    <div class="overlay overlay-no">¡NUNCA!</div>
-                    <div class="overlay overlay-maybe">NI IDEA</div>
-                    
-                    <div class="card-image-wrapper" style="width:100%; height:45%; background:#ddd; position:relative; overflow:hidden;">
-                        <!-- Default loading image -->
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" 
-                             class="card-image" 
-                             id="img-${item.realIndex}"
-                             style="width:100%; height:100%; object-fit:contain; padding:50px;"
-                             alt="Cargando...">
-                    </div>
-                    
-                    <div class="card-content">
-                        <div class="category-badge">${item.prop.category}</div>
-                        <div class="proposition-text">${item.prop.text}</div>
-                        <a href="https://google.com/search?q=${encodeURIComponent(item.prop.text)}" target="_blank" class="saber-mas" onclick="event.stopPropagation()">Saber más +</a>
-                    </div>
-                `;
+            <div class="overlay overlay-yes">¡CLARO!</div>
+            <div class="overlay overlay-no">¡NUNCA!</div>
+            <div class="overlay overlay-maybe">NI IDEA</div>
+            
+            <div class="card-image-wrapper" style="width:100%; height:45%; background:#ddd; position:relative; overflow:hidden;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" 
+                        class="card-image" 
+                        id="img-${item.realIndex}"
+                        style="width:100%; height:100%; object-fit:contain; padding:50px;"
+                        alt="Cargando...">
+            </div>
+            
+            <div class="card-content">
+                <div class="category-badge">${item.prop.category}</div>
+                <div class="proposition-text">${item.prop.text}</div>
+                
+                <!-- CAMBIO AQUI: Botón en lugar de enlace -->
+                <button class="saber-mas" 
+                        onclick="toggleDetails(event, this)" 
+                        style="background:none; cursor:pointer;">
+                    Saber más +
+                </button>
+            </div>
+
+            <!-- NUEVO: CAPA DE DETALLES OCULTA -->
+            <div class="card-details">
+                <h3 class="details-title">${item.prop.text}</h3>
+                <div class="details-text">
+                    ${item.prop.description}
+                </div>
+                <button class="btn-close-details" onclick="toggleDetails(event, this)">
+                    Volver a votar
+                </button>
+            </div>
+        `;
                 
                 addTouchLogic(card);
                 stackElement.appendChild(card);
@@ -889,6 +974,19 @@ document.getElementById('cedulaInput').addEventListener("keypress", function(eve
     verificarCedula();
   }
 });
+
+// Función para mostrar/ocultar la descripción
+function toggleDetails(event, btnElement) {
+        event.stopPropagation(); // Evita que el click afecte el drag de la carta
+        
+        // Buscamos la carta padre más cercana
+        const card = btnElement.closest('.card');
+        
+        if (card) {
+            // Alternamos la clase que muestra el CSS transform
+            card.classList.toggle('show-info');
+        }
+    }
     
         init();
     </script>

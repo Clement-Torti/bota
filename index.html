@@ -23,9 +23,9 @@
             background: repeating-linear-gradient(
                 45deg,
                 var(--neon-green),
-                var(--neon-green) 20px,
-                var(--dark-green) 20px,
-                var(--dark-green) 40px
+                var(--neon-green) 30px,
+                var(--dark-green) 30px,
+                var(--dark-green) 60px
             );
             background-size: 200% 200%;
             height: 100vh;
@@ -330,13 +330,14 @@
         .restart-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #c20061; }
 
         .animate-avatar { opacity: 1; transform: translateY(0); }
+        
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Bo'Ta</h1>
-        <span>RD Decide 🇩🇴</span>
+        <h1>Bo'Ta </h1>
+        <span>Presidenciales 2028 🇩🇴</span>
     </header>
 
     <div class="app-container">
@@ -410,26 +411,26 @@
 
         // --- INIT ---
         function init() {
-            [...propositions].reverse().forEach((prop, index) => {
-                const realIndex = propositions.length - 1 - index;
-                const card = document.createElement('div');
-                card.classList.add('card');
-                card.dataset.index = realIndex;
-                card.innerHTML = `
-                    <div class="overlay overlay-yes">¡CLARO!</div>
-                    <div class="overlay overlay-no">¡NUNCA!</div>
-                    <div class="overlay overlay-maybe">NI IDEA</div>
+    [...propositions].reverse().forEach((prop, index) => {
+        const realIndex = propositions.length - 1 - index;
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.dataset.index = realIndex;
+        card.innerHTML = `
+            <div class="overlay overlay-yes">¡CLARO!</div>
+            <div class="overlay overlay-no">¡NUNCA!</div>
+            <div class="overlay overlay-maybe">NI IDEA</div>
                     <img src="${prop.image}" class="card-image" alt="Tema" onerror="this.onerror=null;this.src='https://placehold.co/600x400/00E055/FFF?text=RD+Decide';">
-                    <div class="card-content">
-                        <div class="category-badge">${prop.category}</div>
-                        <div class="proposition-text">${prop.text}</div>
-                        <a href="https://google.com/search?q=${encodeURIComponent(prop.text)}" target="_blank" class="saber-mas" onclick="event.stopPropagation()">Saber más +</a>
-                    </div>
-                `;
-                addTouchLogic(card);
-                stackElement.appendChild(card);
-            });
-        }
+            <div class="card-content">
+                <div class="category-badge">${prop.category}</div>
+                <div class="proposition-text">${prop.text}</div>
+                <a href="https://google.com/search?q=${encodeURIComponent(prop.text)}" target="_blank" class="saber-mas" onclick="event.stopPropagation()">Saber más +</a>
+            </div>
+        `;
+        addTouchLogic(card);
+        stackElement.appendChild(card);
+    });
+}
 
         function addTouchLogic(card) {
             let startX = 0, startY = 0, currentX = 0, currentY = 0, isDragging = false;

@@ -615,82 +615,398 @@
     <script>
         // --- DATA ---
         const candidates = [
-            { id: 'c1', name: 'Luis El Presi', color: '#0056b3', score: 0, avatar: 'LP' },
-            { id: 'c2', name: 'El León', color: '#008000', score: 0, avatar: 'LF' },
-            { id: 'c3', name: 'Abelito', color: '#800080', score: 0, avatar: 'AM' }
-        ];
+    { 
+        id: 'c1', 
+        name: 'Luis Abinader', 
+        party: 'PRM',
+        color: '#0072CE', // PRM Blue
+        score: 0, 
+        avatar: 'LA',
+        description: 'Presidente actual. Promueve reformas institucionales, independencia del Ministerio Público y alianzas público-privadas.'
+    },
+    { 
+        id: 'c2', 
+        name: 'Leonel Fernández', 
+        party: 'Fuerza del Pueblo',
+        color: '#009900', // FP Green
+        score: 0, 
+        avatar: 'LF',
+        description: 'Ex-presidente (3 veces). Enfocado en grandes infraestructuras, critica la inflación y la "improvisación" del gobierno actual.'
+    },
+    { 
+        id: 'c3', 
+        name: 'Abel Martínez', 
+        party: 'PLD',
+        color: '#800080', // PLD Purple
+        score: 0, 
+        avatar: 'AM',
+        description: 'Ex-alcalde de Santiago. Discurso de "Mano Dura", orden municipal y defensa agresiva de la soberanía nacional.'
+    }
+];
+
+const propositions = [
+    // --- MIGRACIÓN Y SOBERANÍA ---
+    {
+        text: "¿Continuar la construcción del Muro Fronterizo?",
+        category: "Soberanía",
+        keyword: "wall",
+        description: "Completar la verja perimetral inteligente en la frontera con Haití para controlar el tráfico ilícito y la migración.",
+        stances: { c1: 1, c2: 1, c3: 1 } // Todos a favor, aunque oposición critica la ejecución
+    },
+    {
+        text: "¿Deportaciones masivas de indocumentados?",
+        category: "Soberanía",
+        keyword: "deportation",
+        description: "Mantener o aumentar el ritmo de repatriaciones de extranjeros en estatus irregular, sin importar la presión internacional.",
+        stances: { c1: 1, c2: 1, c3: 1 }
+    },
+    {
+        text: "¿Establecer campos de refugiados en RD?",
+        category: "Soberanía",
+        keyword: "refugee",
+        description: "Aceptar la petición de organismos internacionales de habilitar zonas de refugio para haitianos en territorio dominicano.",
+        stances: { c1: -1, c2: -1, c3: -1 } // Rechazo unánime
+    },
+    {
+        text: "¿Reinstaurar visados a estudiantes haitianos?",
+        category: "Seguridad",
+        keyword: "visa",
+        description: "Pausar indefinidamente la emisión de visas de estudiantes y turistas a ciudadanos haitianos por seguridad nacional.",
+        stances: { c1: 1, c2: 0, c3: 1 }
+    },
     
-        // UPDATED: Keywords optimized for Wikipedia Search
-        const propositions = [
+    // --- ECONOMÍA E IMPUESTOS ---
     {
-        text: "¿Construir un muro fronterizo total con tecnología?",
-        category: "Seguridad",
-        keyword: "Border barrier", 
-        description: "Esta propuesta busca sellar la frontera por completo utilizando muros físicos de hormigón reforzado, sensores de movimiento, drones y cámaras térmicas para controlar la migración irregular y el contrabando.",
-        stances: { c1: 1, c2: 1, c3: 0 } 
-    },
-    {
-        text: "¿Apoyas las 3 causales para el aborto?",
-        category: "Salud / Derechos",
-        keyword: "Womens rights protest", 
-        description: "Permitir la interrupción del embarazo en tres situaciones específicas: riesgo para la vida de la madre, feto incompatible con la vida o embarazo producto de violación o incesto.",
-        stances: { c1: 0, c2: -1, c3: -1 } 
-    },
-    {
-        text: "¿Debemos seguir subsidiando los combustibles?",
+        text: "¿Aprobar la Reforma Fiscal Integral?",
         category: "Economía",
-        keyword: "Gas station pump",
-        description: "El gobierno asume parte del costo de la gasolina y el gasoil para evitar que suban los precios del transporte y la comida, pero esto aumenta la deuda pública.",
-        stances: { c1: 1, c2: 1, c3: 1 } 
+        keyword: "tax",
+        description: "Ampliar la base del ITBIS y eliminar exenciones para aumentar la recaudación y reducir el déficit fiscal.",
+        stances: { c1: 1, c2: -1, c3: -1 } // Oposición rechaza que "pague el pueblo"
     },
     {
-        text: "¿Más inversión en turismo en Pedernales?",
-        category: "Desarrollo",
-        keyword: "Caribbean beach",
-        description: "Desarrollar hoteles y aeropuertos en la zona sur profunda. Generaría empleos pero podría afectar áreas protegidas como Bahía de las Águilas si no se controla.",
-        stances: { c1: 1, c2: 0, c3: 0 } 
-    },
-    {
-        text: "¿Mano dura militar en los barrios calientes?",
-        category: "Seguridad",
-        keyword: "Military police",
-        description: "Sacar a las fuerzas armadas a patrullar junto a la policía en sectores con altos índices de delincuencia, realizando operativos sorpresa y retenes constantes.",
-        stances: { c1: 0, c2: 1, c3: 1 } 
-    },
-    {
-        text: "¿Incrementar impuestos a las grandes empresas?",
+        text: "¿Eliminar el anticipo del Impuesto sobre la Renta?",
         category: "Economía",
-        keyword: "Corporate tax",
-        description: "Una reforma fiscal que cobre más a las corporaciones con mayores ganancias para financiar obras públicas, aunque los empresarios advierten que podría causar despidos.",
-        stances: { c1: -1, c2: 1, c3: 0 } 
+        keyword: "business",
+        description: "Quitar el cobro anticipado de impuestos que afecta el flujo de caja de las MIPYMES.",
+        stances: { c1: 0, c2: 1, c3: 1 } // Oposición promete quitarlo, Gobierno lo ha flexibilizado pero no quitado
     },
     {
-        text: "¿Legalizar la marihuana para uso recreativo?",
-        category: "Salud / Derechos",
-        keyword: "Cannabis leaf",
-        description: "Regular la venta y consumo de cannabis para adultos, cobrando impuestos y reduciendo el gasto policial en perseguir consumidores, similar a modelos en EE.UU.",
-        stances: { c1: 1, c2: -1, c3: 0 } 
+        text: "¿Mantener subsidios a los combustibles?",
+        category: "Economía",
+        keyword: "oil",
+        description: "Seguir congelando los precios de la gasolina y gasoil asumiendo deuda para evitar inflación en el transporte.",
+        stances: { c1: 1, c2: -1, c3: 0 } // Leonel critica el endeudamiento excesivo
     },
     {
-        text: "¿Construir más autopistas en el país?",
+        text: "¿Fideicomisos Públicos (Ej. Pedernales)?",
+        category: "Economía",
+        keyword: "trust",
+        description: "Utilizar la figura del fideicomiso para gestionar bienes públicos y proyectos turísticos con reglas de mercado privado.",
+        stances: { c1: 1, c2: -1, c3: -1 } // Oposición dice que privatiza lo público
+    },
+    {
+        text: "¿Entrega del 30% de las AFP?",
+        category: "Economía",
+        keyword: "money",
+        description: "Permitir a los trabajadores retirar anticipadamente el 30% de sus fondos de pensiones.",
+        stances: { c1: -1, c2: -1, c3: 0 } // Liderazgos principales en contra por inflación, aunque popular
+    },
+    
+    // --- SOCIAL Y DERECHOS ---
+    {
+        text: "¿Aprobar las 3 Causales del aborto?",
+        category: "Derechos",
+        keyword: "women",
+        description: "Despenalizar el aborto en casos de riesgo de vida, inviabilidad fetal o violación.",
+        stances: { c1: 1, c2: -1, c3: -1 } // Abinader a favor (pero deja libre voto), Leonel/Abel más conservadores
+    },
+    {
+        text: "¿Inclusión de 'Ideología de Género' en escuelas?",
+        category: "Educación",
+        keyword: "education",
+        description: "Implementar políticas de educación sexual integral con enfoque de género en el currículo escolar.",
+        stances: { c1: 0, c2: -1, c3: -1 } // Abel y Leonel fuertemente en contra. PRM dividido.
+    },
+    {
+        text: "¿Lectura de la Biblia obligatoria en escuelas?",
+        category: "Educación",
+        keyword: "bible",
+        description: "Hacer cumplir la ley que exige la lectura bíblica en planteles públicos.",
+        stances: { c1: 0, c2: 1, c3: 1 } // Oposición apela al voto cristiano
+    },
+    {
+        text: "¿Mantener el 4% del PIB para Educación?",
+        category: "Educación",
+        keyword: "school",
+        description: "Preservar la asignación fija del 4% del presupuesto a educación, aunque la calidad no haya mejorado sustancialmente.",
+        stances: { c1: 1, c2: 1, c3: 1 }
+    },
+    
+    // --- INSTITUCIONALIDAD Y JUSTICIA ---
+    {
+        text: "¿Reforma Constitucional (Ministerio Público)?",
+        category: "Justicia",
+        keyword: "constitution",
+        description: "Modificar la Constitución para 'blindar' la independencia del Procurador General y evitar que lo nombre el Presidente.",
+        stances: { c1: 1, c2: -1, c3: -1 } // Oposición dice que no es necesario modificar la constitución
+    },
+    {
+        text: "¿Reducción de la cantidad de Diputados?",
+        category: "Política",
+        keyword: "congress",
+        description: "Disminuir el número de legisladores en la Cámara de Diputados para ahorrar gastos y eficientizar.",
+        stances: { c1: 1, c2: 0, c3: 0 }
+    },
+    {
+        text: "¿Unificar elecciones municipales y presidenciales?",
+        category: "Política",
+        keyword: "vote",
+        description: "Volver a celebrar todas las elecciones el mismo día para reducir el costo de las campañas y el abstencionismo.",
+        stances: { c1: 1, c2: 0, c3: 0 }
+    },
+    {
+        text: "¿Ley de Extinción de Dominio (Retroactiva)?",
+        category: "Justicia",
+        keyword: "judge",
+        description: "Confiscar bienes provenientes de corrupción o narcotráfico, aplicable a casos del pasado sin límite de tiempo.",
+        stances: { c1: 1, c2: 0, c3: 0 }
+    },
+    
+    // --- INFRAESTRUCTURA Y SERVICIOS ---
+    {
+        text: "¿Expansión del Metro y Teleférico?",
+        category: "Transporte",
+        keyword: "train",
+        description: "Seguir invirtiendo masivamente en transporte colectivo (Metro SD, Monorriel Santiago) sobre soluciones viales.",
+        stances: { c1: 1, c2: 1, c3: 1 } // Leonel inició el metro, Abinader lo expande
+    },
+    {
+        text: "¿Contrato de Aerodom (Renovación)?",
         category: "Infraestructura",
-        keyword: "Highway road",
-        description: "Expandir la red vial con nuevas circunvalaciones y elevados para reducir tapones, priorizando el vehículo privado sobre el transporte público masivo.",
-        stances: { c1: 1, c2: 0, c3: 1 } 
+        keyword: "airplane",
+        description: "Renovar anticipadamente la concesión de los aeropuertos a cambio de un pago inicial para obras del estado.",
+        stances: { c1: 1, c2: -1, c3: -1 } // Oposición criticó fuertemente este contrato
     },
     {
-        text: "¿Subir el salario mínimo nacional?",
-        category: "Economía",
-        keyword: "Salary increase",
-        description: "Aumentar por ley el sueldo base en un 20% para combatir la inflación, aunque las PYMES argumentan que no podrían costearlo sin ayudas.",
-        stances: { c1: 1, c2: 0, c3: 1 } 
-    },
-    {
-        text: "¿Proteger áreas naturales con leyes más estrictas?",
+        text: "¿Construcción de la Presa de Cola (Barrick)?",
         category: "Medio Ambiente",
-        keyword: "Forest protection",
-        description: "Prohibir terminantemente la agricultura y minería en zonas de cuencas de ríos, castigando con cárcel a los depredadores ambientales sin excepciones.",
-        stances: { c1: 1, c2: 1, c3: 0 } 
+        keyword: "mining",
+        description: "Permitir la expansión de operaciones mineras y nueva presa de cola para mantener los ingresos del oro.",
+        stances: { c1: 1, c2: 0, c3: 0 } // Tema delicado, gobierno tiende a apoyar minería responsable
+    },
+    {
+        text: "¿Explotación minera en San Juan (Romero)?",
+        category: "Medio Ambiente",
+        keyword: "mountain",
+        description: "Permitir la extracción de oro en la zona norte de San Juan, arriba de la presa de Sabaneta.",
+        stances: { c1: 0, c2: -1, c3: -1 } // Abinader espera estudio impacto, oposición se ha montado en el 'No'
+    },
+    {
+        text: "¿Privatización de Punta Catalina?",
+        category: "Energía",
+        keyword: "factory",
+        description: "Vender acciones o entregar la administración total de la termoeléctrica al sector privado.",
+        stances: { c1: 0, c2: -1, c3: -1 } // Gobierno intentó fideicomiso, retrocedió. Oposición en contra.
+    },
+
+    // --- SEGURIDAD CIUDADANA ---
+    {
+        text: "¿Reforma Policial profunda?",
+        category: "Seguridad",
+        keyword: "police",
+        description: "Depurar la nómina policial y cambiar la cultura institucional, aunque tome años ver resultados.",
+        stances: { c1: 1, c2: 0, c3: 0 } // Oposición critica la lentitud y falta de resultados
+    },
+    {
+        text: "¿Patrullaje mixto (Militares en la calle)?",
+        category: "Seguridad",
+        keyword: "military",
+        description: "Sacar al ejército a patrullar permanentemente los barrios para disuadir la delincuencia.",
+        stances: { c1: 1, c2: 1, c3: 1 } // Medida populista que todos suelen apoyar en crisis
+    },
+    {
+        text: "¿Ley de la DNI (Inteligencia)?",
+        category: "Derechos",
+        keyword: "spy",
+        description: "Obligar a instituciones privadas y ciudadanos a entregar información a la Dirección Nacional de Inteligencia.",
+        stances: { c1: 1, c2: -1, c3: -1 } // Muy criticada por oposición y prensa
+    },
+
+    // --- VARIOS / TEMAS ACTUALES ---
+    {
+        text: "¿Tasa Cero para importación de alimentos?",
+        category: "Agricultura",
+        keyword: "food",
+        description: "Eliminar aranceles a productos de la canasta básica importados para bajar precios, aunque afecte al productor local.",
+        stances: { c1: 1, c2: -1, c3: -1 } // Conflicto: precios vs protección nacional
+    },
+    {
+        text: "¿Semanal con la Prensa (La Semanal)?",
+        category: "Comunicación",
+        keyword: "press",
+        description: "Que el presidente rinda cuentas y responda preguntas de la prensa todos los lunes en vivo.",
+        stances: { c1: 1, c2: -1, c3: -1 } // Oposición lo tilda de propaganda
+    },
+    {
+        text: "¿Regulación estricta de Airbnb?",
+        category: "Turismo",
+        keyword: "house",
+        description: "Cobrar impuestos hoteleros a los alquileres de corta estancia para igualar competencia con hoteles.",
+        stances: { c1: 1, c2: 0, c3: 0 } // Asonahores presiona por esto
+    },
+    {
+        text: "¿Prohibición de plásticos de un solo uso?",
+        category: "Medio Ambiente",
+        keyword: "plastic",
+        description: "Eliminar gradualmente sorbetes, fundas y foam en todo el territorio nacional.",
+        stances: { c1: 1, c2: 1, c3: 1 }
+    },
+    {
+        text: "¿Burocracia Cero (Digitalización)?",
+        category: "Estado",
+        keyword: "laptop",
+        description: "Digitalizar todos los trámites gubernamentales para reducir la corrupción y las 'botellas'.",
+        stances: { c1: 1, c2: 1, c3: 1 }
+    },
+    {
+        text: "¿Ley de Agua (Privatización del servicio)?",
+        category: "Recursos",
+        keyword: "water",
+        description: "Permitir concesiones privadas en la gestión y cobro del agua potable para mejorar el servicio.",
+        stances: { c1: 0, c2: -1, c3: -1 } // Tema muy sensible, oposición usa etiqueta "privatizadora"
+    },
+    {
+        text: "¿Pena máxima de 40 años?",
+        category: "Justicia",
+        keyword: "prison",
+        description: "Aumentar la pena máxima de prisión (actualmente 30 años) para crímenes atroces o cúmulo de penas.",
+        stances: { c1: 1, c2: 1, c3: 1 }
+    },
+    {
+        text: "¿Titulación masiva de terrenos del Estado?",
+        category: "Social",
+        keyword: "paper",
+        description: "Entregar títulos de propiedad definitivos a personas que viven en terrenos del Estado o CEA.",
+        stances: { c1: 1, c2: 1, c3: 1 }
+    },
+    {
+        text: "¿Fusión de Ministerios (Achicamiento del Estado)?",
+        category: "Estado",
+        keyword: "merge",
+        description: "Fusionar el Mescyt con Minerd, o instituciones afines para reducir la nómina pública.",
+        stances: { c1: 1, c2: -1, c3: -1 } // Propuesta de reforma fiscal actual, oposición la critica
+    },
+    {
+        text: "¿Cobro de ITBIS a servicios digitales (Netflix/Spotify)?",
+        category: "Economía",
+        keyword: "digital",
+        description: "Aplicar el 18% de impuestos a las suscripciones de servicios de streaming extranjeros.",
+        stances: { c1: 1, c2: -1, c3: -1 }
+    },
+    {
+        text: "¿Salario mínimo para trabajadoras domésticas?",
+        category: "Derechos",
+        keyword: "home",
+        description: "Regularizar el trabajo doméstico con salario mínimo, seguro social y horarios definidos.",
+        stances: { c1: 1, c2: 0, c3: 0 } // Tribunal Constitucional tumbó la resolución, pero es intención del gob
+    },
+    {
+        text: "¿Mano dura contra los 'Motoristas'?",
+        category: "Tránsito",
+        keyword: "motorcycle",
+        description: "Implementar chalecos numerados obligatorios y restricciones de horario/zona para motocicletas.",
+        stances: { c1: 1, c2: 0, c3: 0 } // Políticamente costoso (muchos votos), pero necesario
+    },
+    {
+        text: "¿Inversión masiva en Santiago?",
+        category: "Desarrollo",
+        keyword: "city",
+        description: "Destinar una gran parte del presupuesto nacional para obras en la segunda capital (Monorriel, Teleférico).",
+        stances: { c1: 1, c2: 0, c3: 1 } // Abel es de Santiago, Abinader invierte mucho allí
+    },
+    {
+        text: "¿Matrimonio Igualitario?",
+        category: "Derechos",
+        keyword: "rainbow",
+        description: "Modificar la constitución para permitir el matrimonio civil entre personas del mismo sexo.",
+        stances: { c1: -1, c2: -1, c3: -1 } // Ningún candidato mayoritario apoya esto abiertamente en RD
+    },
+    {
+        text: "¿Seguro médico para la diáspora?",
+        category: "Salud",
+        keyword: "world",
+        description: "Ofrecer cobertura de Senasa a los dominicanos residentes en el exterior cuando visiten el país.",
+        stances: { c1: 1, c2: 1, c3: 1 }
+    },
+    {
+        text: "¿Eliminación de los 'Peajes Sombra'?",
+        category: "Economía",
+        keyword: "road",
+        description: "Renegociar contratos viales donde el Estado paga por vehículos que no transitan.",
+        stances: { c1: 1, c2: 0, c3: 0 } // Logro bandera de Abinader, oposición callada
+    },
+    {
+        text: "¿Aumento salarial a médicos y enfermeras?",
+        category: "Salud",
+        keyword: "doctor",
+        description: "Subir sueldos al sector salud aunque implique aumentar el déficit presupuestario.",
+        stances: { c1: 1, c2: 1, c3: 1 }
+    },
+    {
+        text: "¿Declaración de bienes obligatoria y pública?",
+        category: "Transparencia",
+        keyword: "file",
+        description: "Obligar a todo funcionario a publicar su patrimonio real bajo pena de destitución inmediata.",
+        stances: { c1: 1, c2: 0, c3: 0 }
+    },
+    {
+        text: "¿Prohibición del Matrimonio Infantil?",
+        category: "Derechos",
+        keyword: "child",
+        description: "Mantener la prohibición absoluta de matrimonio antes de los 18 años sin excepciones.",
+        stances: { c1: 1, c2: 1, c3: 1 } // Aprobado recientemente por consenso
+    },
+    {
+        text: "¿Construcción Autopista del Ámbar?",
+        category: "Infraestructura",
+        keyword: "road",
+        description: "Nueva carretera Santiago-Puerto Plata mediante Alianza Público-Privada.",
+        stances: { c1: 1, c2: 0, c3: 0 } // Proyecto difícil de arrancar por costos
+    },
+    {
+        text: "¿Plan de vivienda 'Familia Feliz'?",
+        category: "Social",
+        keyword: "house",
+        description: "Subsidios estatales para completar el inicial de la primera vivienda de familias pobres.",
+        stances: { c1: 1, c2: 0, c3: 0 }
+    },
+    {
+        text: "¿Modernización del Código de Trabajo (Cesantía)?",
+        category: "Laboral",
+        keyword: "work",
+        description: "Reformar el código laboral. El punto crítico es si se modifica o elimina el auxilio de cesantía.",
+        stances: { c1: 0, c2: -1, c3: -1 } // Gobierno dice que no tocará cesantía, empresarios quieren, sindicatos no
+    },
+    {
+        text: "¿Hub Logístico Regional?",
+        category: "Economía",
+        keyword: "ship",
+        description: "Posicionar a RD como el centro de distribución de carga del Caribe mediante incentivos fiscales.",
+        stances: { c1: 1, c2: 1, c3: 1 }
+    },
+    {
+        text: "¿Combate al Sargazo?",
+        category: "Turismo",
+        keyword: "sea",
+        description: "Crear un fondo público-privado millonario para recolectar y procesar las algas en las playas.",
+        stances: { c1: 1, c2: 1, c3: 1 }
+    },
+    {
+        text: "¿Protección de Valle Nuevo?",
+        category: "Medio Ambiente",
+        keyword: "forest",
+        description: "Mantener la prohibición estricta de agricultura en el parque nacional, desalojando campesinos.",
+        stances: { c1: 1, c2: 0, c3: 0 }
     }
 ];
         let currentCardIndex = 0;

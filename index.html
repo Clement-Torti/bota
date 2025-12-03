@@ -7,8 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --neon-green: #00E055;
-            --dark-green: #008f36;
+            --neon-green: #02CB01;
+            --dark-green: #05B602;
             --hot-pink: #ff007f;
             --bright-yellow: #ffdd00;
             --white: #ffffff;
@@ -27,11 +27,24 @@
                 var(--dark-green) 20px,
                 var(--dark-green) 40px
             );
+            background-size: 200% 200%;
             height: 100vh;
             display: flex;
             flex-direction: column;
+            justify-content: center;
+            align-items: center;
             overflow: hidden;
             color: var(--text-dark);
+            animation: moveStripes 25s linear infinite;
+        }
+
+        @keyframes moveStripes {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 100% 100%;
+            }
         }
 
         /* HEADER */

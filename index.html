@@ -331,6 +331,76 @@
 
         .animate-avatar { opacity: 1; transform: translateY(0); }
         
+        /* --- CÉDULA MODAL --- */
+.cedula-modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.cedula-card {
+    background: var(--white);
+    padding: 30px 20px;
+    width: 90%;
+    max-width: 350px;
+    border-radius: 20px;
+    text-align: center;
+    border: 5px solid var(--bright-yellow);
+    box-shadow: 0 0 30px var(--bright-yellow);
+    transform: scale(0.9);
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.siren-icon { font-size: 3rem; margin-bottom: 10px; animation: wobble 1s infinite; }
+
+.cedula-card h2 { text-transform: uppercase; color: var(--text-dark); font-weight: 900; margin-bottom: 10px; transform: rotate(-2deg); }
+.cedula-card p { margin-bottom: 15px; font-size: 0.95rem; line-height: 1.4; }
+
+#cedulaInput {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+    text-align: center;
+    border: 3px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    outline: none;
+}
+
+#cedulaInput:focus { border-color: var(--neon-green); }
+
+.cedula-card small { display: block; color: #666; margin-bottom: 20px; font-size: 0.75rem; }
+
+.btn-cedula {
+    background: var(--hot-pink);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: 800;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #c20061;
+    width: 100%;
+    transition: 0.2s;
+}
+
+.btn-cedula:active { transform: translateY(2px); box-shadow: 0 2px 0 #c20061; }
+
+.cedula-feedback { margin-top: 15px; font-weight: 700; min-height: 20px; }
+
+@keyframes popIn { to { transform: scale(1); } }
+@keyframes wobble { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -363,6 +433,22 @@
         <button class="btn-action btn-no" onclick="triggerSwipe('left')">✖</button>
         <button class="btn-action btn-maybe" onclick="triggerSwipe('up')">🤔</button>
         <button class="btn-action btn-yes" onclick="triggerSwipe('right')">❤</button>
+    </div>
+
+    <!-- MODAL DE LA CÉDULA -->
+    <div id="cedulaModal" class="cedula-modal">
+        <div class="cedula-card">
+            <div class="siren-icon">🚨</div>
+            <h2>¡Quieto en primera!</h2>
+            <p>El sistema detectó niveles peligrosos de opinión política.</p>
+            <p><strong>Entre la cédula ahí</strong> pa' confirmar que tú ere' dominicano y no un bot ruso.</p>
+            
+            <input type="tel" id="cedulaInput" maxlength="11" placeholder="Ej: 40212345678" autocomplete="off">
+            <small>Solo los numeritos, sin guiones, tigre.</small>
+            
+            <button class="btn-cedula" onclick="verificarCedula()">Continuamos</button>
+            <p id="cedulaFeedback" class="cedula-feedback"></p>
+        </div>
     </div>
 
     <script>
@@ -404,8 +490,39 @@
                 category: "Seguridad",
                 keyword: "Military police",
                 stances: { c1: 0, c2: 1, c3: 1 } 
+            },
+            {
+                text: "¿Incrementar impuestos a las grandes empresas?",
+                category: "Economía",
+                keyword: "Corporate tax",
+                stances: { c1: -1, c2: 1, c3: 0 } 
+            },
+            {
+                text: "¿Legalizar la marihuana para uso recreativo?",
+                category: "Salud / Derechos",
+                keyword: "Cannabis leaf",
+                stances: { c1: 1, c2: -1, c3: 0 } 
+            },
+            {
+                text: "¿Construir más autopistas en el país?",
+                category: "Infraestructura",
+                keyword: "Highway road",
+                stances: { c1: 1, c2: 0, c3: 1 } 
+            },
+            {
+                text: "¿Subir el salario mínimo nacional?",
+                category: "Economía",
+                keyword: "Salary increase",
+                stances: { c1: 1, c2: 0, c3: 1 } 
+            },
+            {
+                text: "¿Proteger áreas naturales con leyes más estrictas?",
+                category: "Medio Ambiente",
+                keyword: "Forest protection",
+                stances: { c1: 1, c2: 1, c3: 0 } 
             }
         ];
+
     
         let currentCardIndex = 0;
         const stackElement = document.getElementById('cardStack');
@@ -573,6 +690,9 @@
             setTimeout(() => {
                 card.remove();
                 currentCardIndex++;
+                if (currentCardIndex === 5) {
+                    mostrarCedulaModal();
+                }
                 if (currentCardIndex >= propositions.length) showResults();
             }, 300);
         }
@@ -624,6 +744,51 @@
                 });
             }, 100);
         }
+
+        // --- LÓGICA DE LA CÉDULA ---
+
+function mostrarCedulaModal() {
+    const modal = document.getElementById('cedulaModal');
+    modal.style.display = 'flex';
+    // Desenfocar el input un poco para evitar el teclado inmediato en móviles si molesta, 
+    // o enfocarlo si quieres agresividad:
+    document.getElementById('cedulaInput').focus();
+}
+
+function verificarCedula() {
+    const input = document.getElementById('cedulaInput');
+    const feedback = document.getElementById('cedulaFeedback');
+    const val = input.value.replace(/[^0-9]/g, ''); // Solo números
+
+    // Simulación "Fake" pero divertida
+    if (val.length !== 11) {
+        feedback.style.color = 'red';
+        feedback.innerText = "❌ Esa cédula 'ta chueca. Son 11 números.";
+        input.style.borderColor = 'red';
+        return;
+    }
+
+    feedback.style.color = '#00C853';
+    feedback.innerHTML = "✅ <strong>¡Confirmado!</strong><br>Usted es dominicano pura cepa.";
+    
+    // Efecto visual
+    document.querySelector('.cedula-card').style.border = "5px solid #00C853";
+    document.querySelector('.siren-icon').innerText = "🇩🇴";
+    document.querySelector('.siren-icon').style.animation = "none";
+
+    setTimeout(() => {
+        document.getElementById('cedulaModal').style.display = 'none';
+        // El juego continúa solo
+    }, 1500);
+}
+
+// Permitir presionar Enter
+document.getElementById('cedulaInput').addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    verificarCedula();
+  }
+});
     
         init();
     </script>

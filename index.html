@@ -620,11 +620,9 @@
         /* --- ESTILOS PARA LA SECCIÓN "WEY POR QUÉ" --- */
 
         .why-section {
-            margin-top: 25px;
             text-align: left;
             font-size: 0.85rem;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
+            padding-bottom: 15px;
         }
 
         .why-section summary {
@@ -780,14 +778,11 @@
         <div class="cedula-card">
             <div class="siren-icon">🚨</div>
             <h2>¡Quieto en primera!</h2>
-            <p>El sistema detectó niveles peligrosos de opinión política.</p>
-            <p><strong>Dame la cédula ahí</strong> pa' confirmar que tú ere' dominicano y no un bot ruso.</p>
+            <p>
+                Contribuye a la voz de los dominicanos <strong>marcando tu cédula</strong> ahí; e’ <strong>100% anónimo</strong> 
+            </p>
 
             <input type="tel" id="cedulaInput" maxlength="11" placeholder="Ej: 40212345678" autocomplete="off">
-            <small>Solo los numeritos, sin guiones, tigre.</small>
-
-            <button class="btn-cedula" onclick="verificarCedula()">Continuamos 🇩🇴</button>
-            <p id="cedulaFeedback" class="cedula-feedback"></p>
 
             <!-- SECCIÓN NUEVA: WEY, POR QUÉ? -->
             <details class="why-section">
@@ -806,9 +801,20 @@
                         Tus opiniones se mezclan con las de miles de dominicanos para sacar estadísticas, nadie sabrá
                         qué votaste tú.
                     </p>
+
+                    <div style="margin-top: 15px; border-top: 1px dashed #ccc; padding-top: 15px; text-align: center;">
+                        <button onclick="skipCedula()" style="background: none; border: none; color: #666; text-decoration: underline; cursor: pointer; font-weight: 700; font-size: 0.9rem;">
+                            👉 Dale pa' lla' sin cédula
+                        </button>
+                    </div>
                 </div>
             </details>
             <!-- FIN SECCIÓN NUEVA -->
+
+                        
+
+            <button class="btn-cedula" onclick="verificarCedula()">Continuamos 🇩🇴</button>
+            <p id="cedulaFeedback" class="cedula-feedback"></p>
 
         </div>
     </div>
@@ -1487,6 +1493,10 @@ async function init() {
             // Desenfocar el input un poco para evitar el teclado inmediato en móviles si molesta, 
             // o enfocarlo si quieres agresividad:
             document.getElementById('cedulaInput').focus();
+        }
+
+        function skipCedula() {
+            document.getElementById('cedulaModal').style.display = 'none';
         }
 
         function verificarCedula() {

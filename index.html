@@ -252,7 +252,7 @@
             try {
                 // 1. We ask Wikipedia for 3 images related to the keyword
                 // origin=* fixes CORS issues on localhost
-                const url = `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(keyword)}&gsrlimit=3&prop=pageimages&pithumbsize=600&format=json&origin=*`;
+                const url = `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(keyword)}&gsrlimit=3&prop=pageimages&pithumbsize=400&format=json&origin=*`;
 
                 const response = await fetch(url);
                 const data = await response.json();

@@ -40,6 +40,8 @@
             overflow: hidden;
             color: var(--text-dark);
             animation: moveStripes 25s linear infinite;
+            padding-top: 75px;
+            padding-bottom: 75px;
         }
 
         @keyframes moveStripes {
@@ -173,6 +175,56 @@
             line-height: 1.3;
             margin-bottom: 15px;
             color: #333;
+        }
+
+        /* Description on the front of the card */
+        .proposition-description {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.4;
+            font-weight: 500;
+            /* Limit lines if you want, or let it grow */
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* "Saber más" Opinions List */
+        .opinion-row {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            gap: 12px;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+
+        .opinion-row:last-child {
+            border-bottom: none;
+        }
+
+        .opinion-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #fff;
+            border: 3px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .opinion-text {
+            font-size: 0.9rem;
+            color: #333;
+            line-height: 1.4;
         }
 
         /* ADD THIS TO YOUR CSS */
@@ -779,7 +831,8 @@
             <div class="siren-icon">🚨</div>
             <h2>¡Quieto en primera!</h2>
             <p>
-                Contribuye a la voz de los dominicanos <strong>marcando tu cédula</strong> ahí; e’ <strong>100% anónimo</strong> 
+                Contribuye a la voz de los dominicanos <strong>marcando tu cédula</strong> ahí; e’ <strong>100%
+                    anónimo</strong>
             </p>
 
             <input type="tel" id="cedulaInput" maxlength="11" placeholder="Ej: 40212345678" autocomplete="off">
@@ -803,7 +856,8 @@
                     </p>
 
                     <div style="margin-top: 15px; border-top: 1px dashed #ccc; padding-top: 15px; text-align: center;">
-                        <button onclick="skipCedula()" style="background: none; border: none; color: #666; text-decoration: underline; cursor: pointer; font-weight: 700; font-size: 0.9rem;">
+                        <button onclick="skipCedula()"
+                            style="background: none; border: none; color: #666; text-decoration: underline; cursor: pointer; font-weight: 700; font-size: 0.9rem;">
                             👉 Dale pa' lla' sin cédula
                         </button>
                     </div>
@@ -811,7 +865,7 @@
             </details>
             <!-- FIN SECCIÓN NUEVA -->
 
-                        
+
 
             <button class="btn-cedula" onclick="verificarCedula()">Continuamos 🇩🇴</button>
             <p id="cedulaFeedback" class="cedula-feedback"></p>
@@ -857,365 +911,716 @@
                 text: "¿Continuar la construcción del Muro Fronterizo?",
                 category: "Soberanía",
                 keyword: "wall",
-                description: "Completar la verja perimetral inteligente en la frontera con Haití para controlar el tráfico ilícito y la migración.",
-                stances: { c1: 1, c2: 1, c3: 1 } // Todos a favor, aunque oposición critica la ejecución
+                description: "Terminar la verja física y tecnológica en la frontera para frenar la entrada ilegal.",
+                for: "Aumenta la seguridad, reduce el robo de ganado y ayuda a controlar el flujo migratorio irregular.",
+                against: "Es costoso, divide comunidades y algunos creen que no detendrá la migración si hay corrupción militar.",
+                stances: { c1: 1, c2: 1, c3: 1 },
+                candidateOpinions: {
+                    c1: "Inició la obra y la defiende como vital para la seguridad nacional ('La frontera no será la misma').",
+                    c2: "Apoya el muro pero critica la ejecución actual, llamándola 'malla de gallinero' insuficiente.",
+                    c3: "A favor, pero exige una construcción de hormigón más agresiva y tecnológica."
+                }
             },
             {
                 text: "¿Deportaciones masivas de indocumentados?",
                 category: "Soberanía",
                 keyword: "deportation",
-                description: "Mantener o aumentar el ritmo de repatriaciones de extranjeros en estatus irregular, sin importar la presión internacional.",
-                stances: { c1: 1, c2: 1, c3: 1 }
+                description: "Aumentar las repatriaciones semanales de extranjeros en estatus irregular.",
+                for: "Hace cumplir la ley migratoria y reduce la presión sobre los servicios públicos (salud/educación).",
+                against: "Puede violar derechos humanos y afectar sectores económicos (agro/construcción) que dependen de esa mano de obra.",
+                stances: { c1: 1, c2: 1, c3: 1 },
+                candidateOpinions: {
+                    c1: "Ha ordenado operativos para deportar hasta 10,000 indocumentados por semana.",
+                    c2: "De acuerdo con hacer cumplir la ley, aunque a veces critica las formas para diferenciarse.",
+                    c3: "Mano dura total. Su campaña se basó en el 'orden' y la repatriación estricta."
+                }
             },
             {
                 text: "¿Establecer campos de refugiados en RD?",
                 category: "Soberanía",
                 keyword: "refugee",
-                description: "Aceptar la petición de organismos internacionales de habilitar zonas de refugio para haitianos en territorio dominicano.",
-                stances: { c1: -1, c2: -1, c3: -1 } // Rechazo unánime
+                description: "Permitir zonas de refugio humanitario en suelo dominicano para haitianos.",
+                for: "Cumpliría con peticiones de la ONU y ofrecería ayuda humanitaria ante la crisis vecina.",
+                against: "Riesgo alto para la soberanía nacional y carga económica insostenible para el país.",
+                stances: { c1: -1, c2: -1, c3: -1 },
+                candidateOpinions: {
+                    c1: "Rechazo absoluto: 'La República Dominicana no será campo de refugiados'.",
+                    c2: "Se opone firmemente, alegando que la solución a Haití debe ser internacional, no dominicana.",
+                    c3: "Totalmente en contra, considera que atenta contra la existencia de la nación."
+                }
             },
             {
                 text: "¿Reinstaurar visados a estudiantes haitianos?",
                 category: "Seguridad",
                 keyword: "visa",
-                description: "Pausar indefinidamente la emisión de visas de estudiantes y turistas a ciudadanos haitianos por seguridad nacional.",
-                stances: { c1: 1, c2: 0, c3: 1 }
+                description: "Mantener la pausa en la emisión de visas a estudiantes del país vecino.",
+                for: "Evita que se use la visa de estudiante como vía para quedarse ilegalmente en el país.",
+                against: "Afecta a las universidades dominicanas y castiga a jóvenes que solo quieren estudiar legalmente.",
+                stances: { c1: 1, c2: 0, c3: 1 },
+                candidateOpinions: {
+                    c1: "Suspendió el programa de visados indefinidamente por razones de seguridad.",
+                    c2: "Postura ambivalente; prioriza el control fronterizo sobre el cierre académico total.",
+                    c3: "A favor de restricciones severas y revisión de cada visado emitido."
+                }
             },
 
             // --- ECONOMÍA E IMPUESTOS ---
             {
-                text: "¿Aprobar la Reforma Fiscal Integral?",
+                text: "¿Aprobar la Reforma Fiscal?",
                 category: "Economía",
                 keyword: "tax",
-                description: "Ampliar la base del ITBIS y eliminar exenciones para aumentar la recaudación y reducir el déficit fiscal.",
-                stances: { c1: 1, c2: -1, c3: -1 } // Oposición rechaza que "pague el pueblo"
+                description: "Subir o ampliar impuestos (ITBIS/IPI) para que el gobierno tenga más dinero.",
+                for: "Necesario para reducir la deuda pública y mejorar servicios como salud y policía.",
+                against: "Aumenta el costo de la vida, afecta a la clase media y puede frenar el crecimiento económico.",
+                stances: { c1: 1, c2: -1, c3: -1 },
+                candidateOpinions: {
+                    c1: "Propuso la 'Ley de Modernización Fiscal' por responsabilidad económica, aunque la retiró por falta de consenso.",
+                    c2: "Se opuso radicalmente, calificándola de 'bombazo fiscal' contra los pobres.",
+                    c3: "En contra, argumentando que el gobierno gasta mal y no debería cobrar más."
+                }
             },
             {
-                text: "¿Eliminar el anticipo del Impuesto sobre la Renta?",
+                text: "¿Eliminar el 'Anticipo' de impuestos?",
                 category: "Economía",
                 keyword: "business",
-                description: "Quitar el cobro anticipado de impuestos que afecta el flujo de caja de las MIPYMES.",
-                stances: { c1: 0, c2: 1, c3: 1 } // Oposición promete quitarlo, Gobierno lo ha flexibilizado pero no quitado
+                description: "Quitar el cobro adelantado de impuestos que pagan las empresas cada mes.",
+                for: "Alivia el flujo de efectivo de las pequeñas empresas y evita quiebras.",
+                against: "El gobierno perdería un ingreso mensual fijo y predecible necesario para pagar gastos corrientes.",
+                stances: { c1: 0, c2: 1, c3: 1 },
+                candidateOpinions: {
+                    c1: "Lo ha flexibilizado para microempresas, pero no lo elimina totalmente para no afectar ingresos.",
+                    c2: "Promesa de campaña: Eliminar el anticipo para dinamizar la economía.",
+                    c3: "A favor de eliminarlo para apoyar a los emprendedores y PYMES."
+                }
             },
             {
                 text: "¿Mantener subsidios a los combustibles?",
                 category: "Economía",
                 keyword: "oil",
-                description: "Seguir congelando los precios de la gasolina y gasoil asumiendo deuda para evitar inflación en el transporte.",
-                stances: { c1: 1, c2: -1, c3: 0 } // Leonel critica el endeudamiento excesivo
+                description: "Que el gobierno pague parte de la gasolina para que no suba de precio.",
+                for: "Evita que suba el pasaje y los alimentos, manteniendo la paz social.",
+                against: "Es muy costoso, genera mucha deuda y beneficia también a quienes pueden pagar.",
+                stances: { c1: 1, c2: -1, c3: -1 },
+                candidateOpinions: {
+                    c1: "Mantiene precios congelados asumiendo miles de millones en deuda para frenar la inflación.",
+                    c2: "Critica el endeudamiento excesivo utilizado para sostener estos subsidios.",
+                    c3: "Critica los altos precios a pesar de los subsidios y la gestión de la fórmula."
+                }
             },
             {
-                text: "¿Fideicomisos Públicos (Ej. Pedernales)?",
+                text: "¿Uso de Fideicomisos Públicos?",
                 category: "Economía",
                 keyword: "trust",
-                description: "Utilizar la figura del fideicomiso para gestionar bienes públicos y proyectos turísticos con reglas de mercado privado.",
-                stances: { c1: 1, c2: -1, c3: -1 } // Oposición dice que privatiza lo público
+                description: "Crear entidades mixtas para administrar bienes del Estado (ej. Pedernales, Punta Catalina).",
+                for: "Agiliza la inversión y ejecución de obras sin la burocracia estatal lenta.",
+                against: "Falta de transparencia, evita la ley de compras y contrataciones, y riesgo de privatización.",
+                stances: { c1: 1, c2: -1, c3: -1 },
+                candidateOpinions: {
+                    c1: "Defensor principal: Los usa para desarrollar turismo (Pedernales) y transporte (Fitram).",
+                    c2: "Muy crítico: Alega que privatizan lo público y violan leyes orgánicas.",
+                    c3: "En contra: Considera que el gobierno cede su responsabilidad al sector privado."
+                }
             },
             {
                 text: "¿Entrega del 30% de las AFP?",
                 category: "Economía",
                 keyword: "money",
-                description: "Permitir a los trabajadores retirar anticipadamente el 30% de sus fondos de pensiones.",
-                stances: { c1: -1, c2: -1, c3: 0 } // Liderazgos principales en contra por inflación, aunque popular
+                description: "Dar a los trabajadores el 30% de su dinero ahorrado para pensiones.",
+                for: "Alivio económico inmediato para familias endeudadas o en crisis.",
+                against: "Genera inflación inmediata y deja a los trabajadores sin dinero para su vejez.",
+                stances: { c1: -1, c2: -1, c3: -1 },
+                candidateOpinions: {
+                    c1: "En contra: Argumenta que dispararía la inflación y dañaría la economía.",
+                    c2: "En contra: Lo considera populismo económico que destruye el futuro del trabajador.",
+                    c3: "En contra: El PLD institucionalmente se opone a desmantelar el sistema de pensiones."
+                }
             },
+
 
             // --- SOCIAL Y DERECHOS ---
             {
                 text: "¿Aprobar las 3 Causales del aborto?",
                 category: "Derechos",
                 keyword: "women",
-                description: "Despenalizar el aborto en casos de riesgo de vida, inviabilidad fetal o violación.",
-                stances: { c1: 1, c2: -1, c3: -1 } // Abinader a favor (pero deja libre voto), Leonel/Abel más conservadores
+                description: "Permitir el aborto solo en 3 casos: peligro de muerte de la madre, feto inviable o violación.",
+                for: "Protege la vida y salud de las mujeres y garantiza derechos fundamentales en situaciones extremas.",
+                against: "Viola el principio constitucional de que la vida comienza desde la concepción (Art. 37).",
+                stances: { c1: 1, c2: -1, c3: -1 },
+                candidateOpinions: {
+                    c1: "Personalmente a favor, pero ha dejado que el Congreso decida sin imponer línea partidaria.",
+                    c2: "Históricamente en contra, apelando a la Constitución que él mismo promovió en 2010.",
+                    c3: "En contra, alineado con la postura de la iglesia y los sectores conservadores."
+                }
             },
             {
-                text: "¿Inclusión de 'Ideología de Género' en escuelas?",
+                text: "¿'Ideología de Género' en escuelas?",
                 category: "Educación",
                 keyword: "education",
-                description: "Implementar políticas de educación sexual integral con enfoque de género en el currículo escolar.",
-                stances: { c1: 0, c2: -1, c3: -1 } // Abel y Leonel fuertemente en contra. PRM dividido.
+                description: "Enseñar educación sexual y diversidad de género en las escuelas públicas.",
+                for: "Fomenta la tolerancia, reduce el acoso escolar y previene embarazos adolescentes.",
+                against: "Padres argumentan que el Estado no debe interferir en la educación moral de sus hijos.",
+                stances: { c1: 0, c2: -1, c3: -1 },
+                candidateOpinions: {
+                    c1: "El Min. de Educación intentó una ordenanza al respecto, pero retrocedió ante críticas.",
+                    c2: "Rechaza que se impongan agendas foráneas que 'confunden' a la niñez.",
+                    c3: "Totalmente en contra, promete defender los valores tradicionales de la familia."
+                }
             },
             {
-                text: "¿Lectura de la Biblia obligatoria en escuelas?",
+                text: "¿Lectura de la Biblia obligatoria?",
                 category: "Educación",
                 keyword: "bible",
-                description: "Hacer cumplir la ley que exige la lectura bíblica en planteles públicos.",
-                stances: { c1: 0, c2: 1, c3: 1 } // Oposición apela al voto cristiano
+                description: "Hacer cumplir la ley que manda a leer la Biblia en todas las escuelas.",
+                for: "Inculca valores morales y respeta la tradición cristiana del país.",
+                against: "Discrimina a estudiantes de otras religiones y viola el estado laico.",
+                stances: { c1: 0, c2: 1, c3: 1 },
+                candidateOpinions: {
+                    c1: "Respeta la ley, pero su gestión prioriza un enfoque educativo secular y técnico.",
+                    c2: "A favor, busca activamente el apoyo de las iglesias evangélicas y católicas.",
+                    c3: "A favor, utiliza el discurso religioso como pilar de su defensa de la 'dominicanidad'."
+                }
             },
             {
-                text: "¿Mantener el 4% del PIB para Educación?",
+                text: "¿Mantener el 4% para Educación?",
                 category: "Educación",
                 keyword: "school",
-                description: "Preservar la asignación fija del 4% del presupuesto a educación, aunque la calidad no haya mejorado sustancialmente.",
-                stances: { c1: 1, c2: 1, c3: 1 }
+                description: "Seguir dando obligatoriamente el 4% del dinero del país al Ministerio de Educación.",
+                for: "Es una conquista social y la ley exige invertir en mejorar las escuelas.",
+                against: "Se argumenta que el dinero se desperdicia si no hay planes de calidad educativa.",
+                stances: { c1: 1, c2: 1, c3: 1 },
+                candidateOpinions: {
+                    c1: "Lo mantiene innegociable, enfocándose ahora en transporte escolar y politécnicos.",
+                    c2: "Apoya el monto, pero critica duramente la 'mala calidad' del gasto actual.",
+                    c3: "A favor, pero denuncia que el dinero se usa en nóminas políticas y no en enseñanza."
+                }
             },
 
             // --- INSTITUCIONALIDAD Y JUSTICIA ---
             {
-                text: "¿Reforma Constitucional (Ministerio Público)?",
+                text: "¿Reforma Constitucional (MP)?",
                 category: "Justicia",
                 keyword: "constitution",
-                description: "Modificar la Constitución para 'blindar' la independencia del Procurador General y evitar que lo nombre el Presidente.",
-                stances: { c1: 1, c2: -1, c3: -1 } // Oposición dice que no es necesario modificar la constitución
+                description: "Cambiar la Constitución para que el Presidente no elija al Procurador.",
+                for: "Garantiza que la justicia no dependa de políticos y reduce la impunidad.",
+                against: "Se teme que se aproveche para cambiar reglas de reelección y bajar el % para ganar.",
+                stances: { c1: 1, c2: -1, c3: -1 },
+                candidateOpinions: {
+                    c1: "Es su propuesta bandera para dejar un legado de independencia judicial.",
+                    c2: "Se opone radicalmente: 'La Constitución no se toca', cree que es innecesario.",
+                    c3: "En contra, considera que es un distractor de los problemas económicos reales."
+                }
             },
             {
-                text: "¿Reducción de la cantidad de Diputados?",
+                text: "¿Reducción de Diputados?",
                 category: "Política",
                 keyword: "congress",
-                description: "Disminuir el número de legisladores en la Cámara de Diputados para ahorrar gastos y eficientizar.",
-                stances: { c1: 1, c2: 0, c3: 0 }
+                description: "Eliminar curules en el congreso para tener menos legisladores (de 190 a 137 aprox).",
+                for: "Ahorra dinero del presupuesto y hace el congreso más eficiente.",
+                against: "Provincias pequeñas perderían representación y voz en el gobierno.",
+                stances: { c1: 1, c2: 0, c3: 0 },
+                candidateOpinions: {
+                    c1: "Propuso reducir 53 diputados como parte de su reforma constitucional.",
+                    c2: "Escéptico, prefiere analizar el impacto en la representación democrática.",
+                    c3: "Postura ambigua, critica el gasto pero defiende la estructura partidaria."
+                }
             },
             {
-                text: "¿Unificar elecciones municipales y presidenciales?",
+                text: "¿Unificar elecciones?",
                 category: "Política",
                 keyword: "vote",
-                description: "Volver a celebrar todas las elecciones el mismo día para reducir el costo de las campañas y el abstencionismo.",
-                stances: { c1: 1, c2: 0, c3: 0 }
+                description: "Votar por Presidente y Alcaldes el mismo día (eliminar elecciones separadas).",
+                for: "Reduce el gasto de campañas y el cansancio de la gente.",
+                against: "Los temas municipales pierden importancia frente a la figura presidencial (efecto arrastre).",
+                stances: { c1: 1, c2: 0, c3: 0 },
+                candidateOpinions: {
+                    c1: "A favor de unificar para 2032 para reducir costos y abstención.",
+                    c2: "Prefiere elecciones separadas para fortalecer el liderazgo local.",
+                    c3: "El PLD prefiere la separación para evitar que el gobierno arrastre todo el poder."
+                }
             },
             {
-                text: "¿Ley de Extinción de Dominio (Retroactiva)?",
+                text: "¿Ley de Extinción de Dominio?",
                 category: "Justicia",
                 keyword: "judge",
-                description: "Confiscar bienes provenientes de corrupción o narcotráfico, aplicable a casos del pasado sin límite de tiempo.",
-                stances: { c1: 1, c2: 0, c3: 0 }
+                description: "Quitar bienes robados al estado o del narco, incluso de casos viejos.",
+                for: "Recupera lo robado ('El que la hace la paga') y desincentiva la corrupción.",
+                against: "Podría usarse como persecución política si no se aplica con cuidado jurídico.",
+                stances: { c1: 1, c2: 0, c3: 0 },
+                candidateOpinions: {
+                    c1: "Promulgó la ley y la celebra como un hito contra el crimen organizado.",
+                    c2: "Apoya el concepto pero advirtió sobre choques con la Constitución (irretroactividad).",
+                    c3: "Apoya la transparencia pero vigila que no sea un arma contra opositores."
+                }
             },
 
             // --- INFRAESTRUCTURA Y SERVICIOS ---
             {
-                text: "¿Expansión del Metro y Teleférico?",
+                text: "¿Expansión del Metro/Teleférico?",
                 category: "Transporte",
                 keyword: "train",
-                description: "Seguir invirtiendo masivamente en transporte colectivo (Metro SD, Monorriel Santiago) sobre soluciones viales.",
-                stances: { c1: 1, c2: 1, c3: 1 } // Leonel inició el metro, Abinader lo expande
+                description: "Construir más líneas de Metro (SD) y Monorriel (Santiago).",
+                for: "Solución real al caos del tapón y transporte digno para la gente.",
+                against: "Requiere subsidios millonarios eternos y endeudamiento externo.",
+                stances: { c1: 1, c2: 1, c3: 1 },
+                candidateOpinions: {
+                    c1: "Ejecutando agresivamente: Línea 2C, Monorriel Santiago y Teleférico.",
+                    c2: "Reivindica ser el 'Padre del Metro' y promete seguir expandiéndolo.",
+                    c3: "A favor del transporte masivo, aunque critica la lentitud de las obras actuales."
+                }
             },
             {
-                text: "¿Contrato de Aerodom (Renovación)?",
+                text: "¿Contrato de Aerodom?",
                 category: "Infraestructura",
                 keyword: "airplane",
-                description: "Renovar anticipadamente la concesión de los aeropuertos a cambio de un pago inicial para obras del estado.",
-                stances: { c1: 1, c2: -1, c3: -1 } // Oposición criticó fuertemente este contrato
+                description: "Renovar el contrato de los aeropuertos hasta 2060 a cambio de dinero hoy.",
+                for: "El estado recibe fondos inmediatos para asfaltado y obras sin pedir préstamos.",
+                against: "Compromete ingresos futuros del país y se considera un mal negocio financiero.",
+                stances: { c1: 1, c2: -1, c3: -1 },
+                candidateOpinions: {
+                    c1: "Defiende la renegociación como un éxito que trajo recursos frescos al estado.",
+                    c2: "Lo calificó de 'adefesio jurídico' y estafa al pueblo dominicano.",
+                    c3: "En contra, acusó al gobierno de hipotecar el futuro del país."
+                }
             },
             {
-                text: "¿Construcción de la Presa de Cola (Barrick)?",
+                text: "¿Presa de Cola (Barrick Gold)?",
                 category: "Medio Ambiente",
                 keyword: "mining",
-                description: "Permitir la expansión de operaciones mineras y nueva presa de cola para mantener los ingresos del oro.",
-                stances: { c1: 1, c2: 0, c3: 0 } // Tema delicado, gobierno tiende a apoyar minería responsable
+                description: "Permitir que la minera construya un nuevo depósito de residuos para seguir operando.",
+                for: "Mantiene los empleos y los altos ingresos fiscales que da el oro.",
+                against: "Riesgo alto de contaminar ríos y afectar la agricultura de la zona.",
+                stances: { c1: 1, c2: 0, c3: 0 },
+                candidateOpinions: {
+                    c1: "Busca un equilibrio, apoyando la minería pero exigiendo estudios ambientales.",
+                    c2: "Cauteloso, evita chocar con los ambientalistas pero entiende la economía.",
+                    c3: "Tiende a ponerse del lado de las comunidades locales que rechazan la presa."
+                }
             },
             {
-                text: "¿Explotación minera en San Juan (Romero)?",
+                text: "¿Minería en San Juan (Romero)?",
                 category: "Medio Ambiente",
                 keyword: "mountain",
-                description: "Permitir la extracción de oro en la zona norte de San Juan, arriba de la presa de Sabaneta.",
-                stances: { c1: 0, c2: -1, c3: -1 } // Abinader espera estudio impacto, oposición se ha montado en el 'No'
+                description: "Sacar oro de las montañas de San Juan, encima de una presa de agua.",
+                for: "Generaría riqueza en una de las provincias más pobres del país.",
+                against: "Podría destruir el agua (Río San Juan) que usa el Sur para agricultura.",
+                stances: { c1: 0, c2: -1, c3: -1 },
+                candidateOpinions: {
+                    c1: "No ha dado el permiso final, esperando 'consenso social' (postura pasiva).",
+                    c2: "Opuesto rotundamente: 'El agua vale más que el oro'.",
+                    c3: "En contra: Defiende a los agricultores del 'Granero del Sur'."
+                }
             },
             {
-                text: "¿Privatización de Punta Catalina?",
+                text: "¿Privatización Punta Catalina?",
                 category: "Energía",
                 keyword: "factory",
-                description: "Vender acciones o entregar la administración total de la termoeléctrica al sector privado.",
-                stances: { c1: 0, c2: -1, c3: -1 } // Gobierno intentó fideicomiso, retrocedió. Oposición en contra.
+                description: "Vender o ceder la administración de la planta eléctrica al sector privado.",
+                for: "El sector privado suele administrar mejor y evitar botellas/corrupción.",
+                against: "El Estado invirtió miles de millones y debe recibir los beneficios, no un privado.",
+                stances: { c1: 0, c2: -1, c3: -1 },
+                candidateOpinions: {
+                    c1: "Intentó un Fideicomiso pero lo retiró. Ahora la mantiene estatal (Celso Marranzini).",
+                    c2: "En contra de venderla, la considera un activo estratégico de seguridad nacional.",
+                    c3: "El PLD la construyó y se opone ferozmente a que se entregue a privados."
+                }
             },
-
             // --- SEGURIDAD CIUDADANA ---
             {
                 text: "¿Reforma Policial profunda?",
                 category: "Seguridad",
                 keyword: "police",
-                description: "Depurar la nómina policial y cambiar la cultura institucional, aunque tome años ver resultados.",
-                stances: { c1: 1, c2: 0, c3: 0 } // Oposición critica la lentitud y falta de resultados
+                description: "Limpiar y modernizar la policía, aunque tome tiempo ver los resultados.",
+                for: "Es la única forma de acabar con la corrupción interna y tener agentes profesionales y educados.",
+                against: "El proceso es muy lento y la delincuencia sigue alta mientras se 'arregla' la casa.",
+                stances: { c1: 1, c2: 0, c3: 0 },
+                candidateOpinions: {
+                    c1: "La defiende como un proceso histórico e irreversible: 'No hay vuelta atrás'.",
+                    c2: "Dice que es un fracaso: 'La delincuencia está peor que nunca' y critica la estrategia.",
+                    c3: "Critica la teoría; propone patrullaje agresivo inmediato y tecnología ('Ojos de Águila')."
+                }
             },
             {
-                text: "¿Patrullaje mixto (Militares en la calle)?",
+                text: "¿Patrullaje mixto (Militares)?",
                 category: "Seguridad",
                 keyword: "military",
-                description: "Sacar al ejército a patrullar permanentemente los barrios para disuadir la delincuencia.",
-                stances: { c1: 1, c2: 1, c3: 1 } // Medida populista que todos suelen apoyar en crisis
+                description: "Sacar a los guardias a la calle para ayudar a la policía a vigilar.",
+                for: "La gente se siente más segura y los delincuentes respetan más al uniforme militar.",
+                against: "Los militares no están entrenados para tratar con civiles, es un 'parche' temporal.",
+                stances: { c1: 1, c2: 1, c3: 1 },
+                candidateOpinions: {
+                    c1: "Lo utiliza recurrentemente en operativos como 'Garantía de Paz' en épocas festivas.",
+                    c2: "Aunque critica al gobierno, apoya el uso de fuerzas armadas cuando la policía es rebasada.",
+                    c3: "A favor del orden total: apoya cualquier medida de fuerza en las calles."
+                }
             },
             {
-                text: "¿Ley de la DNI (Inteligencia)?",
+                text: "¿Ley del DNI (Inteligencia)?",
                 category: "Derechos",
                 keyword: "spy",
-                description: "Obligar a instituciones privadas y ciudadanos a entregar información a la Dirección Nacional de Inteligencia.",
-                stances: { c1: 1, c2: -1, c3: -1 } // Muy criticada por oposición y prensa
+                description: "Nueva ley que obliga a entregar información privada al gobierno por seguridad.",
+                for: "Necesaria para combatir el crimen organizado, terrorismo y ciberataques modernos.",
+                against: "Peligrosa para la privacidad y la libertad de prensa; podría usarse para espiar opositores.",
+                stances: { c1: 1, c2: -1, c3: -1 },
+                candidateOpinions: {
+                    c1: "Defendió la ley como necesaria, aunque aceptó dialogar modificaciones tras las quejas.",
+                    c2: "La calificó de inconstitucional y dictatorial, exigiendo su anulación.",
+                    c3: "Rechazo total, argumentando que viola derechos fundamentales de los ciudadanos."
+                }
             },
 
             // --- VARIOS / TEMAS ACTUALES ---
             {
-                text: "¿Tasa Cero para importación de alimentos?",
+                text: "¿Tasa Cero a importaciones?",
                 category: "Agricultura",
                 keyword: "food",
-                description: "Eliminar aranceles a productos de la canasta básica importados para bajar precios, aunque afecte al productor local.",
-                stances: { c1: 1, c2: -1, c3: -1 } // Conflicto: precios vs protección nacional
+                description: "Quitar impuestos a alimentos traídos de fuera para bajar los precios.",
+                for: "Ayuda a que la comida sea más barata para el consumidor en momentos de inflación.",
+                against: "Quiebra a los agricultores dominicanos que no pueden competir con precios extranjeros.",
+                stances: { c1: 1, c2: -1, c3: -1 },
+                candidateOpinions: {
+                    c1: "Promulgó la ley temporalmente para mitigar la inflación de la canasta básica.",
+                    c2: "Muy crítico: 'Privilegia a los importadores y destruye el campo dominicano'.",
+                    c3: "En contra: 'Es una estocada mortal a los productores nacionales'."
+                }
             },
             {
-                text: "¿Semanal con la Prensa (La Semanal)?",
+                text: "¿La Semanal con la Prensa?",
                 category: "Comunicación",
                 keyword: "press",
-                description: "Que el presidente rinda cuentas y responda preguntas de la prensa todos los lunes en vivo.",
-                stances: { c1: 1, c2: -1, c3: -1 } // Oposición lo tilda de propaganda
+                description: "Conferencia en vivo todos los lunes donde el Presidente responde preguntas.",
+                for: "Muestra transparencia y un mandatario que da la cara y rinde cuentas.",
+                against: "Se usa como propaganda política y expone al presidente a cometer errores constantes.",
+                stances: { c1: 1, c2: -1, c3: -1 },
+                candidateOpinions: {
+                    c1: "Su plataforma principal de agenda: 'Rendimos cuentas sagradamente'.",
+                    c2: "Ironiza sobre ella: 'Habla mucho, resuelve poco' y la considera un show mediático.",
+                    c3: "La califica de teatro para distraer de los problemas reales del país."
+                }
             },
             {
-                text: "¿Regulación estricta de Airbnb?",
+                text: "¿Regulación de Airbnb?",
                 category: "Turismo",
                 keyword: "house",
-                description: "Cobrar impuestos hoteleros a los alquileres de corta estancia para igualar competencia con hoteles.",
-                stances: { c1: 1, c2: 0, c3: 0 } // Asonahores presiona por esto
+                description: "Cobrar impuestos y poner reglas a los alquileres de corta estancia.",
+                for: "Competencia leal con los hoteles y garantiza seguridad al turista.",
+                against: "Podría encarecer el servicio y afectar a dueños de apartamentos que viven de eso.",
+                stances: { c1: 1, c2: 0, c3: 0 },
+                candidateOpinions: {
+                    c1: "El Ministerio de Turismo ya tiene listo el acuerdo para regularlos fiscalmente.",
+                    c2: "Prudente, apoya el turismo pero entiende que debe haber 'reglas claras' para todos.",
+                    c3: "No tiene una postura agresiva, favorece el emprendimiento pero con orden."
+                }
             },
             {
-                text: "¿Prohibición de plásticos de un solo uso?",
+                text: "¿Prohibir plásticos de un uso?",
                 category: "Medio Ambiente",
                 keyword: "plastic",
-                description: "Eliminar gradualmente sorbetes, fundas y foam en todo el territorio nacional.",
-                stances: { c1: 1, c2: 1, c3: 1 }
+                description: "Eliminar sorbetes y fundas plásticas para cuidar los ríos y playas.",
+                for: "Vital para el medio ambiente y para mantener limpio el país (turismo).",
+                against: "Aumenta costos a comercios y consumidores si no hay alternativas baratas.",
+                stances: { c1: 1, c2: 1, c3: 1 },
+                candidateOpinions: {
+                    c1: "Impulsa la Ley de Residuos Sólidos y programas de 'Dominicana Limpia'.",
+                    c2: "A favor de la protección ambiental como eje de desarrollo sostenible.",
+                    c3: "Como ex-alcalde, su éxito fue la limpieza, así que apoya eliminar basura plástica."
+                }
             },
             {
-                text: "¿Burocracia Cero (Digitalización)?",
+                text: "¿Burocracia Cero (Digital)?",
                 category: "Estado",
                 keyword: "laptop",
-                description: "Digitalizar todos los trámites gubernamentales para reducir la corrupción y las 'botellas'.",
-                stances: { c1: 1, c2: 1, c3: 1 }
+                description: "Hacer todos los trámites del gobierno por internet para evitar filas y sobornos.",
+                for: "Eficiencia, rapidez y menos corrupción al eliminar el contacto humano.",
+                against: "Dificultad para personas mayores o sin internet en zonas rurales.",
+                stances: { c1: 1, c2: 1, c3: 1 },
+                candidateOpinions: {
+                    c1: "Programa bandera: 'Burocracia Cero' para agilizar inversiones y permisos.",
+                    c2: "Reivindica ser quien modernizó el estado y apoya la digitalización continua.",
+                    c3: "A favor de la gerencia eficiente y rápida en el estado."
+                }
             },
             {
-                text: "¿Ley de Agua (Privatización del servicio)?",
+                text: "¿Privatización del Agua?",
                 category: "Recursos",
                 keyword: "water",
-                description: "Permitir concesiones privadas en la gestión y cobro del agua potable para mejorar el servicio.",
-                stances: { c1: 0, c2: -1, c3: -1 } // Tema muy sensible, oposición usa etiqueta "privatizadora"
+                description: "Permitir que empresas privadas gestionen o cobren el servicio de agua.",
+                for: "Podría mejorar el servicio y las tuberías que hoy son un desastre.",
+                against: "El agua es un derecho humano, si se privatiza subirá de precio y los pobres sufrirán.",
+                stances: { c1: 0, c2: -1, c3: -1 },
+                candidateOpinions: {
+                    c1: "Niega querer privatizar, pero propuso un Pacto del Agua con alianzas público-privadas.",
+                    c2: "Advierte que el gobierno tiene un plan oculto para entregar el agua al sector privado.",
+                    c3: "Totalmente en contra: 'El agua es del pueblo y no se negocia'."
+                }
             },
             {
                 text: "¿Pena máxima de 40 años?",
                 category: "Justicia",
                 keyword: "prison",
-                description: "Aumentar la pena máxima de prisión (actualmente 30 años) para crímenes atroces o cúmulo de penas.",
-                stances: { c1: 1, c2: 1, c3: 1 }
+                description: "Subir los años de cárcel para criminales violentos (Cúmulo de penas).",
+                for: "Castigo ejemplar para asesinos y violadores; saca criminales de la calle más tiempo.",
+                against: "No baja la delincuencia por sí solo y las cárceles ya están llenas.",
+                stances: { c1: 1, c2: 1, c3: 1 },
+                candidateOpinions: {
+                    c1: "Apoya el nuevo Código Penal que incluye el cúmulo de penas.",
+                    c2: "A favor de modernizar el código para castigar el sicariato y acido del diablo.",
+                    c3: "Mano dura: apoya penas severas para garantizar seguridad."
+                }
             },
             {
-                text: "¿Titulación masiva de terrenos del Estado?",
+                text: "¿Titulación de Terrenos?",
                 category: "Social",
                 keyword: "paper",
-                description: "Entregar títulos de propiedad definitivos a personas que viven en terrenos del Estado o CEA.",
-                stances: { c1: 1, c2: 1, c3: 1 }
+                description: "Darle su título de propiedad definitivo a gente que vive en tierra del Estado.",
+                for: "Saca a la gente de la pobreza permitiéndoles tomar préstamos con su casa.",
+                against: "Proceso legal complejo y costoso; riesgo de legalizar invasiones recientes.",
+                stances: { c1: 1, c2: 1, c3: 1 },
+                candidateOpinions: {
+                    c1: "Ha entregado cifra récord de títulos y lo exhibe como gran logro social.",
+                    c2: "Dice que apoya la medida, pero alega que él inició esos programas.",
+                    c3: "A favor de regularizar la vivienda digna."
+                }
             },
             {
-                text: "¿Fusión de Ministerios (Achicamiento del Estado)?",
+                text: "¿Fusión de Ministerios?",
                 category: "Estado",
                 keyword: "merge",
-                description: "Fusionar el Mescyt con Minerd, o instituciones afines para reducir la nómina pública.",
-                stances: { c1: 1, c2: -1, c3: -1 } // Propuesta de reforma fiscal actual, oposición la critica
+                description: "Unir ministerios (ej. Educación y Educación Superior) para gastar menos.",
+                for: "Reduce la nómina pública, elimina duplicidades y ahorra dinero.",
+                against: "Crea desempleo y puede descuidar áreas especializadas como la ciencia y tecnología.",
+                stances: { c1: 1, c2: -1, c3: -1 },
+                candidateOpinions: {
+                    c1: "Propuso fusionar MESCYT-MINERD y otros entes para 'eficientizar' el gasto.",
+                    c2: "Se opone, dice que degradar el Ministerio de Educación Superior es un retroceso.",
+                    c3: "Critica la improvisación: 'No se trata de fusionar por fusionar, sino de gerenciar'."
+                }
             },
             {
-                text: "¿Cobro de ITBIS a servicios digitales (Netflix/Spotify)?",
+                text: "¿Impuesto a Netflix/Spotify?",
                 category: "Economía",
                 keyword: "digital",
-                description: "Aplicar el 18% de impuestos a las suscripciones de servicios de streaming extranjeros.",
-                stances: { c1: 1, c2: -1, c3: -1 }
+                description: "Cobrar ITBIS (18%) a los servicios digitales extranjeros.",
+                for: "Competencia justa con empresas locales (Claro/Altice) que sí pagan impuestos.",
+                against: "Golpe directo al bolsillo de la clase media y jóvenes.",
+                stances: { c1: 1, c2: -1, c3: -1 },
+                candidateOpinions: {
+                    c1: "Incluido en la reforma fiscal retirada; el gobierno busca cómo gravar la economía digital.",
+                    c2: "Lo usó para atacar al gobierno: 'Quieren ponerle impuestos hasta al aire'.",
+                    c3: "En contra de cargar más impuestos al consumo de la gente."
+                }
             },
             {
-                text: "¿Salario mínimo para trabajadoras domésticas?",
+                text: "¿Derechos Trabajo Doméstico?",
                 category: "Derechos",
                 keyword: "home",
-                description: "Regularizar el trabajo doméstico con salario mínimo, seguro social y horarios definidos.",
-                stances: { c1: 1, c2: 0, c3: 0 } // Tribunal Constitucional tumbó la resolución, pero es intención del gob
+                description: "Obligar a pagar salario mínimo y seguridad social a empleadas del hogar.",
+                for: "Justicia histórica para un sector vulnerable y explotado.",
+                against: "Muchas familias no podrán pagarlo y tendrán que despedir a sus ayudantes.",
+                stances: { c1: 1, c2: 0, c3: 0 },
+                candidateOpinions: {
+                    c1: "Emitió resolución para regularizarlo (frenada por Tribunal), mantiene la intención.",
+                    c2: "A favor de los derechos, pero advierte sobre el desempleo que puede causar si es brusco.",
+                    c3: "Apoya la dignidad laboral, con reservas sobre la implementación."
+                }
             },
             {
-                text: "¿Mano dura contra los 'Motoristas'?",
+                text: "¿Control a Motoristas?",
                 category: "Tránsito",
                 keyword: "motorcycle",
-                description: "Implementar chalecos numerados obligatorios y restricciones de horario/zona para motocicletas.",
-                stances: { c1: 1, c2: 0, c3: 0 } // Políticamente costoso (muchos votos), pero necesario
+                description: "Chalecos numerados y prohibición de dos personas en moto en ciertas zonas.",
+                for: "La mayoría de atracos se hacen en moto; esto ayuda a identificarlos.",
+                against: "Los motoconchistas lo ven como un abuso que les impide trabajar.",
+                stances: { c1: 1, c2: 0, c3: 0 },
+                candidateOpinions: {
+                    c1: "Implementó el plan 'EN MOTO' de registro nacional obligatorio.",
+                    c2: "Critica los excesos policiales contra los 'padres de familia' en campaña.",
+                    c3: "A favor del orden, pero critica que se penalice al trabajador y no al delincuente."
+                }
             },
             {
                 text: "¿Inversión masiva en Santiago?",
                 category: "Desarrollo",
                 keyword: "city",
-                description: "Destinar una gran parte del presupuesto nacional para obras en la segunda capital (Monorriel, Teleférico).",
-                stances: { c1: 1, c2: 0, c3: 1 } // Abel es de Santiago, Abinader invierte mucho allí
+                description: "Gastar mucho presupuesto en obras para Santiago (Monorriel/Teleférico).",
+                for: "Santiago aporta mucho al PIB y tenía décadas descuidada por el Estado.",
+                against: "Otras provincias del Sur y el Este se sienten olvidadas.",
+                stances: { c1: 1, c2: 0, c3: 1 },
+                candidateOpinions: {
+                    c1: "Ha centrado gran parte de su obra de gobierno en Santiago.",
+                    c2: "Reconoce la importancia de Santiago, pero recuerda sus obras (UTESA, carreteras).",
+                    c3: "Al ser de Santiago, exige inversión, aunque dice que el gobierno va muy lento."
+                }
             },
             {
                 text: "¿Matrimonio Igualitario?",
                 category: "Derechos",
                 keyword: "rainbow",
-                description: "Modificar la constitución para permitir el matrimonio civil entre personas del mismo sexo.",
-                stances: { c1: -1, c2: -1, c3: -1 } // Ningún candidato mayoritario apoya esto abiertamente en RD
+                description: "Permitir legalmente el matrimonio entre personas del mismo sexo.",
+                for: "Igualdad de derechos civiles ante la ley para todos los ciudadanos.",
+                against: "Contrario a la Constitución dominicana y valores religiosos tradicionales.",
+                stances: { c1: -1, c2: -1, c3: -1 },
+                candidateOpinions: {
+                    c1: "Evita el tema. Su partido es diverso, pero la línea oficial es conservadora.",
+                    c2: "Cita la Constitución del 2010 (Art. 55) que define matrimonio hombre-mujer.",
+                    c3: "Se apega a los valores tradicionales y la constitución vigente."
+                }
             },
             {
-                text: "¿Seguro médico para la diáspora?",
+                text: "¿Seguro médico para la Diáspora?",
                 category: "Salud",
                 keyword: "world",
-                description: "Ofrecer cobertura de Senasa a los dominicanos residentes en el exterior cuando visiten el país.",
-                stances: { c1: 1, c2: 1, c3: 1 }
+                description: "Dar seguro de salud Senasa a dominicanos ausentes cuando visiten el país.",
+                for: "Reconoce el aporte de las remesas y protege a los 'hermanos lejanos'.",
+                against: "Logísticamente difícil de coordinar si no residen aquí.",
+                stances: { c1: 1, c2: 1, c3: 1 },
+                candidateOpinions: {
+                    c1: "Lanzó el plan 'Senasa Larimar' específicamente para esto.",
+                    c2: "Siempre apoya medidas que beneficien a la comunidad en NY/España.",
+                    c3: "A favor de proteger a los dominicanos en el exterior."
+                }
             },
             {
-                text: "¿Eliminación de los 'Peajes Sombra'?",
+                text: "¿Eliminar Peaje Sombra?",
                 category: "Economía",
                 keyword: "road",
-                description: "Renegociar contratos viales donde el Estado paga por vehículos que no transitan.",
-                stances: { c1: 1, c2: 0, c3: 0 } // Logro bandera de Abinader, oposición callada
+                description: "Haber cancelado el contrato donde el país pagaba millones por la Autopista del Nordeste.",
+                for: "Ahorro millonario para el Estado y fin de un contrato abusivo.",
+                against: "Implica riesgos legales o pagos de compensación iniciales altos.",
+                stances: { c1: 1, c2: 0, c3: 0 },
+                candidateOpinions: {
+                    c1: "Lo anuncia como uno de sus mayores logros de gestión económica.",
+                    c2: "Guarda silencio o justifica que en su momento fue necesario para construir la vía.",
+                    c3: "No ataca esta medida, pues es popularmente aceptada."
+                }
             },
             {
-                text: "¿Aumento salarial a médicos y enfermeras?",
+                text: "¿Aumento a Médicos/Enfermeras?",
                 category: "Salud",
                 keyword: "doctor",
-                description: "Subir sueldos al sector salud aunque implique aumentar el déficit presupuestario.",
-                stances: { c1: 1, c2: 1, c3: 1 }
+                description: "Subir el sueldo al personal de salud pública.",
+                for: "Son trabajadores esenciales que merecen sueldos dignos.",
+                against: "Aumenta el gasto fijo del gobierno (déficit).",
+                stances: { c1: 1, c2: 1, c3: 1 },
+                candidateOpinions: {
+                    c1: "Ha firmado acuerdos de aumento con el Colegio Médico (CMD).",
+                    c2: "Siempre promete mejorar las condiciones del sector salud.",
+                    c3: "Apoya las reivindicaciones de los médicos."
+                }
             },
             {
-                text: "¿Declaración de bienes obligatoria y pública?",
+                text: "¿Declaración Jurada Pública?",
                 category: "Transparencia",
                 keyword: "file",
-                description: "Obligar a todo funcionario a publicar su patrimonio real bajo pena de destitución inmediata.",
-                stances: { c1: 1, c2: 0, c3: 0 }
+                description: "Obligar a funcionarios a decir cuánto dinero tienen públicamente.",
+                for: "Permite vigilar si se enriquecen ilícitamente en el cargo.",
+                against: "Algunos alegan riesgos de seguridad (secuestros) al publicar datos.",
+                stances: { c1: 1, c2: 0, c3: 0 },
+                candidateOpinions: {
+                    c1: "Exige a sus funcionarios declarar o los suspende (caso reciente).",
+                    c2: "Apoya la ley, pero sus gobiernos fueron criticados por falta de fiscalización.",
+                    c3: "A favor de la transparencia, aunque critica el 'show' mediático con los datos."
+                }
             },
             {
-                text: "¿Prohibición del Matrimonio Infantil?",
+                text: "¿Fin del Matrimonio Infantil?",
                 category: "Derechos",
                 keyword: "child",
-                description: "Mantener la prohibición absoluta de matrimonio antes de los 18 años sin excepciones.",
-                stances: { c1: 1, c2: 1, c3: 1 } // Aprobado recientemente por consenso
+                description: "Prohibición total de casarse antes de los 18 años.",
+                for: "Protege a las niñas del abuso y asegura su educación.",
+                against: "Choca con costumbres arraigadas en zonas rurales profundas.",
+                stances: { c1: 1, c2: 1, c3: 1 },
+                candidateOpinions: {
+                    c1: "Promulgó la ley que elimina todas las excepciones (Ley 1-21).",
+                    c2: "Apoya la protección de la niñez plenamente.",
+                    c3: "A favor de erradicar esta práctica."
+                }
             },
             {
-                text: "¿Construcción Autopista del Ámbar?",
+                text: "¿Autopista del Ámbar?",
                 category: "Infraestructura",
                 keyword: "road",
-                description: "Nueva carretera Santiago-Puerto Plata mediante Alianza Público-Privada.",
-                stances: { c1: 1, c2: 0, c3: 0 } // Proyecto difícil de arrancar por costos
+                description: "Carretera nueva para conectar Santiago y Puerto Plata en 30 minutos.",
+                for: "Impulso masivo al turismo y comercio en el Cibao.",
+                against: "Muy costosa y compleja; temor a otro 'Peaje Sombra' si falla.",
+                stances: { c1: 1, c2: 0, c3: 0 },
+                candidateOpinions: {
+                    c1: "Es una promesa de campaña, busca Alianza Público-Privada para hacerla.",
+                    c2: "Escéptico sobre la viabilidad financiera bajo el modelo actual.",
+                    c3: "A favor de la obra, pero cuestiona la capacidad de ejecución del gobierno."
+                }
             },
             {
-                text: "¿Plan de vivienda 'Familia Feliz'?",
+                text: "¿Vivienda 'Familia Feliz'?",
                 category: "Social",
                 keyword: "house",
-                description: "Subsidios estatales para completar el inicial de la primera vivienda de familias pobres.",
-                stances: { c1: 1, c2: 0, c3: 0 }
+                description: "Ayuda del gobierno para pagar el inicial de tu primera casa.",
+                for: "Facilita que los pobres tengan techo propio y digno.",
+                against: "El alcance es limitado comparado con la gran cantidad de gente sin casa.",
+                stances: { c1: 1, c2: 0, c3: 0 },
+                candidateOpinions: {
+                    c1: "Programa central de su política social de vivienda.",
+                    c2: "Critica que son pocas viviendas y muy caras para los pobres.",
+                    c3: "Dice que el gobierno hace mucho anuncio y poca construcción real."
+                }
             },
             {
-                text: "¿Modernización del Código de Trabajo (Cesantía)?",
+                text: "¿Reforma Código Laboral (Cesantía)?",
                 category: "Laboral",
                 keyword: "work",
-                description: "Reformar el código laboral. El punto crítico es si se modifica o elimina el auxilio de cesantía.",
-                stances: { c1: 0, c2: -1, c3: -1 } // Gobierno dice que no tocará cesantía, empresarios quieren, sindicatos no
+                description: "Cambiar las leyes del trabajo. El debate es si quitan o no la Cesantía.",
+                for: "Modernizar el trabajo (teletrabajo) y fomentar más empleo formal.",
+                against: "Miedo a que eliminen el dinero que le toca al trabajador si lo cancelan.",
+                stances: { c1: 0, c2: -1, c3: -1 },
+                candidateOpinions: {
+                    c1: "Promueve la reforma pero ha prometido 'no tocar la cesantía' para calmar sindicatos.",
+                    c2: "Se erige como defensor de los trabajadores: 'La cesantía es sagrada'.",
+                    c3: "El PLD advierte que no apoyará nada que perjudique al empleado."
+                }
             },
             {
                 text: "¿Hub Logístico Regional?",
                 category: "Economía",
                 keyword: "ship",
-                description: "Posicionar a RD como el centro de distribución de carga del Caribe mediante incentivos fiscales.",
-                stances: { c1: 1, c2: 1, c3: 1 }
+                description: "Que RD sea el almacén y centro de distribución de carga del Caribe.",
+                for: "Genera divisas y empleos de calidad aprovechando nuestra ubicación.",
+                against: "Requiere incentivos fiscales que el gobierno quiere quitar.",
+                stances: { c1: 1, c2: 1, c3: 1 },
+                candidateOpinions: {
+                    c1: "Estrategia clave de su gobierno (Decreto 148-22).",
+                    c2: "Visión compartida de desarrollo nacional a largo plazo.",
+                    c3: "A favor del desarrollo portuario y logístico."
+                }
             },
             {
                 text: "¿Combate al Sargazo?",
                 category: "Turismo",
                 keyword: "sea",
-                description: "Crear un fondo público-privado millonario para recolectar y procesar las algas en las playas.",
-                stances: { c1: 1, c2: 1, c3: 1 }
+                description: "Invertir millones para recoger las algas que invaden las playas.",
+                for: "Si no se limpia, el turismo colapsa y la economía sufre.",
+                against: "Es un problema regional enorme; RD sola gasta mucho con poco impacto.",
+                stances: { c1: 1, c2: 1, c3: 1 },
+                candidateOpinions: {
+                    c1: "Creó un gabinete de lucha contra el sargazo y busca fondos internacionales.",
+                    c2: "Reconoce la gravedad y apoya soluciones técnicas urgentes.",
+                    c3: "Apoya proteger el turismo, motor de la economía."
+                }
             },
             {
                 text: "¿Protección de Valle Nuevo?",
                 category: "Medio Ambiente",
                 keyword: "forest",
-                description: "Mantener la prohibición estricta de agricultura en el parque nacional, desalojando campesinos.",
-                stances: { c1: 1, c2: 0, c3: 0 }
+                description: "Prohibir la agricultura en el parque nacional para salvar el agua.",
+                for: "De ahí sale el agua para gran parte del país (Madre de las aguas).",
+                against: "Deja sin sustento a cientos de familias campesinas de la zona.",
+                stances: { c1: 1, c2: 0, c3: 0 },
+                candidateOpinions: {
+                    c1: "Ha ejecutado el desalojo de agricultores para recuperar el parque.",
+                    c2: "Critica el 'drama humano' de los desalojos sin alternativas claras.",
+                    c3: "Apoya el medio ambiente pero pide trato digno a los campesinos."
+                }
             }
         ];
+
         let currentCardIndex = 0;
         const stackElement = document.getElementById('cardStack');
 
@@ -1260,83 +1665,102 @@
         }
 
         // --- UPDATED INIT FUNCTION ---
-// --- NEW HELPER: SHUFFLE FUNCTION ---
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-}
+        // --- NEW HELPER: SHUFFLE FUNCTION ---
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
 
-// --- UPDATED INIT FUNCTION ---
-async function init() {
-    // 1. Shuffle the global propositions array immediately
+        // --- UPDATED INIT FUNCTION ---
+        async function init() {
+    // 1. Shuffle
     shuffleArray(propositions);
 
     const totalCards = propositions.length;
 
-    // 2. Create cards data
-    // We reverse it because HTML stacks elements (last child is on top)
+    // 2. Prepare Data
     const cardsData = [...propositions].reverse().map((prop, index) => {
-        // realIndex: The index in the main 'propositions' array (for logic/images)
         const realIndex = propositions.length - 1 - index;
-        
-        // displayNum: The number the user sees (1/50, 2/50...)
-        // Since the last card appended (index 0 here) is the bottom card (50/50),
-        // and the last card processed is the top card (1/50).
         const displayNum = totalCards - index;
-
         return { prop, realIndex, displayNum };
     });
 
     // 3. Build DOM
     for (const item of cardsData) {
+        
+        // --- GENERATE CANDIDATE OPINIONS HTML ---
+        // We map through the global 'candidates' array to create the rows
+        const candidateOpinionsHTML = candidates.map(c => `
+            <div class="opinion-row">
+                <div class="opinion-avatar" style="border-color: ${c.color}; color: ${c.color}">
+                    ${c.avatar}
+                </div>
+                <div class="opinion-text">
+                    <strong style="color:${c.color}">${c.name}</strong><br>
+                    ${item.prop.candidateOpinions && item.prop.candidateOpinions[c.id] 
+                        ? item.prop.candidateOpinions[c.id] 
+                        : "Sin comentarios específicos."}
+                </div>
+            </div>
+        `).join('');
+
         const card = document.createElement('div');
         card.classList.add('card');
         card.dataset.index = item.realIndex;
         
         card.innerHTML = `
-    <div class="overlay overlay-yes">¡CLARO!</div>
-    <div class="overlay overlay-no">¡NUNCA!</div>
-    <div class="overlay overlay-maybe">NI IDEA</div>
-    
-    <!-- NEW: CARD COUNTER -->
-    <div class="card-counter">${item.displayNum} / ${totalCards}</div>
+            <div class="overlay overlay-yes">¡CLARO!</div>
+            <div class="overlay overlay-no">¡NUNCA!</div>
+            <div class="overlay overlay-maybe">NI IDEA</div>
+            
+            <div class="card-counter">${item.displayNum} / ${totalCards}</div>
 
-    <div class="card-image-wrapper" style="width:100%; height:45%; background:#ddd; position:relative; overflow:hidden;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" 
-                class="card-image" 
-                id="img-${item.realIndex}"
-                style="width:100%; height:100%; object-fit:contain; padding:50px;"
-                alt="Cargando...">
-    </div>
-    
-    <div class="card-content">
-        <div class="category-badge">${item.prop.category}</div>
-        <div class="proposition-text">${item.prop.text}</div>
-        
-        <button class="saber-mas" 
-                onclick="toggleDetails(event, this)" 
-                style="background:none; cursor:pointer;">
-            Saber más +
-        </button>
-    </div>
+            <div class="card-image-wrapper" style="width:100%; height:45%; background:#ddd; position:relative; overflow:hidden;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" 
+                        class="card-image" 
+                        id="img-${item.realIndex}"
+                        style="width:100%; height:100%; object-fit:contain; padding:50px;"
+                        alt="Cargando...">
+            </div>
+            
+            <div class="card-content">
+                <div class="category-badge">${item.prop.category}</div>
+                <div class="proposition-text">${item.prop.text}</div>
+                
+                <!-- NEW: Description displayed on the card front -->
+                <div class="proposition-description">
+                    ${item.prop.description}
+                </div>
+                
+                <button class="saber-mas" 
+                        onclick="toggleDetails(event, this)" 
+                        style="background:none; cursor:pointer;">
+                    Saber más +
+                </button>
+            </div>
 
-    <div class="card-details">
-        <h3 class="details-title">${item.prop.text}</h3>
-        <div class="details-text">
-            ${item.prop.description}
-        </div>
-        <button class="btn-close-details" onclick="toggleDetails(event, this)">
-            Volver a votar
-        </button>
-    </div>
-`;
+            <!-- DETAILS VIEW (BACK) -->
+            <div class="card-details">
+                <h3 class="details-title" style="margin-bottom:20px; font-size:1.1rem;">
+                    ${item.prop.text}
+                </h3>
+                
+                <div class="details-text">
+                    <!-- NEW: Injected Candidate Opinions -->
+                    ${candidateOpinionsHTML}
+                </div>
+
+                <button class="btn-close-details" onclick="toggleDetails(event, this)">
+                    Volver a votar
+                </button>
+            </div>
+        `;
         
         addTouchLogic(card);
         stackElement.appendChild(card);
         
-        // Fetch image
         fetchWikiImage(item.prop.keyword).then(url => {
             const img = document.getElementById(`img-${item.realIndex}`);
             if (img) {
@@ -1348,58 +1772,91 @@ async function init() {
     }
 }
 
-        function addTouchLogic(card) {
-            let startX = 0, startY = 0, currentX = 0, currentY = 0, isDragging = false;
+function addTouchLogic(card) {
+    let startX = 0, startY = 0, currentX = 0, currentY = 0, isDragging = false;
+    let isMoveEventFired = false; // New flag to ensure we actually moved
 
-            const startDrag = (e) => {
-                startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
-                startY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
-                isDragging = true;
-                card.style.transition = 'none';
-            };
-            card.addEventListener('touchstart', startDrag);
-            card.addEventListener('mousedown', startDrag);
+    const startDrag = (e) => {
+        // 1. Ignore drag if touching a button or scrollable content
+        if (e.target.closest('button') || e.target.closest('.details-text')) return;
 
-            const moveDrag = (e) => {
-                if (!isDragging) return;
-                // Prevent scrolling on mobile while dragging
-                if (e.type === 'touchmove') { }
+        startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+        startY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+        
+        // 2. IMPORTANT FIX: Initialize current values to start values
+        currentX = startX;
+        currentY = startY;
+        
+        isDragging = true;
+        isMoveEventFired = false; // Reset flag
+        card.style.transition = 'none';
+    };
 
-                currentX = (e.type.includes('mouse') ? e.clientX : e.touches[0].clientX);
-                currentY = (e.type.includes('mouse') ? e.clientY : e.touches[0].clientY);
-                let diffX = currentX - startX, diffY = currentY - startY, rotation = diffX / 10;
+    card.addEventListener('touchstart', startDrag); 
+    card.addEventListener('mousedown', startDrag);
 
-                if (Math.abs(diffY) > Math.abs(diffX) && diffY < -50) {
-                    // Swipe Up
-                    card.style.transform = `translateY(${diffY}px) scale(${1 - Math.abs(diffY) / 1000})`;
-                    card.querySelector('.overlay-maybe').style.opacity = Math.min(Math.abs(diffY) / 150, 1);
-                } else {
-                    // Side Swipe
-                    card.style.transform = `translateX(${diffX}px) rotate(${rotation}deg)`;
-                    if (diffX > 0) { card.querySelector('.overlay-yes').style.opacity = Math.min(diffX / 100, 1); }
-                    else { card.querySelector('.overlay-no').style.opacity = Math.min(Math.abs(diffX) / 100, 1); }
-                }
-            };
-            window.addEventListener('touchmove', moveDrag, { passive: false });
-            window.addEventListener('mousemove', moveDrag);
+    const moveDrag = (e) => {
+        if (!isDragging) return;
 
-            const endDrag = () => {
-                if (!isDragging) return;
-                isDragging = false;
-                let diffX = currentX - startX, diffY = currentY - startY;
-                card.style.transition = 'transform 0.4s ease';
+        // Mark that a move actually happened
+        isMoveEventFired = true;
 
-                if (diffX > 100) processSwipe('right', card);
-                else if (diffX < -100) processSwipe('left', card);
-                else if (diffY < -100) processSwipe('up', card);
-                else {
-                    card.style.transform = '';
-                    card.querySelectorAll('.overlay').forEach(el => el.style.opacity = 0);
-                }
-            };
-            window.addEventListener('touchend', endDrag);
-            window.addEventListener('mouseup', endDrag);
+        currentX = (e.type.includes('mouse') ? e.clientX : e.touches[0].clientX);
+        currentY = (e.type.includes('mouse') ? e.clientY : e.touches[0].clientY);
+        
+        let diffX = currentX - startX;
+        let diffY = currentY - startY;
+        let rotation = diffX / 10;
+
+        // Prevent scrolling on mobile ONLY if we are swiping horizontally
+        if(e.type === 'touchmove' && Math.abs(diffX) > Math.abs(diffY)) {
+             e.preventDefault(); 
         }
+
+        if (Math.abs(diffY) > Math.abs(diffX) && diffY < -50) {
+             // Swipe Up logic
+             card.style.transform = `translateY(${diffY}px) scale(${1 - Math.abs(diffY)/1000})`;
+             card.querySelector('.overlay-maybe').style.opacity = Math.min(Math.abs(diffY) / 150, 1);
+        } else {
+            // Side Swipe logic
+            card.style.transform = `translateX(${diffX}px) rotate(${rotation}deg)`;
+            if (diffX > 0) { card.querySelector('.overlay-yes').style.opacity = Math.min(diffX / 100, 1); } 
+            else { card.querySelector('.overlay-no').style.opacity = Math.min(Math.abs(diffX) / 100, 1); }
+        }
+    };
+    
+    // Use passive: false to allow e.preventDefault()
+    window.addEventListener('touchmove', moveDrag, {passive: false}); 
+    window.addEventListener('mousemove', moveDrag);
+
+    const endDrag = (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+
+        // 3. If we didn't actually move the finger, it's just a tap. Do nothing.
+        if (!isMoveEventFired) {
+            return;
+        }
+
+        let diffX = currentX - startX;
+        let diffY = currentY - startY;
+        
+        card.style.transition = 'transform 0.4s ease';
+        
+        // Thresholds to trigger action
+        if (diffX > 100) processSwipe('right', card);
+        else if (diffX < -100) processSwipe('left', card);
+        else if (diffY < -100) processSwipe('up', card);
+        else { 
+            // Reset if threshold not met
+            card.style.transform = ''; 
+            card.querySelectorAll('.overlay').forEach(el => el.style.opacity = 0); 
+        }
+    };
+    
+    window.addEventListener('touchend', endDrag); 
+    window.addEventListener('mouseup', endDrag);
+}
 
         function triggerSwipe(direction) {
             const cards = document.querySelectorAll('.card');

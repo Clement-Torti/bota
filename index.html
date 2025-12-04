@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es-DO">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -13,20 +14,23 @@
             --bright-yellow: #ffdd00;
             --white: #ffffff;
             --text-dark: #1a1a1a;
-            --card-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; touch-action: manipulation; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            touch-action: manipulation;
+        }
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: repeating-linear-gradient(
-                45deg,
-                var(--neon-green),
-                var(--neon-green) 30px,
-                var(--dark-green) 30px,
-                var(--dark-green) 60px
-            );
+            background: repeating-linear-gradient(45deg,
+                    var(--neon-green),
+                    var(--neon-green) 30px,
+                    var(--dark-green) 30px,
+                    var(--dark-green) 60px);
             background-size: 200% 200%;
             height: 100vh;
             display: flex;
@@ -42,6 +46,7 @@
             0% {
                 background-position: 0% 0%;
             }
+
             100% {
                 background-position: 100% 100%;
             }
@@ -53,7 +58,8 @@
             padding: 15px;
             z-index: 10;
             position: relative;
-            flex-shrink: 0; /* No encoger */
+            flex-shrink: 0;
+            /* No encoger */
         }
 
         header h1 {
@@ -74,7 +80,7 @@
             transform: rotate(-2deg);
             display: inline-block;
             margin-top: 5px;
-            box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+            box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
         }
 
         /* MAIN APP */
@@ -112,10 +118,26 @@
             border: 4px solid var(--white);
         }
 
-        .card:nth-last-child(1) { z-index: 3; }
-        .card:nth-last-child(2) { z-index: 2; transform: scale(0.95) translateY(15px); opacity: 0.9; }
-        .card:nth-last-child(3) { z-index: 1; transform: scale(0.90) translateY(30px); opacity: 0.8; }
-        .card:nth-last-child(n+4) { opacity: 0; pointer-events: none; }
+        .card:nth-last-child(1) {
+            z-index: 3;
+        }
+
+        .card:nth-last-child(2) {
+            z-index: 2;
+            transform: scale(0.95) translateY(15px);
+            opacity: 0.9;
+        }
+
+        .card:nth-last-child(3) {
+            z-index: 1;
+            transform: scale(0.90) translateY(30px);
+            opacity: 0.8;
+        }
+
+        .card:nth-last-child(n+4) {
+            opacity: 0;
+            pointer-events: none;
+        }
 
         .card-image {
             width: 100%;
@@ -153,6 +175,22 @@
             color: #333;
         }
 
+        /* ADD THIS TO YOUR CSS */
+        .card-counter {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: white;
+            z-index: 5;
+            pointer-events: none;
+            /* Allows clicking through it */
+        }
+
         .saber-mas {
             margin-top: auto;
             color: var(--hot-pink);
@@ -164,7 +202,7 @@
             font-size: 0.8rem;
             transition: 0.2s;
         }
-        
+
         .saber-mas:hover {
             background: var(--hot-pink);
             color: white;
@@ -195,14 +233,30 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 0 rgba(0,0,0,0.2);
+            box-shadow: 0 8px 0 rgba(0, 0, 0, 0.2);
             color: white;
         }
 
-        .btn-action:active { transform: translateY(4px); box-shadow: 0 4px 0 rgba(0,0,0,0.2); }
-        .btn-no { background: var(--hot-pink); }
-        .btn-maybe { background: var(--bright-yellow); width: 50px; height: 50px; font-size: 1.5rem; color: var(--text-dark); }
-        .btn-yes { background: #00C853; }
+        .btn-action:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-no {
+            background: var(--hot-pink);
+        }
+
+        .btn-maybe {
+            background: var(--bright-yellow);
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .btn-yes {
+            background: #00C853;
+        }
 
         /* OVERLAYS */
         .overlay {
@@ -215,23 +269,47 @@
             border-radius: 12px;
             opacity: 0;
             z-index: 10;
-            background: rgba(255,255,255,0.8);
+            background: rgba(255, 255, 255, 0.8);
         }
-        .overlay-yes { left: 20px; color: #00C853; border-color: #00C853; transform: rotate(-15deg); }
-        .overlay-no { right: 20px; color: var(--hot-pink); border-color: var(--hot-pink); transform: rotate(15deg); }
-        .overlay-maybe { top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--bright-yellow); border-color: var(--bright-yellow); background: rgba(0,0,0,0.7); font-size: 2rem; }
+
+        .overlay-yes {
+            left: 20px;
+            color: #00C853;
+            border-color: #00C853;
+            transform: rotate(-15deg);
+        }
+
+        .overlay-no {
+            right: 20px;
+            color: var(--hot-pink);
+            border-color: var(--hot-pink);
+            transform: rotate(15deg);
+        }
+
+        .overlay-maybe {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--bright-yellow);
+            border-color: var(--bright-yellow);
+            background: rgba(0, 0, 0, 0.7);
+            font-size: 2rem;
+        }
 
         /* --- VISTA DE RESULTADOS --- */
         .results-view {
             display: none;
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; 
-            height: 100vh; /* Ocupa toda la pantalla */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            /* Ocupa toda la pantalla */
             background: linear-gradient(180deg, var(--neon-green) 0%, #008f36 100%);
             z-index: 100;
             flex-direction: column;
-            justify-content: space-between; /* Distribuye espacio */
+            justify-content: space-between;
+            /* Distribuye espacio */
             align-items: center;
             overflow: hidden;
         }
@@ -245,12 +323,14 @@
 
         .podium-container {
             display: flex;
-            align-items: flex-end; /* Alinea barras abajo */
+            align-items: flex-end;
+            /* Alinea barras abajo */
             justify-content: center;
             width: 100%;
             /* ESTO ES CLAVE: Ocupa todo el espacio disponible en medio */
-            flex-grow: 1; 
-            padding-bottom: 90px; /* Espacio para que las barras no toquen el botón */
+            flex-grow: 1;
+            padding-bottom: 90px;
+            /* Espacio para que las barras no toquen el botón */
             padding-left: 10px;
             padding-right: 10px;
         }
@@ -262,32 +342,53 @@
             justify-content: flex-end;
             margin: 0 4px;
             width: 30%;
-            height: 100%; /* Permite que crezcan hasta arriba */
+            height: 100%;
+            /* Permite que crezcan hasta arriba */
             position: relative;
         }
 
-        .place-1 { order: 2; width: 38%; z-index: 10; }
-        .place-2 { order: 1; }
-        .place-3 { order: 3; }
+        .place-1 {
+            order: 2;
+            width: 38%;
+            z-index: 10;
+        }
+
+        .place-2 {
+            order: 1;
+        }
+
+        .place-3 {
+            order: 3;
+        }
 
         .candidate-avatar-res {
-            width: 60px; height: 60px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             border: 4px solid white;
-            margin-bottom: -20px; /* Superposición */
+            margin-bottom: -20px;
+            /* Superposición */
             z-index: 5;
             background: #fff;
             display: flex;
-            align-items: center; justify-content: center;
-            font-weight: bold; font-size: 1.1rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.5s ease;
             position: relative;
         }
-        
-        .place-1 .candidate-avatar-res { width: 85px; height: 85px; font-size: 1.5rem; border-color: var(--bright-yellow); margin-bottom: -30px; }
+
+        .place-1 .candidate-avatar-res {
+            width: 85px;
+            height: 85px;
+            font-size: 1.5rem;
+            border-color: var(--bright-yellow);
+            margin-bottom: -30px;
+        }
 
         .podium-bar {
             width: 100%;
@@ -298,19 +399,41 @@
             justify-content: flex-end;
             align-items: center;
             padding-bottom: 10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             /* Altura inicial 0 */
             height: 0;
-            transition: height 1.2s cubic-bezier(0.34, 1.56, 0.64, 1); /* Efecto rebote */
-            min-height: 40px; /* Para que siempre se vea algo */
+            transition: height 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            /* Efecto rebote */
+            min-height: 40px;
+            /* Para que siempre se vea algo */
         }
 
-        .place-1 .podium-bar { background: var(--bright-yellow); color: var(--text-dark); }
-        .place-2 .podium-bar { background: rgba(255,255,255,0.9); }
-        .place-3 .podium-bar { background: rgba(255,255,255,0.8); }
+        .place-1 .podium-bar {
+            background: var(--bright-yellow);
+            color: var(--text-dark);
+        }
 
-        .score-text { font-weight: 900; font-size: 1.4rem; }
-        .name-text { font-size: 0.75rem; font-weight: 700; margin-top: 2px; text-align: center; line-height: 1.1; padding: 0 5px; }
+        .place-2 .podium-bar {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .place-3 .podium-bar {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .score-text {
+            font-weight: 900;
+            font-size: 1.4rem;
+        }
+
+        .name-text {
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-top: 2px;
+            text-align: center;
+            line-height: 1.1;
+            padding: 0 5px;
+        }
 
         .restart-btn {
             position: absolute;
@@ -327,223 +450,298 @@
             text-transform: uppercase;
             z-index: 200;
         }
-        .restart-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #c20061; }
 
-        .animate-avatar { opacity: 1; transform: translateY(0); }
-        
+        .restart-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #c20061;
+        }
+
+        .animate-avatar {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* --- CÉDULA MODAL --- */
-.cedula-modal {
-    display: none; /* Oculto por defecto */
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(5px);
-    z-index: 9999;
-    justify-content: center;
-    align-items: center;
-    animation: fadeIn 0.3s ease;
-}
+        .cedula-modal {
+            display: none;
+            /* Oculto por defecto */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
 
-.cedula-card {
-    background: var(--white);
-    padding: 30px 20px;
-    width: 90%;
-    max-width: 350px;
-    border-radius: 20px;
-    text-align: center;
-    border: 5px solid var(--bright-yellow);
-    box-shadow: 0 0 30px var(--bright-yellow);
-    transform: scale(0.9);
-    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        .cedula-card {
+            background: var(--white);
+            padding: 30px 20px;
+            width: 90%;
+            max-width: 350px;
+            border-radius: 20px;
+            text-align: center;
+            border: 5px solid var(--bright-yellow);
+            box-shadow: 0 0 30px var(--bright-yellow);
+            transform: scale(0.9);
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 
-    /* --- LÍNEAS NUEVAS PARA EL SCROLL --- */
-    max-height: 85vh;       /* Nunca será más alta que el 85% de la pantalla */
-    overflow-y: auto;       /* Activa scroll vertical si se pasa de altura */
-    overscroll-behavior: contain; /* Evita que se mueva el fondo de atrás */
-}
+            /* --- LÍNEAS NUEVAS PARA EL SCROLL --- */
+            max-height: 85vh;
+            /* Nunca será más alta que el 85% de la pantalla */
+            overflow-y: auto;
+            /* Activa scroll vertical si se pasa de altura */
+            overscroll-behavior: contain;
+            /* Evita que se mueva el fondo de atrás */
+        }
 
-/* Scrollbar finito y bonito */
-.cedula-card::-webkit-scrollbar {
-    width: 6px;
-}
-.cedula-card::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
-}
-.cedula-card::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 10px;
-}
-.cedula-card::-webkit-scrollbar-thumb:hover {
-    background: var(--hot-pink); /* Un toque de color al hacer hover */
-}
+        /* Scrollbar finito y bonito */
+        .cedula-card::-webkit-scrollbar {
+            width: 6px;
+        }
 
-.siren-icon { font-size: 3rem; margin-bottom: 10px; animation: wobble 1s infinite; }
+        .cedula-card::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
 
-.cedula-card h2 { text-transform: uppercase; color: var(--text-dark); font-weight: 900; margin-bottom: 10px; transform: rotate(-2deg); }
-.cedula-card p { margin-bottom: 15px; font-size: 0.95rem; line-height: 1.4; }
+        .cedula-card::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
 
-#cedulaInput {
-    width: 100%;
-    padding: 15px;
-    font-size: 1.2rem;
-    text-align: center;
-    border: 3px solid #ddd;
-    border-radius: 10px;
-    margin-bottom: 5px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    outline: none;
-}
+        .cedula-card::-webkit-scrollbar-thumb:hover {
+            background: var(--hot-pink);
+            /* Un toque de color al hacer hover */
+        }
 
-#cedulaInput:focus { border-color: var(--neon-green); }
+        .siren-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            animation: wobble 1s infinite;
+        }
 
-.cedula-card small { display: block; color: #666; margin-bottom: 20px; font-size: 0.75rem; }
+        .cedula-card h2 {
+            text-transform: uppercase;
+            color: var(--text-dark);
+            font-weight: 900;
+            margin-bottom: 10px;
+            transform: rotate(-2deg);
+        }
 
-.btn-cedula {
-    background: var(--hot-pink);
-    color: white;
-    border: none;
-    padding: 12px 30px;
-    font-size: 1rem;
-    font-weight: 800;
-    border-radius: 50px;
-    cursor: pointer;
-    box-shadow: 0 4px 0 #c20061;
-    width: 100%;
-    transition: 0.2s;
-}
+        .cedula-card p {
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
 
-.btn-cedula:active { transform: translateY(2px); box-shadow: 0 2px 0 #c20061; }
+        #cedulaInput {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2rem;
+            text-align: center;
+            border: 3px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 5px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            outline: none;
+        }
 
-.cedula-feedback { margin-top: 15px; font-weight: 700; min-height: 20px; }
+        #cedulaInput:focus {
+            border-color: var(--neon-green);
+        }
 
-@keyframes popIn { to { transform: scale(1); } }
-@keyframes wobble { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .cedula-card small {
+            display: block;
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.75rem;
+        }
+
+        .btn-cedula {
+            background: var(--hot-pink);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 800;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #c20061;
+            width: 100%;
+            transition: 0.2s;
+        }
+
+        .btn-cedula:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #c20061;
+        }
+
+        .cedula-feedback {
+            margin-top: 15px;
+            font-weight: 700;
+            min-height: 20px;
+        }
+
+        @keyframes popIn {
+            to {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes wobble {
+
+            0%,
+            100% {
+                transform: rotate(-10deg);
+            }
+
+            50% {
+                transform: rotate(10deg);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
 
 
-/* --- ESTILOS PARA LA SECCIÓN "WEY POR QUÉ" --- */
+        /* --- ESTILOS PARA LA SECCIÓN "WEY POR QUÉ" --- */
 
-.why-section {
-    margin-top: 25px;
-    text-align: left;
-    font-size: 0.85rem;
-    border-top: 1px solid #eee;
-    padding-top: 15px;
-}
+        .why-section {
+            margin-top: 25px;
+            text-align: left;
+            font-size: 0.85rem;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
 
-.why-section summary {
-    cursor: pointer;
-    color: #666;
-    font-weight: 700;
-    list-style: none; /* Oculta el triángulo default en algunos navegadores */
-    text-align: center;
-    text-decoration: underline;
-    transition: color 0.2s;
-}
+        .why-section summary {
+            cursor: pointer;
+            color: #666;
+            font-weight: 700;
+            list-style: none;
+            /* Oculta el triángulo default en algunos navegadores */
+            text-align: center;
+            text-decoration: underline;
+            transition: color 0.2s;
+        }
 
-.why-section summary:hover {
-    color: var(--hot-pink);
-}
+        .why-section summary:hover {
+            color: var(--hot-pink);
+        }
 
-/* Ocultar el triángulo default en Chrome/Safari */
-.why-section summary::-webkit-details-marker {
-    display: none;
-}
+        /* Ocultar el triángulo default en Chrome/Safari */
+        .why-section summary::-webkit-details-marker {
+            display: none;
+        }
 
-.why-content {
-    margin-top: 15px;
-    background: #f9f9f9;
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid #eee;
-    font-size: 0.8rem;
-    color: #444;
-    animation: fadeIn 0.3s ease;
-}
+        .why-content {
+            margin-top: 15px;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #eee;
+            font-size: 0.8rem;
+            color: #444;
+            animation: fadeIn 0.3s ease;
+        }
 
-.why-content p {
-    margin-bottom: 10px;
-    line-height: 1.4;
-}
+        .why-content p {
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
 
-.why-content p:last-child {
-    margin-bottom: 0;
-}
+        .why-content p:last-child {
+            margin-bottom: 0;
+        }
 
-.highlight-privacy {
-    background: #e8f5e9; /* Verde muy suave */
-    color: #1b5e20;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #c8e6c9;
-    font-weight: 500;
-}
+        .highlight-privacy {
+            background: #e8f5e9;
+            /* Verde muy suave */
+            color: #1b5e20;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #c8e6c9;
+            font-weight: 500;
+        }
 
-/* --- ESTILOS PARA LA VISTA DETALLADA (SABER MÁS) --- */
-.card-details {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--white);
-    z-index: 50; /* Por encima de la imagen */
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    transform: translateY(100%); /* Oculto por defecto (abajo) */
-    transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-    box-shadow: inset 0 10px 20px -10px rgba(0,0,0,0.1);
-}
+        /* --- ESTILOS PARA LA VISTA DETALLADA (SABER MÁS) --- */
+        .card-details {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            z-index: 50;
+            /* Por encima de la imagen */
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(100%);
+            /* Oculto por defecto (abajo) */
+            transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            box-shadow: inset 0 10px 20px -10px rgba(0, 0, 0, 0.1);
+        }
 
-/* Clase que activa la vista */
-.card.show-info .card-details {
-    transform: translateY(0);
-}
+        /* Clase que activa la vista */
+        .card.show-info .card-details {
+            transform: translateY(0);
+        }
 
-.details-title {
-    font-size: 1.3rem;
-    font-weight: 900;
-    margin-bottom: 15px;
-    color: var(--hot-pink);
-    text-transform: uppercase;
-    line-height: 1.2;
-    text-align: left;
-}
+        .details-title {
+            font-size: 1.3rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            color: var(--hot-pink);
+            text-transform: uppercase;
+            line-height: 1.2;
+            text-align: left;
+        }
 
-.details-text {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    text-align: left;
-    color: #444;
-    overflow-y: auto;
-    flex: 1; /* Ocupa el espacio disponible */
-    padding-bottom: 20px;
-}
+        .details-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            text-align: left;
+            color: #444;
+            overflow-y: auto;
+            flex: 1;
+            /* Ocupa el espacio disponible */
+            padding-bottom: 20px;
+        }
 
-.btn-close-details {
-    background: var(--text-dark);
-    color: var(--bright-yellow);
-    border: none;
-    padding: 15px;
-    font-weight: 800;
-    text-transform: uppercase;
-    border-radius: 12px;
-    cursor: pointer;
-    margin-top: auto;
-    box-shadow: 0 4px 0 rgba(0,0,0,0.2);
-}
+        .btn-close-details {
+            background: var(--text-dark);
+            color: var(--bright-yellow);
+            border: none;
+            padding: 15px;
+            font-weight: 800;
+            text-transform: uppercase;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: auto;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+        }
 
-.btn-close-details:active {
-    transform: translateY(2px);
-    box-shadow: none;
-}
-
+        .btn-close-details:active {
+            transform: translateY(2px);
+            box-shadow: none;
+        }
     </style>
 </head>
+
 <body>
 
     <header>
@@ -554,14 +752,15 @@
     <div class="app-container">
         <!-- Tarjetas -->
         <div class="card-stack" id="cardStack"></div>
-        
+
         <!-- Vista Resultados (Podio) -->
         <div class="results-view" id="resultsView">
             <div class="results-header">
-                <h2 style="font-size:2rem; font-weight:900; text-shadow: 2px 2px 0 rgba(0,0,0,0.2);">¡EL RANKING! 🏆</h2>
+                <h2 style="font-size:2rem; font-weight:900; text-shadow: 2px 2px 0 rgba(0,0,0,0.2);">¡EL RANKING! 🏆
+                </h2>
                 <p>Tu match político ideal</p>
             </div>
-            
+
             <div class="podium-container" id="podiumContainer">
                 <!-- Se inyecta con JS -->
             </div>
@@ -576,442 +775,444 @@
         <button class="btn-action btn-yes" onclick="triggerSwipe('right')">❤</button>
     </div>
 
-<!-- MODAL DE LA CÉDULA -->
-<div id="cedulaModal" class="cedula-modal">
-    <div class="cedula-card">
-        <div class="siren-icon">🚨</div>
-        <h2>¡Quieto en primera!</h2>
-        <p>El sistema detectó niveles peligrosos de opinión política.</p>
-        <p><strong>Dame la cédula ahí</strong> pa' confirmar que tú ere' dominicano y no un bot ruso.</p>
-        
-        <input type="tel" id="cedulaInput" maxlength="11" placeholder="Ej: 40212345678" autocomplete="off">
-        <small>Solo los numeritos, sin guiones, tigre.</small>
-        
-        <button class="btn-cedula" onclick="verificarCedula()">Continuamos 🇩🇴</button>
-        <p id="cedulaFeedback" class="cedula-feedback"></p>
+    <!-- MODAL DE LA CÉDULA -->
+    <div id="cedulaModal" class="cedula-modal">
+        <div class="cedula-card">
+            <div class="siren-icon">🚨</div>
+            <h2>¡Quieto en primera!</h2>
+            <p>El sistema detectó niveles peligrosos de opinión política.</p>
+            <p><strong>Dame la cédula ahí</strong> pa' confirmar que tú ere' dominicano y no un bot ruso.</p>
 
-        <!-- SECCIÓN NUEVA: WEY, POR QUÉ? -->
-        <details class="why-section">
-            <summary>Wey, ¿y pa' qué quieren eso? 🤔</summary>
-            <div class="why-content">
-                <p>
-                    <strong>Tranquilo, manín.</strong> Esto no es pa' chivatearte con nadie.
-                </p>
-                <p>
-                    Recopilamos esta data para descartar bots y crear <strong>tendencias generales de mercado</strong> para saber qué piensa el pueblo realmente sobre estas propuestas. 
-                </p>
-                <p class="highlight-privacy">
-                    🔒 <strong>100% ANÓNIMO:</strong><br>
-                    <strong>NUNCA</strong> guardamos tu nombre asociado a tus respuestas. 
-                    Tus opiniones se mezclan con las de miles de dominicanos para sacar estadísticas, nadie sabrá qué votaste tú.
-                </p>
-            </div>
-        </details>
-        <!-- FIN SECCIÓN NUEVA -->
+            <input type="tel" id="cedulaInput" maxlength="11" placeholder="Ej: 40212345678" autocomplete="off">
+            <small>Solo los numeritos, sin guiones, tigre.</small>
 
+            <button class="btn-cedula" onclick="verificarCedula()">Continuamos 🇩🇴</button>
+            <p id="cedulaFeedback" class="cedula-feedback"></p>
+
+            <!-- SECCIÓN NUEVA: WEY, POR QUÉ? -->
+            <details class="why-section">
+                <summary>Wey, ¿y pa' qué quieren eso? 🤔</summary>
+                <div class="why-content">
+                    <p>
+                        <strong>Tranquilo, manín.</strong> Esto no es pa' chivatearte con nadie.
+                    </p>
+                    <p>
+                        Recopilamos esta data para descartar bots y crear <strong>tendencias generales de
+                            mercado</strong> para saber qué piensa el pueblo realmente sobre estas propuestas.
+                    </p>
+                    <p class="highlight-privacy">
+                        🔒 <strong>100% ANÓNIMO:</strong><br>
+                        <strong>NUNCA</strong> guardamos tu nombre asociado a tus respuestas.
+                        Tus opiniones se mezclan con las de miles de dominicanos para sacar estadísticas, nadie sabrá
+                        qué votaste tú.
+                    </p>
+                </div>
+            </details>
+            <!-- FIN SECCIÓN NUEVA -->
+
+        </div>
     </div>
-</div>
 
     <script>
         // --- DATA ---
         const candidates = [
-    { 
-        id: 'c1', 
-        name: 'Luis Abinader', 
-        party: 'PRM',
-        color: '#0072CE', // PRM Blue
-        score: 0, 
-        avatar: 'LA',
-        description: 'Presidente actual. Promueve reformas institucionales, independencia del Ministerio Público y alianzas público-privadas.'
-    },
-    { 
-        id: 'c2', 
-        name: 'Leonel Fernández', 
-        party: 'Fuerza del Pueblo',
-        color: '#009900', // FP Green
-        score: 0, 
-        avatar: 'LF',
-        description: 'Ex-presidente (3 veces). Enfocado en grandes infraestructuras, critica la inflación y la "improvisación" del gobierno actual.'
-    },
-    { 
-        id: 'c3', 
-        name: 'Abel Martínez', 
-        party: 'PLD',
-        color: '#800080', // PLD Purple
-        score: 0, 
-        avatar: 'AM',
-        description: 'Ex-alcalde de Santiago. Discurso de "Mano Dura", orden municipal y defensa agresiva de la soberanía nacional.'
-    }
-];
+            {
+                id: 'c1',
+                name: 'Luis Abinader',
+                party: 'PRM',
+                color: '#0072CE', // PRM Blue
+                score: 0,
+                avatar: 'LA',
+                description: 'Presidente actual. Promueve reformas institucionales, independencia del Ministerio Público y alianzas público-privadas.'
+            },
+            {
+                id: 'c2',
+                name: 'Leonel Fernández',
+                party: 'Fuerza del Pueblo',
+                color: '#009900', // FP Green
+                score: 0,
+                avatar: 'LF',
+                description: 'Ex-presidente (3 veces). Enfocado en grandes infraestructuras, critica la inflación y la "improvisación" del gobierno actual.'
+            },
+            {
+                id: 'c3',
+                name: 'Abel Martínez',
+                party: 'PLD',
+                color: '#800080', // PLD Purple
+                score: 0,
+                avatar: 'AM',
+                description: 'Ex-alcalde de Santiago. Discurso de "Mano Dura", orden municipal y defensa agresiva de la soberanía nacional.'
+            }
+        ];
 
-const propositions = [
-    // --- MIGRACIÓN Y SOBERANÍA ---
-    {
-        text: "¿Continuar la construcción del Muro Fronterizo?",
-        category: "Soberanía",
-        keyword: "wall",
-        description: "Completar la verja perimetral inteligente en la frontera con Haití para controlar el tráfico ilícito y la migración.",
-        stances: { c1: 1, c2: 1, c3: 1 } // Todos a favor, aunque oposición critica la ejecución
-    },
-    {
-        text: "¿Deportaciones masivas de indocumentados?",
-        category: "Soberanía",
-        keyword: "deportation",
-        description: "Mantener o aumentar el ritmo de repatriaciones de extranjeros en estatus irregular, sin importar la presión internacional.",
-        stances: { c1: 1, c2: 1, c3: 1 }
-    },
-    {
-        text: "¿Establecer campos de refugiados en RD?",
-        category: "Soberanía",
-        keyword: "refugee",
-        description: "Aceptar la petición de organismos internacionales de habilitar zonas de refugio para haitianos en territorio dominicano.",
-        stances: { c1: -1, c2: -1, c3: -1 } // Rechazo unánime
-    },
-    {
-        text: "¿Reinstaurar visados a estudiantes haitianos?",
-        category: "Seguridad",
-        keyword: "visa",
-        description: "Pausar indefinidamente la emisión de visas de estudiantes y turistas a ciudadanos haitianos por seguridad nacional.",
-        stances: { c1: 1, c2: 0, c3: 1 }
-    },
-    
-    // --- ECONOMÍA E IMPUESTOS ---
-    {
-        text: "¿Aprobar la Reforma Fiscal Integral?",
-        category: "Economía",
-        keyword: "tax",
-        description: "Ampliar la base del ITBIS y eliminar exenciones para aumentar la recaudación y reducir el déficit fiscal.",
-        stances: { c1: 1, c2: -1, c3: -1 } // Oposición rechaza que "pague el pueblo"
-    },
-    {
-        text: "¿Eliminar el anticipo del Impuesto sobre la Renta?",
-        category: "Economía",
-        keyword: "business",
-        description: "Quitar el cobro anticipado de impuestos que afecta el flujo de caja de las MIPYMES.",
-        stances: { c1: 0, c2: 1, c3: 1 } // Oposición promete quitarlo, Gobierno lo ha flexibilizado pero no quitado
-    },
-    {
-        text: "¿Mantener subsidios a los combustibles?",
-        category: "Economía",
-        keyword: "oil",
-        description: "Seguir congelando los precios de la gasolina y gasoil asumiendo deuda para evitar inflación en el transporte.",
-        stances: { c1: 1, c2: -1, c3: 0 } // Leonel critica el endeudamiento excesivo
-    },
-    {
-        text: "¿Fideicomisos Públicos (Ej. Pedernales)?",
-        category: "Economía",
-        keyword: "trust",
-        description: "Utilizar la figura del fideicomiso para gestionar bienes públicos y proyectos turísticos con reglas de mercado privado.",
-        stances: { c1: 1, c2: -1, c3: -1 } // Oposición dice que privatiza lo público
-    },
-    {
-        text: "¿Entrega del 30% de las AFP?",
-        category: "Economía",
-        keyword: "money",
-        description: "Permitir a los trabajadores retirar anticipadamente el 30% de sus fondos de pensiones.",
-        stances: { c1: -1, c2: -1, c3: 0 } // Liderazgos principales en contra por inflación, aunque popular
-    },
-    
-    // --- SOCIAL Y DERECHOS ---
-    {
-        text: "¿Aprobar las 3 Causales del aborto?",
-        category: "Derechos",
-        keyword: "women",
-        description: "Despenalizar el aborto en casos de riesgo de vida, inviabilidad fetal o violación.",
-        stances: { c1: 1, c2: -1, c3: -1 } // Abinader a favor (pero deja libre voto), Leonel/Abel más conservadores
-    },
-    {
-        text: "¿Inclusión de 'Ideología de Género' en escuelas?",
-        category: "Educación",
-        keyword: "education",
-        description: "Implementar políticas de educación sexual integral con enfoque de género en el currículo escolar.",
-        stances: { c1: 0, c2: -1, c3: -1 } // Abel y Leonel fuertemente en contra. PRM dividido.
-    },
-    {
-        text: "¿Lectura de la Biblia obligatoria en escuelas?",
-        category: "Educación",
-        keyword: "bible",
-        description: "Hacer cumplir la ley que exige la lectura bíblica en planteles públicos.",
-        stances: { c1: 0, c2: 1, c3: 1 } // Oposición apela al voto cristiano
-    },
-    {
-        text: "¿Mantener el 4% del PIB para Educación?",
-        category: "Educación",
-        keyword: "school",
-        description: "Preservar la asignación fija del 4% del presupuesto a educación, aunque la calidad no haya mejorado sustancialmente.",
-        stances: { c1: 1, c2: 1, c3: 1 }
-    },
-    
-    // --- INSTITUCIONALIDAD Y JUSTICIA ---
-    {
-        text: "¿Reforma Constitucional (Ministerio Público)?",
-        category: "Justicia",
-        keyword: "constitution",
-        description: "Modificar la Constitución para 'blindar' la independencia del Procurador General y evitar que lo nombre el Presidente.",
-        stances: { c1: 1, c2: -1, c3: -1 } // Oposición dice que no es necesario modificar la constitución
-    },
-    {
-        text: "¿Reducción de la cantidad de Diputados?",
-        category: "Política",
-        keyword: "congress",
-        description: "Disminuir el número de legisladores en la Cámara de Diputados para ahorrar gastos y eficientizar.",
-        stances: { c1: 1, c2: 0, c3: 0 }
-    },
-    {
-        text: "¿Unificar elecciones municipales y presidenciales?",
-        category: "Política",
-        keyword: "vote",
-        description: "Volver a celebrar todas las elecciones el mismo día para reducir el costo de las campañas y el abstencionismo.",
-        stances: { c1: 1, c2: 0, c3: 0 }
-    },
-    {
-        text: "¿Ley de Extinción de Dominio (Retroactiva)?",
-        category: "Justicia",
-        keyword: "judge",
-        description: "Confiscar bienes provenientes de corrupción o narcotráfico, aplicable a casos del pasado sin límite de tiempo.",
-        stances: { c1: 1, c2: 0, c3: 0 }
-    },
-    
-    // --- INFRAESTRUCTURA Y SERVICIOS ---
-    {
-        text: "¿Expansión del Metro y Teleférico?",
-        category: "Transporte",
-        keyword: "train",
-        description: "Seguir invirtiendo masivamente en transporte colectivo (Metro SD, Monorriel Santiago) sobre soluciones viales.",
-        stances: { c1: 1, c2: 1, c3: 1 } // Leonel inició el metro, Abinader lo expande
-    },
-    {
-        text: "¿Contrato de Aerodom (Renovación)?",
-        category: "Infraestructura",
-        keyword: "airplane",
-        description: "Renovar anticipadamente la concesión de los aeropuertos a cambio de un pago inicial para obras del estado.",
-        stances: { c1: 1, c2: -1, c3: -1 } // Oposición criticó fuertemente este contrato
-    },
-    {
-        text: "¿Construcción de la Presa de Cola (Barrick)?",
-        category: "Medio Ambiente",
-        keyword: "mining",
-        description: "Permitir la expansión de operaciones mineras y nueva presa de cola para mantener los ingresos del oro.",
-        stances: { c1: 1, c2: 0, c3: 0 } // Tema delicado, gobierno tiende a apoyar minería responsable
-    },
-    {
-        text: "¿Explotación minera en San Juan (Romero)?",
-        category: "Medio Ambiente",
-        keyword: "mountain",
-        description: "Permitir la extracción de oro en la zona norte de San Juan, arriba de la presa de Sabaneta.",
-        stances: { c1: 0, c2: -1, c3: -1 } // Abinader espera estudio impacto, oposición se ha montado en el 'No'
-    },
-    {
-        text: "¿Privatización de Punta Catalina?",
-        category: "Energía",
-        keyword: "factory",
-        description: "Vender acciones o entregar la administración total de la termoeléctrica al sector privado.",
-        stances: { c1: 0, c2: -1, c3: -1 } // Gobierno intentó fideicomiso, retrocedió. Oposición en contra.
-    },
+        const propositions = [
+            // --- MIGRACIÓN Y SOBERANÍA ---
+            {
+                text: "¿Continuar la construcción del Muro Fronterizo?",
+                category: "Soberanía",
+                keyword: "wall",
+                description: "Completar la verja perimetral inteligente en la frontera con Haití para controlar el tráfico ilícito y la migración.",
+                stances: { c1: 1, c2: 1, c3: 1 } // Todos a favor, aunque oposición critica la ejecución
+            },
+            {
+                text: "¿Deportaciones masivas de indocumentados?",
+                category: "Soberanía",
+                keyword: "deportation",
+                description: "Mantener o aumentar el ritmo de repatriaciones de extranjeros en estatus irregular, sin importar la presión internacional.",
+                stances: { c1: 1, c2: 1, c3: 1 }
+            },
+            {
+                text: "¿Establecer campos de refugiados en RD?",
+                category: "Soberanía",
+                keyword: "refugee",
+                description: "Aceptar la petición de organismos internacionales de habilitar zonas de refugio para haitianos en territorio dominicano.",
+                stances: { c1: -1, c2: -1, c3: -1 } // Rechazo unánime
+            },
+            {
+                text: "¿Reinstaurar visados a estudiantes haitianos?",
+                category: "Seguridad",
+                keyword: "visa",
+                description: "Pausar indefinidamente la emisión de visas de estudiantes y turistas a ciudadanos haitianos por seguridad nacional.",
+                stances: { c1: 1, c2: 0, c3: 1 }
+            },
 
-    // --- SEGURIDAD CIUDADANA ---
-    {
-        text: "¿Reforma Policial profunda?",
-        category: "Seguridad",
-        keyword: "police",
-        description: "Depurar la nómina policial y cambiar la cultura institucional, aunque tome años ver resultados.",
-        stances: { c1: 1, c2: 0, c3: 0 } // Oposición critica la lentitud y falta de resultados
-    },
-    {
-        text: "¿Patrullaje mixto (Militares en la calle)?",
-        category: "Seguridad",
-        keyword: "military",
-        description: "Sacar al ejército a patrullar permanentemente los barrios para disuadir la delincuencia.",
-        stances: { c1: 1, c2: 1, c3: 1 } // Medida populista que todos suelen apoyar en crisis
-    },
-    {
-        text: "¿Ley de la DNI (Inteligencia)?",
-        category: "Derechos",
-        keyword: "spy",
-        description: "Obligar a instituciones privadas y ciudadanos a entregar información a la Dirección Nacional de Inteligencia.",
-        stances: { c1: 1, c2: -1, c3: -1 } // Muy criticada por oposición y prensa
-    },
+            // --- ECONOMÍA E IMPUESTOS ---
+            {
+                text: "¿Aprobar la Reforma Fiscal Integral?",
+                category: "Economía",
+                keyword: "tax",
+                description: "Ampliar la base del ITBIS y eliminar exenciones para aumentar la recaudación y reducir el déficit fiscal.",
+                stances: { c1: 1, c2: -1, c3: -1 } // Oposición rechaza que "pague el pueblo"
+            },
+            {
+                text: "¿Eliminar el anticipo del Impuesto sobre la Renta?",
+                category: "Economía",
+                keyword: "business",
+                description: "Quitar el cobro anticipado de impuestos que afecta el flujo de caja de las MIPYMES.",
+                stances: { c1: 0, c2: 1, c3: 1 } // Oposición promete quitarlo, Gobierno lo ha flexibilizado pero no quitado
+            },
+            {
+                text: "¿Mantener subsidios a los combustibles?",
+                category: "Economía",
+                keyword: "oil",
+                description: "Seguir congelando los precios de la gasolina y gasoil asumiendo deuda para evitar inflación en el transporte.",
+                stances: { c1: 1, c2: -1, c3: 0 } // Leonel critica el endeudamiento excesivo
+            },
+            {
+                text: "¿Fideicomisos Públicos (Ej. Pedernales)?",
+                category: "Economía",
+                keyword: "trust",
+                description: "Utilizar la figura del fideicomiso para gestionar bienes públicos y proyectos turísticos con reglas de mercado privado.",
+                stances: { c1: 1, c2: -1, c3: -1 } // Oposición dice que privatiza lo público
+            },
+            {
+                text: "¿Entrega del 30% de las AFP?",
+                category: "Economía",
+                keyword: "money",
+                description: "Permitir a los trabajadores retirar anticipadamente el 30% de sus fondos de pensiones.",
+                stances: { c1: -1, c2: -1, c3: 0 } // Liderazgos principales en contra por inflación, aunque popular
+            },
 
-    // --- VARIOS / TEMAS ACTUALES ---
-    {
-        text: "¿Tasa Cero para importación de alimentos?",
-        category: "Agricultura",
-        keyword: "food",
-        description: "Eliminar aranceles a productos de la canasta básica importados para bajar precios, aunque afecte al productor local.",
-        stances: { c1: 1, c2: -1, c3: -1 } // Conflicto: precios vs protección nacional
-    },
-    {
-        text: "¿Semanal con la Prensa (La Semanal)?",
-        category: "Comunicación",
-        keyword: "press",
-        description: "Que el presidente rinda cuentas y responda preguntas de la prensa todos los lunes en vivo.",
-        stances: { c1: 1, c2: -1, c3: -1 } // Oposición lo tilda de propaganda
-    },
-    {
-        text: "¿Regulación estricta de Airbnb?",
-        category: "Turismo",
-        keyword: "house",
-        description: "Cobrar impuestos hoteleros a los alquileres de corta estancia para igualar competencia con hoteles.",
-        stances: { c1: 1, c2: 0, c3: 0 } // Asonahores presiona por esto
-    },
-    {
-        text: "¿Prohibición de plásticos de un solo uso?",
-        category: "Medio Ambiente",
-        keyword: "plastic",
-        description: "Eliminar gradualmente sorbetes, fundas y foam en todo el territorio nacional.",
-        stances: { c1: 1, c2: 1, c3: 1 }
-    },
-    {
-        text: "¿Burocracia Cero (Digitalización)?",
-        category: "Estado",
-        keyword: "laptop",
-        description: "Digitalizar todos los trámites gubernamentales para reducir la corrupción y las 'botellas'.",
-        stances: { c1: 1, c2: 1, c3: 1 }
-    },
-    {
-        text: "¿Ley de Agua (Privatización del servicio)?",
-        category: "Recursos",
-        keyword: "water",
-        description: "Permitir concesiones privadas en la gestión y cobro del agua potable para mejorar el servicio.",
-        stances: { c1: 0, c2: -1, c3: -1 } // Tema muy sensible, oposición usa etiqueta "privatizadora"
-    },
-    {
-        text: "¿Pena máxima de 40 años?",
-        category: "Justicia",
-        keyword: "prison",
-        description: "Aumentar la pena máxima de prisión (actualmente 30 años) para crímenes atroces o cúmulo de penas.",
-        stances: { c1: 1, c2: 1, c3: 1 }
-    },
-    {
-        text: "¿Titulación masiva de terrenos del Estado?",
-        category: "Social",
-        keyword: "paper",
-        description: "Entregar títulos de propiedad definitivos a personas que viven en terrenos del Estado o CEA.",
-        stances: { c1: 1, c2: 1, c3: 1 }
-    },
-    {
-        text: "¿Fusión de Ministerios (Achicamiento del Estado)?",
-        category: "Estado",
-        keyword: "merge",
-        description: "Fusionar el Mescyt con Minerd, o instituciones afines para reducir la nómina pública.",
-        stances: { c1: 1, c2: -1, c3: -1 } // Propuesta de reforma fiscal actual, oposición la critica
-    },
-    {
-        text: "¿Cobro de ITBIS a servicios digitales (Netflix/Spotify)?",
-        category: "Economía",
-        keyword: "digital",
-        description: "Aplicar el 18% de impuestos a las suscripciones de servicios de streaming extranjeros.",
-        stances: { c1: 1, c2: -1, c3: -1 }
-    },
-    {
-        text: "¿Salario mínimo para trabajadoras domésticas?",
-        category: "Derechos",
-        keyword: "home",
-        description: "Regularizar el trabajo doméstico con salario mínimo, seguro social y horarios definidos.",
-        stances: { c1: 1, c2: 0, c3: 0 } // Tribunal Constitucional tumbó la resolución, pero es intención del gob
-    },
-    {
-        text: "¿Mano dura contra los 'Motoristas'?",
-        category: "Tránsito",
-        keyword: "motorcycle",
-        description: "Implementar chalecos numerados obligatorios y restricciones de horario/zona para motocicletas.",
-        stances: { c1: 1, c2: 0, c3: 0 } // Políticamente costoso (muchos votos), pero necesario
-    },
-    {
-        text: "¿Inversión masiva en Santiago?",
-        category: "Desarrollo",
-        keyword: "city",
-        description: "Destinar una gran parte del presupuesto nacional para obras en la segunda capital (Monorriel, Teleférico).",
-        stances: { c1: 1, c2: 0, c3: 1 } // Abel es de Santiago, Abinader invierte mucho allí
-    },
-    {
-        text: "¿Matrimonio Igualitario?",
-        category: "Derechos",
-        keyword: "rainbow",
-        description: "Modificar la constitución para permitir el matrimonio civil entre personas del mismo sexo.",
-        stances: { c1: -1, c2: -1, c3: -1 } // Ningún candidato mayoritario apoya esto abiertamente en RD
-    },
-    {
-        text: "¿Seguro médico para la diáspora?",
-        category: "Salud",
-        keyword: "world",
-        description: "Ofrecer cobertura de Senasa a los dominicanos residentes en el exterior cuando visiten el país.",
-        stances: { c1: 1, c2: 1, c3: 1 }
-    },
-    {
-        text: "¿Eliminación de los 'Peajes Sombra'?",
-        category: "Economía",
-        keyword: "road",
-        description: "Renegociar contratos viales donde el Estado paga por vehículos que no transitan.",
-        stances: { c1: 1, c2: 0, c3: 0 } // Logro bandera de Abinader, oposición callada
-    },
-    {
-        text: "¿Aumento salarial a médicos y enfermeras?",
-        category: "Salud",
-        keyword: "doctor",
-        description: "Subir sueldos al sector salud aunque implique aumentar el déficit presupuestario.",
-        stances: { c1: 1, c2: 1, c3: 1 }
-    },
-    {
-        text: "¿Declaración de bienes obligatoria y pública?",
-        category: "Transparencia",
-        keyword: "file",
-        description: "Obligar a todo funcionario a publicar su patrimonio real bajo pena de destitución inmediata.",
-        stances: { c1: 1, c2: 0, c3: 0 }
-    },
-    {
-        text: "¿Prohibición del Matrimonio Infantil?",
-        category: "Derechos",
-        keyword: "child",
-        description: "Mantener la prohibición absoluta de matrimonio antes de los 18 años sin excepciones.",
-        stances: { c1: 1, c2: 1, c3: 1 } // Aprobado recientemente por consenso
-    },
-    {
-        text: "¿Construcción Autopista del Ámbar?",
-        category: "Infraestructura",
-        keyword: "road",
-        description: "Nueva carretera Santiago-Puerto Plata mediante Alianza Público-Privada.",
-        stances: { c1: 1, c2: 0, c3: 0 } // Proyecto difícil de arrancar por costos
-    },
-    {
-        text: "¿Plan de vivienda 'Familia Feliz'?",
-        category: "Social",
-        keyword: "house",
-        description: "Subsidios estatales para completar el inicial de la primera vivienda de familias pobres.",
-        stances: { c1: 1, c2: 0, c3: 0 }
-    },
-    {
-        text: "¿Modernización del Código de Trabajo (Cesantía)?",
-        category: "Laboral",
-        keyword: "work",
-        description: "Reformar el código laboral. El punto crítico es si se modifica o elimina el auxilio de cesantía.",
-        stances: { c1: 0, c2: -1, c3: -1 } // Gobierno dice que no tocará cesantía, empresarios quieren, sindicatos no
-    },
-    {
-        text: "¿Hub Logístico Regional?",
-        category: "Economía",
-        keyword: "ship",
-        description: "Posicionar a RD como el centro de distribución de carga del Caribe mediante incentivos fiscales.",
-        stances: { c1: 1, c2: 1, c3: 1 }
-    },
-    {
-        text: "¿Combate al Sargazo?",
-        category: "Turismo",
-        keyword: "sea",
-        description: "Crear un fondo público-privado millonario para recolectar y procesar las algas en las playas.",
-        stances: { c1: 1, c2: 1, c3: 1 }
-    },
-    {
-        text: "¿Protección de Valle Nuevo?",
-        category: "Medio Ambiente",
-        keyword: "forest",
-        description: "Mantener la prohibición estricta de agricultura en el parque nacional, desalojando campesinos.",
-        stances: { c1: 1, c2: 0, c3: 0 }
-    }
-];
+            // --- SOCIAL Y DERECHOS ---
+            {
+                text: "¿Aprobar las 3 Causales del aborto?",
+                category: "Derechos",
+                keyword: "women",
+                description: "Despenalizar el aborto en casos de riesgo de vida, inviabilidad fetal o violación.",
+                stances: { c1: 1, c2: -1, c3: -1 } // Abinader a favor (pero deja libre voto), Leonel/Abel más conservadores
+            },
+            {
+                text: "¿Inclusión de 'Ideología de Género' en escuelas?",
+                category: "Educación",
+                keyword: "education",
+                description: "Implementar políticas de educación sexual integral con enfoque de género en el currículo escolar.",
+                stances: { c1: 0, c2: -1, c3: -1 } // Abel y Leonel fuertemente en contra. PRM dividido.
+            },
+            {
+                text: "¿Lectura de la Biblia obligatoria en escuelas?",
+                category: "Educación",
+                keyword: "bible",
+                description: "Hacer cumplir la ley que exige la lectura bíblica en planteles públicos.",
+                stances: { c1: 0, c2: 1, c3: 1 } // Oposición apela al voto cristiano
+            },
+            {
+                text: "¿Mantener el 4% del PIB para Educación?",
+                category: "Educación",
+                keyword: "school",
+                description: "Preservar la asignación fija del 4% del presupuesto a educación, aunque la calidad no haya mejorado sustancialmente.",
+                stances: { c1: 1, c2: 1, c3: 1 }
+            },
+
+            // --- INSTITUCIONALIDAD Y JUSTICIA ---
+            {
+                text: "¿Reforma Constitucional (Ministerio Público)?",
+                category: "Justicia",
+                keyword: "constitution",
+                description: "Modificar la Constitución para 'blindar' la independencia del Procurador General y evitar que lo nombre el Presidente.",
+                stances: { c1: 1, c2: -1, c3: -1 } // Oposición dice que no es necesario modificar la constitución
+            },
+            {
+                text: "¿Reducción de la cantidad de Diputados?",
+                category: "Política",
+                keyword: "congress",
+                description: "Disminuir el número de legisladores en la Cámara de Diputados para ahorrar gastos y eficientizar.",
+                stances: { c1: 1, c2: 0, c3: 0 }
+            },
+            {
+                text: "¿Unificar elecciones municipales y presidenciales?",
+                category: "Política",
+                keyword: "vote",
+                description: "Volver a celebrar todas las elecciones el mismo día para reducir el costo de las campañas y el abstencionismo.",
+                stances: { c1: 1, c2: 0, c3: 0 }
+            },
+            {
+                text: "¿Ley de Extinción de Dominio (Retroactiva)?",
+                category: "Justicia",
+                keyword: "judge",
+                description: "Confiscar bienes provenientes de corrupción o narcotráfico, aplicable a casos del pasado sin límite de tiempo.",
+                stances: { c1: 1, c2: 0, c3: 0 }
+            },
+
+            // --- INFRAESTRUCTURA Y SERVICIOS ---
+            {
+                text: "¿Expansión del Metro y Teleférico?",
+                category: "Transporte",
+                keyword: "train",
+                description: "Seguir invirtiendo masivamente en transporte colectivo (Metro SD, Monorriel Santiago) sobre soluciones viales.",
+                stances: { c1: 1, c2: 1, c3: 1 } // Leonel inició el metro, Abinader lo expande
+            },
+            {
+                text: "¿Contrato de Aerodom (Renovación)?",
+                category: "Infraestructura",
+                keyword: "airplane",
+                description: "Renovar anticipadamente la concesión de los aeropuertos a cambio de un pago inicial para obras del estado.",
+                stances: { c1: 1, c2: -1, c3: -1 } // Oposición criticó fuertemente este contrato
+            },
+            {
+                text: "¿Construcción de la Presa de Cola (Barrick)?",
+                category: "Medio Ambiente",
+                keyword: "mining",
+                description: "Permitir la expansión de operaciones mineras y nueva presa de cola para mantener los ingresos del oro.",
+                stances: { c1: 1, c2: 0, c3: 0 } // Tema delicado, gobierno tiende a apoyar minería responsable
+            },
+            {
+                text: "¿Explotación minera en San Juan (Romero)?",
+                category: "Medio Ambiente",
+                keyword: "mountain",
+                description: "Permitir la extracción de oro en la zona norte de San Juan, arriba de la presa de Sabaneta.",
+                stances: { c1: 0, c2: -1, c3: -1 } // Abinader espera estudio impacto, oposición se ha montado en el 'No'
+            },
+            {
+                text: "¿Privatización de Punta Catalina?",
+                category: "Energía",
+                keyword: "factory",
+                description: "Vender acciones o entregar la administración total de la termoeléctrica al sector privado.",
+                stances: { c1: 0, c2: -1, c3: -1 } // Gobierno intentó fideicomiso, retrocedió. Oposición en contra.
+            },
+
+            // --- SEGURIDAD CIUDADANA ---
+            {
+                text: "¿Reforma Policial profunda?",
+                category: "Seguridad",
+                keyword: "police",
+                description: "Depurar la nómina policial y cambiar la cultura institucional, aunque tome años ver resultados.",
+                stances: { c1: 1, c2: 0, c3: 0 } // Oposición critica la lentitud y falta de resultados
+            },
+            {
+                text: "¿Patrullaje mixto (Militares en la calle)?",
+                category: "Seguridad",
+                keyword: "military",
+                description: "Sacar al ejército a patrullar permanentemente los barrios para disuadir la delincuencia.",
+                stances: { c1: 1, c2: 1, c3: 1 } // Medida populista que todos suelen apoyar en crisis
+            },
+            {
+                text: "¿Ley de la DNI (Inteligencia)?",
+                category: "Derechos",
+                keyword: "spy",
+                description: "Obligar a instituciones privadas y ciudadanos a entregar información a la Dirección Nacional de Inteligencia.",
+                stances: { c1: 1, c2: -1, c3: -1 } // Muy criticada por oposición y prensa
+            },
+
+            // --- VARIOS / TEMAS ACTUALES ---
+            {
+                text: "¿Tasa Cero para importación de alimentos?",
+                category: "Agricultura",
+                keyword: "food",
+                description: "Eliminar aranceles a productos de la canasta básica importados para bajar precios, aunque afecte al productor local.",
+                stances: { c1: 1, c2: -1, c3: -1 } // Conflicto: precios vs protección nacional
+            },
+            {
+                text: "¿Semanal con la Prensa (La Semanal)?",
+                category: "Comunicación",
+                keyword: "press",
+                description: "Que el presidente rinda cuentas y responda preguntas de la prensa todos los lunes en vivo.",
+                stances: { c1: 1, c2: -1, c3: -1 } // Oposición lo tilda de propaganda
+            },
+            {
+                text: "¿Regulación estricta de Airbnb?",
+                category: "Turismo",
+                keyword: "house",
+                description: "Cobrar impuestos hoteleros a los alquileres de corta estancia para igualar competencia con hoteles.",
+                stances: { c1: 1, c2: 0, c3: 0 } // Asonahores presiona por esto
+            },
+            {
+                text: "¿Prohibición de plásticos de un solo uso?",
+                category: "Medio Ambiente",
+                keyword: "plastic",
+                description: "Eliminar gradualmente sorbetes, fundas y foam en todo el territorio nacional.",
+                stances: { c1: 1, c2: 1, c3: 1 }
+            },
+            {
+                text: "¿Burocracia Cero (Digitalización)?",
+                category: "Estado",
+                keyword: "laptop",
+                description: "Digitalizar todos los trámites gubernamentales para reducir la corrupción y las 'botellas'.",
+                stances: { c1: 1, c2: 1, c3: 1 }
+            },
+            {
+                text: "¿Ley de Agua (Privatización del servicio)?",
+                category: "Recursos",
+                keyword: "water",
+                description: "Permitir concesiones privadas en la gestión y cobro del agua potable para mejorar el servicio.",
+                stances: { c1: 0, c2: -1, c3: -1 } // Tema muy sensible, oposición usa etiqueta "privatizadora"
+            },
+            {
+                text: "¿Pena máxima de 40 años?",
+                category: "Justicia",
+                keyword: "prison",
+                description: "Aumentar la pena máxima de prisión (actualmente 30 años) para crímenes atroces o cúmulo de penas.",
+                stances: { c1: 1, c2: 1, c3: 1 }
+            },
+            {
+                text: "¿Titulación masiva de terrenos del Estado?",
+                category: "Social",
+                keyword: "paper",
+                description: "Entregar títulos de propiedad definitivos a personas que viven en terrenos del Estado o CEA.",
+                stances: { c1: 1, c2: 1, c3: 1 }
+            },
+            {
+                text: "¿Fusión de Ministerios (Achicamiento del Estado)?",
+                category: "Estado",
+                keyword: "merge",
+                description: "Fusionar el Mescyt con Minerd, o instituciones afines para reducir la nómina pública.",
+                stances: { c1: 1, c2: -1, c3: -1 } // Propuesta de reforma fiscal actual, oposición la critica
+            },
+            {
+                text: "¿Cobro de ITBIS a servicios digitales (Netflix/Spotify)?",
+                category: "Economía",
+                keyword: "digital",
+                description: "Aplicar el 18% de impuestos a las suscripciones de servicios de streaming extranjeros.",
+                stances: { c1: 1, c2: -1, c3: -1 }
+            },
+            {
+                text: "¿Salario mínimo para trabajadoras domésticas?",
+                category: "Derechos",
+                keyword: "home",
+                description: "Regularizar el trabajo doméstico con salario mínimo, seguro social y horarios definidos.",
+                stances: { c1: 1, c2: 0, c3: 0 } // Tribunal Constitucional tumbó la resolución, pero es intención del gob
+            },
+            {
+                text: "¿Mano dura contra los 'Motoristas'?",
+                category: "Tránsito",
+                keyword: "motorcycle",
+                description: "Implementar chalecos numerados obligatorios y restricciones de horario/zona para motocicletas.",
+                stances: { c1: 1, c2: 0, c3: 0 } // Políticamente costoso (muchos votos), pero necesario
+            },
+            {
+                text: "¿Inversión masiva en Santiago?",
+                category: "Desarrollo",
+                keyword: "city",
+                description: "Destinar una gran parte del presupuesto nacional para obras en la segunda capital (Monorriel, Teleférico).",
+                stances: { c1: 1, c2: 0, c3: 1 } // Abel es de Santiago, Abinader invierte mucho allí
+            },
+            {
+                text: "¿Matrimonio Igualitario?",
+                category: "Derechos",
+                keyword: "rainbow",
+                description: "Modificar la constitución para permitir el matrimonio civil entre personas del mismo sexo.",
+                stances: { c1: -1, c2: -1, c3: -1 } // Ningún candidato mayoritario apoya esto abiertamente en RD
+            },
+            {
+                text: "¿Seguro médico para la diáspora?",
+                category: "Salud",
+                keyword: "world",
+                description: "Ofrecer cobertura de Senasa a los dominicanos residentes en el exterior cuando visiten el país.",
+                stances: { c1: 1, c2: 1, c3: 1 }
+            },
+            {
+                text: "¿Eliminación de los 'Peajes Sombra'?",
+                category: "Economía",
+                keyword: "road",
+                description: "Renegociar contratos viales donde el Estado paga por vehículos que no transitan.",
+                stances: { c1: 1, c2: 0, c3: 0 } // Logro bandera de Abinader, oposición callada
+            },
+            {
+                text: "¿Aumento salarial a médicos y enfermeras?",
+                category: "Salud",
+                keyword: "doctor",
+                description: "Subir sueldos al sector salud aunque implique aumentar el déficit presupuestario.",
+                stances: { c1: 1, c2: 1, c3: 1 }
+            },
+            {
+                text: "¿Declaración de bienes obligatoria y pública?",
+                category: "Transparencia",
+                keyword: "file",
+                description: "Obligar a todo funcionario a publicar su patrimonio real bajo pena de destitución inmediata.",
+                stances: { c1: 1, c2: 0, c3: 0 }
+            },
+            {
+                text: "¿Prohibición del Matrimonio Infantil?",
+                category: "Derechos",
+                keyword: "child",
+                description: "Mantener la prohibición absoluta de matrimonio antes de los 18 años sin excepciones.",
+                stances: { c1: 1, c2: 1, c3: 1 } // Aprobado recientemente por consenso
+            },
+            {
+                text: "¿Construcción Autopista del Ámbar?",
+                category: "Infraestructura",
+                keyword: "road",
+                description: "Nueva carretera Santiago-Puerto Plata mediante Alianza Público-Privada.",
+                stances: { c1: 1, c2: 0, c3: 0 } // Proyecto difícil de arrancar por costos
+            },
+            {
+                text: "¿Plan de vivienda 'Familia Feliz'?",
+                category: "Social",
+                keyword: "house",
+                description: "Subsidios estatales para completar el inicial de la primera vivienda de familias pobres.",
+                stances: { c1: 1, c2: 0, c3: 0 }
+            },
+            {
+                text: "¿Modernización del Código de Trabajo (Cesantía)?",
+                category: "Laboral",
+                keyword: "work",
+                description: "Reformar el código laboral. El punto crítico es si se modifica o elimina el auxilio de cesantía.",
+                stances: { c1: 0, c2: -1, c3: -1 } // Gobierno dice que no tocará cesantía, empresarios quieren, sindicatos no
+            },
+            {
+                text: "¿Hub Logístico Regional?",
+                category: "Economía",
+                keyword: "ship",
+                description: "Posicionar a RD como el centro de distribución de carga del Caribe mediante incentivos fiscales.",
+                stances: { c1: 1, c2: 1, c3: 1 }
+            },
+            {
+                text: "¿Combate al Sargazo?",
+                category: "Turismo",
+                keyword: "sea",
+                description: "Crear un fondo público-privado millonario para recolectar y procesar las algas en las playas.",
+                stances: { c1: 1, c2: 1, c3: 1 }
+            },
+            {
+                text: "¿Protección de Valle Nuevo?",
+                category: "Medio Ambiente",
+                keyword: "forest",
+                description: "Mantener la prohibición estricta de agricultura en el parque nacional, desalojando campesinos.",
+                stances: { c1: 1, c2: 0, c3: 0 }
+            }
+        ];
         let currentCardIndex = 0;
         const stackElement = document.getElementById('cardStack');
-    
+
         // --- WIKIPEDIA IMAGE FETCHER ---
         // This is 100% free, open, and has no rate limits or keys.
         async function fetchWikiImage(keyword) {
@@ -1019,16 +1220,16 @@ const propositions = [
                 // 1. We ask Wikipedia for 3 images related to the keyword
                 // origin=* fixes CORS issues on localhost
                 const url = `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(keyword)}&gsrlimit=3&prop=pageimages&pithumbsize=600&format=json&origin=*`;
-                
+
                 const response = await fetch(url);
                 const data = await response.json();
-                
+
                 // 2. Extract pages from the result
                 const pages = data.query && data.query.pages ? Object.values(data.query.pages) : [];
-                
+
                 // 3. Filter only results that actually have a thumbnail image
                 const validImages = pages.filter(page => page.thumbnail && page.thumbnail.source);
-    
+
                 if (validImages.length > 0) {
                     // 4. Pick a random image from the results to make it dynamic
                     const randomImage = validImages[Math.floor(Math.random() * validImages.length)];
@@ -1042,136 +1243,168 @@ const propositions = [
                 return `https://placehold.co/600x450/EEE/31343C?text=${encodeURIComponent(keyword)}`;
             }
         }
-    
-        // --- INIT ---
-        async function init() {
-            // Create cards structure first
-            const cardsData = [...propositions].reverse().map((prop, index) => {
-                const realIndex = propositions.length - 1 - index;
-                return { prop, realIndex };
-            });
-    
-            // We use a loop to append them to DOM
-            for (const item of cardsData) {
-                const card = document.createElement('div');
-                card.classList.add('card');
-                card.dataset.index = item.realIndex;
-                
-                card.innerHTML = `
-            <div class="overlay overlay-yes">¡CLARO!</div>
-            <div class="overlay overlay-no">¡NUNCA!</div>
-            <div class="overlay overlay-maybe">NI IDEA</div>
-            
-            <div class="card-image-wrapper" style="width:100%; height:45%; background:#ddd; position:relative; overflow:hidden;">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" 
-                        class="card-image" 
-                        id="img-${item.realIndex}"
-                        style="width:100%; height:100%; object-fit:contain; padding:50px;"
-                        alt="Cargando...">
-            </div>
-            
-            <div class="card-content">
-                <div class="category-badge">${item.prop.category}</div>
-                <div class="proposition-text">${item.prop.text}</div>
-                
-                <!-- CAMBIO AQUI: Botón en lugar de enlace -->
-                <button class="saber-mas" 
-                        onclick="toggleDetails(event, this)" 
-                        style="background:none; cursor:pointer;">
-                    Saber más +
-                </button>
-            </div>
 
-            <!-- NUEVO: CAPA DE DETALLES OCULTA -->
-            <div class="card-details">
-                <h3 class="details-title">${item.prop.text}</h3>
-                <div class="details-text">
-                    ${item.prop.description}
-                </div>
-                <button class="btn-close-details" onclick="toggleDetails(event, this)">
-                    Volver a votar
-                </button>
-            </div>
-        `;
-                
-                addTouchLogic(card);
-                stackElement.appendChild(card);
-                
-                // Trigger the fetch in background (non-blocking)
-                fetchWikiImage(item.prop.keyword).then(url => {
-                    const img = document.getElementById(`img-${item.realIndex}`);
-                    if (img) {
-                        img.src = url;
-                        img.style.objectFit = "cover"; // Switch to cover once loaded
-                        img.style.padding = "0";
-                    }
-                });
+        // --- INIT ---
+        // --- NEW HELPER: SHUFFLE FUNCTION ---
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
             }
         }
+
+        // --- UPDATED INIT FUNCTION ---
+// --- NEW HELPER: SHUFFLE FUNCTION ---
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+// --- UPDATED INIT FUNCTION ---
+async function init() {
+    // 1. Shuffle the global propositions array immediately
+    shuffleArray(propositions);
+
+    const totalCards = propositions.length;
+
+    // 2. Create cards data
+    // We reverse it because HTML stacks elements (last child is on top)
+    const cardsData = [...propositions].reverse().map((prop, index) => {
+        // realIndex: The index in the main 'propositions' array (for logic/images)
+        const realIndex = propositions.length - 1 - index;
+        
+        // displayNum: The number the user sees (1/50, 2/50...)
+        // Since the last card appended (index 0 here) is the bottom card (50/50),
+        // and the last card processed is the top card (1/50).
+        const displayNum = totalCards - index;
+
+        return { prop, realIndex, displayNum };
+    });
+
+    // 3. Build DOM
+    for (const item of cardsData) {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.dataset.index = item.realIndex;
+        
+        card.innerHTML = `
+    <div class="overlay overlay-yes">¡CLARO!</div>
+    <div class="overlay overlay-no">¡NUNCA!</div>
+    <div class="overlay overlay-maybe">NI IDEA</div>
     
+    <!-- NEW: CARD COUNTER -->
+    <div class="card-counter">${item.displayNum} / ${totalCards}</div>
+
+    <div class="card-image-wrapper" style="width:100%; height:45%; background:#ddd; position:relative; overflow:hidden;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" 
+                class="card-image" 
+                id="img-${item.realIndex}"
+                style="width:100%; height:100%; object-fit:contain; padding:50px;"
+                alt="Cargando...">
+    </div>
+    
+    <div class="card-content">
+        <div class="category-badge">${item.prop.category}</div>
+        <div class="proposition-text">${item.prop.text}</div>
+        
+        <button class="saber-mas" 
+                onclick="toggleDetails(event, this)" 
+                style="background:none; cursor:pointer;">
+            Saber más +
+        </button>
+    </div>
+
+    <div class="card-details">
+        <h3 class="details-title">${item.prop.text}</h3>
+        <div class="details-text">
+            ${item.prop.description}
+        </div>
+        <button class="btn-close-details" onclick="toggleDetails(event, this)">
+            Volver a votar
+        </button>
+    </div>
+`;
+        
+        addTouchLogic(card);
+        stackElement.appendChild(card);
+        
+        // Fetch image
+        fetchWikiImage(item.prop.keyword).then(url => {
+            const img = document.getElementById(`img-${item.realIndex}`);
+            if (img) {
+                img.src = url;
+                img.style.objectFit = "cover";
+                img.style.padding = "0";
+            }
+        });
+    }
+}
+
         function addTouchLogic(card) {
             let startX = 0, startY = 0, currentX = 0, currentY = 0, isDragging = false;
-            
+
             const startDrag = (e) => {
                 startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
                 startY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
                 isDragging = true;
                 card.style.transition = 'none';
             };
-            card.addEventListener('touchstart', startDrag); 
+            card.addEventListener('touchstart', startDrag);
             card.addEventListener('mousedown', startDrag);
-    
+
             const moveDrag = (e) => {
                 if (!isDragging) return;
                 // Prevent scrolling on mobile while dragging
-                if(e.type === 'touchmove') { }
-    
+                if (e.type === 'touchmove') { }
+
                 currentX = (e.type.includes('mouse') ? e.clientX : e.touches[0].clientX);
                 currentY = (e.type.includes('mouse') ? e.clientY : e.touches[0].clientY);
                 let diffX = currentX - startX, diffY = currentY - startY, rotation = diffX / 10;
-    
+
                 if (Math.abs(diffY) > Math.abs(diffX) && diffY < -50) {
-                     // Swipe Up
-                     card.style.transform = `translateY(${diffY}px) scale(${1 - Math.abs(diffY)/1000})`;
-                     card.querySelector('.overlay-maybe').style.opacity = Math.min(Math.abs(diffY) / 150, 1);
+                    // Swipe Up
+                    card.style.transform = `translateY(${diffY}px) scale(${1 - Math.abs(diffY) / 1000})`;
+                    card.querySelector('.overlay-maybe').style.opacity = Math.min(Math.abs(diffY) / 150, 1);
                 } else {
                     // Side Swipe
                     card.style.transform = `translateX(${diffX}px) rotate(${rotation}deg)`;
-                    if (diffX > 0) { card.querySelector('.overlay-yes').style.opacity = Math.min(diffX / 100, 1); } 
+                    if (diffX > 0) { card.querySelector('.overlay-yes').style.opacity = Math.min(diffX / 100, 1); }
                     else { card.querySelector('.overlay-no').style.opacity = Math.min(Math.abs(diffX) / 100, 1); }
                 }
             };
-            window.addEventListener('touchmove', moveDrag, {passive: false}); 
+            window.addEventListener('touchmove', moveDrag, { passive: false });
             window.addEventListener('mousemove', moveDrag);
-    
+
             const endDrag = () => {
                 if (!isDragging) return;
                 isDragging = false;
                 let diffX = currentX - startX, diffY = currentY - startY;
                 card.style.transition = 'transform 0.4s ease';
-                
+
                 if (diffX > 100) processSwipe('right', card);
                 else if (diffX < -100) processSwipe('left', card);
                 else if (diffY < -100) processSwipe('up', card);
-                else { 
-                    card.style.transform = ''; 
-                    card.querySelectorAll('.overlay').forEach(el => el.style.opacity = 0); 
+                else {
+                    card.style.transform = '';
+                    card.querySelectorAll('.overlay').forEach(el => el.style.opacity = 0);
                 }
             };
-            window.addEventListener('touchend', endDrag); 
+            window.addEventListener('touchend', endDrag);
             window.addEventListener('mouseup', endDrag);
         }
-    
+
         function triggerSwipe(direction) {
             const cards = document.querySelectorAll('.card');
-            const topCard = cards[cards.length - 1]; 
+            const topCard = cards[cards.length - 1];
             if (topCard) processSwipe(direction, topCard);
         }
-    
+
         function processSwipe(direction, card) {
             const index = parseInt(card.dataset.index);
             const prop = propositions[index];
-            
+
             if (direction !== 'up') {
                 const userChoice = direction === 'right' ? 1 : -1;
                 candidates.forEach(cand => {
@@ -1179,15 +1412,15 @@ const propositions = [
                     if (userChoice === candidateStance) cand.score += 1;
                 });
             }
-    
+
             let transString = '';
-            if(direction === 'right') transString = `translateX(${window.innerWidth}px) rotate(30deg)`;
-            else if(direction === 'left') transString = `translateX(-${window.innerWidth}px) rotate(-30deg)`;
+            if (direction === 'right') transString = `translateX(${window.innerWidth}px) rotate(30deg)`;
+            else if (direction === 'left') transString = `translateX(-${window.innerWidth}px) rotate(-30deg)`;
             else transString = `translateY(-${window.innerHeight}px) scale(0.5)`;
-    
+
             card.style.transform = transString;
             card.style.opacity = '0';
-    
+
             setTimeout(() => {
                 card.remove();
                 currentCardIndex++;
@@ -1197,31 +1430,31 @@ const propositions = [
                 if (currentCardIndex >= propositions.length) showResults();
             }, 300);
         }
-    
+
         function showResults() {
             document.getElementById('controls').style.display = 'none';
-            document.querySelector('header').style.display = 'none'; 
+            document.querySelector('header').style.display = 'none';
             const resultsView = document.getElementById('resultsView');
             resultsView.style.display = 'flex';
-            
+
             candidates.sort((a, b) => b.score - a.score);
             const container = document.getElementById('podiumContainer');
             container.innerHTML = '';
-            
+
             const top3 = candidates.slice(0, 3);
             const maxScore = propositions.length;
-    
+
             top3.forEach((cand, index) => {
                 const rank = index + 1;
                 const percent = maxScore > 0 ? Math.round((cand.score / maxScore) * 100) : 0;
-                
+
                 let heightBase = 0;
-                if(rank === 1) heightBase = 85; 
-                if(rank === 2) heightBase = 65; 
-                if(rank === 3) heightBase = 45; 
-    
+                if (rank === 1) heightBase = 85;
+                if (rank === 2) heightBase = 65;
+                if (rank === 3) heightBase = 45;
+
                 const finalHeight = Math.min(heightBase + (cand.score * 2), 95);
-    
+
                 const div = document.createElement('div');
                 div.className = `podium-place place-${rank}`;
                 div.innerHTML = `
@@ -1235,7 +1468,7 @@ const propositions = [
                 `;
                 container.appendChild(div);
             });
-    
+
             setTimeout(() => {
                 document.querySelectorAll('.podium-bar').forEach(bar => {
                     bar.style.height = bar.style.getPropertyValue('--target-height');
@@ -1248,63 +1481,64 @@ const propositions = [
 
         // --- LÓGICA DE LA CÉDULA ---
 
-function mostrarCedulaModal() {
-    const modal = document.getElementById('cedulaModal');
-    modal.style.display = 'flex';
-    // Desenfocar el input un poco para evitar el teclado inmediato en móviles si molesta, 
-    // o enfocarlo si quieres agresividad:
-    document.getElementById('cedulaInput').focus();
-}
-
-function verificarCedula() {
-    const input = document.getElementById('cedulaInput');
-    const feedback = document.getElementById('cedulaFeedback');
-    const val = input.value.replace(/[^0-9]/g, ''); // Solo números
-
-    // Simulación "Fake" pero divertida
-    if (val.length !== 11) {
-        feedback.style.color = 'red';
-        feedback.innerText = "❌ Esa cédula 'ta chueca. Son 11 números.";
-        input.style.borderColor = 'red';
-        return;
-    }
-
-    feedback.style.color = '#00C853';
-    feedback.innerHTML = "✅ <strong>¡Confirmado!</strong><br>Usted es dominicano pura cepa.";
-    
-    // Efecto visual
-    document.querySelector('.cedula-card').style.border = "5px solid #00C853";
-    document.querySelector('.siren-icon').innerText = "🇩🇴";
-    document.querySelector('.siren-icon').style.animation = "none";
-
-    setTimeout(() => {
-        document.getElementById('cedulaModal').style.display = 'none';
-        // El juego continúa solo
-    }, 1500);
-}
-
-// Permitir presionar Enter
-document.getElementById('cedulaInput').addEventListener("keypress", function(event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    verificarCedula();
-  }
-});
-
-// Función para mostrar/ocultar la descripción
-function toggleDetails(event, btnElement) {
-        event.stopPropagation(); // Evita que el click afecte el drag de la carta
-        
-        // Buscamos la carta padre más cercana
-        const card = btnElement.closest('.card');
-        
-        if (card) {
-            // Alternamos la clase que muestra el CSS transform
-            card.classList.toggle('show-info');
+        function mostrarCedulaModal() {
+            const modal = document.getElementById('cedulaModal');
+            modal.style.display = 'flex';
+            // Desenfocar el input un poco para evitar el teclado inmediato en móviles si molesta, 
+            // o enfocarlo si quieres agresividad:
+            document.getElementById('cedulaInput').focus();
         }
-    }
-    
+
+        function verificarCedula() {
+            const input = document.getElementById('cedulaInput');
+            const feedback = document.getElementById('cedulaFeedback');
+            const val = input.value.replace(/[^0-9]/g, ''); // Solo números
+
+            // Simulación "Fake" pero divertida
+            if (val.length !== 11) {
+                feedback.style.color = 'red';
+                feedback.innerText = "❌ Esa cédula 'ta chueca. Son 11 números.";
+                input.style.borderColor = 'red';
+                return;
+            }
+
+            feedback.style.color = '#00C853';
+            feedback.innerHTML = "✅ <strong>¡Confirmado!</strong><br>Usted es dominicano pura cepa.";
+
+            // Efecto visual
+            document.querySelector('.cedula-card').style.border = "5px solid #00C853";
+            document.querySelector('.siren-icon').innerText = "🇩🇴";
+            document.querySelector('.siren-icon').style.animation = "none";
+
+            setTimeout(() => {
+                document.getElementById('cedulaModal').style.display = 'none';
+                // El juego continúa solo
+            }, 1500);
+        }
+
+        // Permitir presionar Enter
+        document.getElementById('cedulaInput').addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                verificarCedula();
+            }
+        });
+
+        // Función para mostrar/ocultar la descripción
+        function toggleDetails(event, btnElement) {
+            event.stopPropagation(); // Evita que el click afecte el drag de la carta
+
+            // Buscamos la carta padre más cercana
+            const card = btnElement.closest('.card');
+
+            if (card) {
+                // Alternamos la clase que muestra el CSS transform
+                card.classList.toggle('show-info');
+            }
+        }
+
         init();
     </script>
 </body>
+
 </html>

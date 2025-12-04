@@ -40,8 +40,6 @@
             overflow: hidden;
             color: var(--text-dark);
             animation: moveStripes 25s linear infinite;
-            padding-top: 75px;
-            padding-bottom: 75px;
         }
 
         @keyframes moveStripes {
@@ -221,6 +219,20 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
+        /* Update these classes to handle images */
+        .opinion-avatar, .candidate-avatar-res {
+            overflow: hidden; /* Clips the image to the circle */
+            background: white;
+            padding: 0; /* Remove padding so image fills space */
+        }
+
+        .opinion-avatar img, .candidate-avatar-res img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures image covers the circle without distortion */
+            display: block;
+        }
+
         .opinion-text {
             font-size: 0.9rem;
             color: #333;
@@ -267,7 +279,7 @@
             align-items: center;
             gap: 20px;
             padding: 20px;
-            padding-bottom: 30px;
+            padding-bottom: 50px;
             width: 100%;
             max-width: 480px;
             margin: 0 auto;
@@ -795,7 +807,7 @@
 <body>
 
     <header>
-        <h1>Bo'Ta 🗳️</h1>
+        <h1 style="margin-top: 50px;">Bo'Ta 🗳️</h1>
         <span>Presidenciales 2028 🇩🇴</span>
     </header>
 
@@ -864,9 +876,6 @@
                 </div>
             </details>
             <!-- FIN SECCIÓN NUEVA -->
-
-
-
             <button class="btn-cedula" onclick="verificarCedula()">Continuamos 🇩🇴</button>
             <p id="cedulaFeedback" class="cedula-feedback"></p>
 
@@ -1694,8 +1703,8 @@
         // We map through the global 'candidates' array to create the rows
         const candidateOpinionsHTML = candidates.map(c => `
             <div class="opinion-row">
-                <div class="opinion-avatar" style="border-color: ${c.color}; color: ${c.color}">
-                    ${c.avatar}
+                <div class="opinion-avatar" style="border-color: ${c.color}">
+                    <img src="${c.avatar}.png" alt="${c.name}">
                 </div>
                 <div class="opinion-text">
                     <strong style="color:${c.color}">${c.name}</strong><br>
@@ -1921,8 +1930,8 @@ function addTouchLogic(card) {
                 const div = document.createElement('div');
                 div.className = `podium-place place-${rank}`;
                 div.innerHTML = `
-                    <div class="candidate-avatar-res" style="color:${cand.color}">
-                        ${cand.avatar}
+                    <div class="candidate-avatar-res" style="border-color: ${cand.color}">
+                        <img src="${cand.avatar}.png" alt="${cand.name}">
                     </div>
                     <div class="podium-bar" style="--target-height: ${finalHeight}%;">
                         <span class="score-text">${percent}%</span>

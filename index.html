@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bo'ta 🗳️</title>
+    <title>Bo'ta</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="favicon.png">
+
     <style>
         /* --- VARIABLES & GLOBAL RESET --- */
         :root { --neon-green: #02CB01; --dark-green: #05B602; --hot-pink: #ff007f; --bright-yellow: #ffdd00; --white: #ffffff; --text-dark: #1a1a1a; --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); }
@@ -680,7 +682,7 @@
             setTimeout(() => {
                 card.remove();
                 currentCardIndex++;
-                if (currentCardIndex === 5) {
+                if (currentCardIndex === 35) {
                     mostrarCedulaModal();
                 }
                 if (currentCardIndex >= propositions.length) showResults();

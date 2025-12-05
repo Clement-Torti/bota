@@ -113,8 +113,60 @@
         .cedula-card { background: var(--white); padding: 30px 20px; width: 90%; max-width: 350px; border-radius: 20px; text-align: center; border: 5px solid var(--bright-yellow); box-shadow: 0 0 30px var(--bright-yellow); transform: scale(0.9); animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; max-height: 85vh; overflow-y: auto; overscroll-behavior: contain; }
         .siren-icon { font-size: 3rem; margin-bottom: 10px; animation: wobble 1s infinite; }
         .cedula-card h2 { text-transform: uppercase; color: var(--text-dark); font-weight: 900; margin-bottom: 10px; transform: rotate(-2deg); }
-        #cedulaInput { width: 100%; padding: 15px; font-size: 1.2rem; text-align: center; border: 3px solid #ddd; border-radius: 10px; margin-bottom: 5px; font-family: 'Montserrat', sans-serif; font-weight: 700; outline: none; }
-        .btn-cedula { background: var(--hot-pink); color: white; border: none; padding: 12px 30px; font-size: 1rem; font-weight: 800; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 0 #c20061; width: 100%; transition: 0.2s; margin-top: 10px; }
+/* --- AGE MODAL STYLES --- */
+.age-buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.btn-age {
+    background: #f8f8f8;
+    border: 2px solid #ddd;
+    border-radius: 15px;
+    padding: 12px 15px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-age:hover {
+    background: #fff;
+    border-color: var(--hot-pink);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 0, 127, 0.15);
+}
+
+.btn-age:active {
+    transform: scale(0.98);
+}
+
+.age-range {
+    font-size: 0.8rem;
+    font-weight: 900;
+    color: var(--neon-green); /* Using your neon green var */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.age-slang {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-top: 2px;
+}
+
+/* Specific hover effects for fun */
+.btn-age:nth-child(1):hover .age-slang { color: var(--hot-pink); }
+.btn-age:nth-child(2):hover .age-slang { color: #0072CE; }
+.btn-age:nth-child(3):hover .age-slang { color: #800080; }
+.btn-age:nth-child(4):hover .age-slang { color: #FFA500; }        .btn-cedula { background: var(--hot-pink); color: white; border: none; padding: 12px 30px; font-size: 1rem; font-weight: 800; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 0 #c20061; width: 100%; transition: 0.2s; margin-top: 10px; }
         .btn-cedula:active { transform: translateY(2px); box-shadow: 0 2px 0 #c20061; }
         .cedula-feedback { margin-top: 15px; font-weight: 700; min-height: 20px; }
         @keyframes popIn { to { transform: scale(1); } }
@@ -213,45 +265,52 @@
     <!-- MODAL DE LA CÉDULA -->
     <div id="cedulaModal" class="cedula-modal">
         <div class="cedula-card">
-            <div class="siren-icon">🚨</div>
-            <h2>¡Quieto en primera!</h2>
+            <div class="siren-icon">🎂</div>
+            <h2>¿Cuál es tu Coro?</h2>
             <p>
-                Contribuye a la voz de los dominicanos <strong>marcando tu cédula</strong> ahí; e’ <strong>100%
-                    anónimo</strong>
+                Selecciona tu grupo pa' saber qué piensa cada generación. <br>
+                <strong>(Cero chivateo, es 100% anónimo)</strong>
             </p>
 
-            <input type="tel" id="cedulaInput" maxlength="11" placeholder="Ej: 40212345678" autocomplete="off">
+            <div class="age-buttons-container">
+                <button class="btn-age" onclick="selectAge('18-25')">
+                    <span class="age-range">18 - 25</span>
+                    <span class="age-slang">Gen Z (La Pampara 🔥)</span>
+                </button>
+                
+                <button class="btn-age" onclick="selectAge('26-40')">
+                    <span class="age-range">26 - 40</span>
+                    <span class="age-slang">Millennial (Cogiéndolo Variado 🍺)</span>
+                </button>
+                
+                <button class="btn-age" onclick="selectAge('41-60')">
+                    <span class="age-range">41 - 60</span>
+                    <span class="age-slang">Gen X (Los Jefes 👔)</span>
+                </button>
+                
+                <button class="btn-age" onclick="selectAge('60+')">
+                    <span class="age-range">60 o más</span>
+                    <span class="age-slang">Los Robles (Respeto 🫡)</span>
+                </button>
+            </div>
 
-            <!-- SECCIÓN NUEVA: WEY, POR QUÉ? -->
-            <details class="why-section">
-                <summary>Wey, ¿y pa' qué quieren eso? 🤔</summary>
+            <!-- UPDATED PRIVACY SECTION -->
+            <details class="why-section" style="margin-top: 15px;">
+                <summary>Wey, ¿y pa' qué quieren saber? 🤔</summary>
                 <div class="why-content">
                     <p>
-                        <strong>Tranquilo, manín.</strong> Esto no es pa' chivatearte con nadie.
+                        <strong>Tranquilo, manín.</strong>
                     </p>
                     <p>
-                        Recopilamos esta data para descartar bots y crear <strong>tendencias generales de
-                            mercado</strong> para saber qué piensa el pueblo realmente sobre estas propuestas.
+                        Queremos saber si los jóvenes piensan igual que los doños. Así sacamos estadísticas tipo: 
+                        <em>"El 80% de la Gen Z quiere tal cosa"</em>.
                     </p>
                     <p class="highlight-privacy">
-                        🔒 <strong>100% ANÓNIMO:</strong><br>
-                        <strong>NUNCA</strong> guardamos tu nombre asociado a tus respuestas.
-                        Tus opiniones se mezclan con las de miles de dominicanos para sacar estadísticas, nadie sabrá
-                        qué votaste tú.
+                        🔒 <strong>DATA ANÓNIMA:</strong><br>
+                        No guardamos nombres. Solo tu opinión y tu rango de edad.
                     </p>
-
-                    <div style="margin-top: 15px; border-top: 1px dashed #ccc; padding-top: 15px; text-align: center;">
-                        <button onclick="skipCedula()"
-                            style="background: none; border: none; color: #666; text-decoration: underline; cursor: pointer; font-weight: 700; font-size: 0.9rem;">
-                            👉 Dale pa' lla' sin cédula
-                        </button>
-                    </div>
                 </div>
             </details>
-            <!-- FIN SECCIÓN NUEVA -->
-            <button class="btn-cedula" onclick="verificarCedula()">Continuamos 🇩🇴</button>
-            <p id="cedulaFeedback" class="cedula-feedback"></p>
-
         </div>
     </div>
 
@@ -599,7 +658,7 @@
             setTimeout(() => {
                 card.remove();
                 currentCardIndex++;
-                if (currentCardIndex === 35) {
+                if (currentCardIndex === 5) {
                     mostrarCedulaModal();
                 }
                 if (currentCardIndex >= propositions.length) showResults();
@@ -719,45 +778,35 @@
             document.getElementById('cedulaInput').focus();
         }
 
-        function skipCedula() {
-            document.getElementById('cedulaModal').style.display = 'none';
-        }
+        function selectAge(group) {
+            // 1. Visual feedback (User clicked)
+            console.log("Grupo seleccionado:", group);
 
-        function verificarCedula() {
-            const input = document.getElementById('cedulaInput');
-            const feedback = document.getElementById('cedulaFeedback');
-            const val = input.value.replace(/[^0-9]/g, ''); // Solo números
+            // 2. You could save this to a variable or localStorage if needed
+            // localStorage.setItem('voter_age_group', group);
 
-            // Simulación "Fake" pero divertida
-            if (val.length !== 11) {
-                feedback.style.color = 'red';
-                feedback.innerText = "❌ Esa cédula 'ta chueca. Son 11 números.";
-                input.style.borderColor = 'red';
-                return;
-            }
-
-            feedback.style.color = '#00C853';
-            feedback.innerHTML = "✅ <strong>¡Confirmado!</strong><br>Usted es dominicano pura cepa.";
-
-            // Efecto visual
-            document.querySelector('.cedula-card').style.border = "5px solid #00C853";
-            document.querySelector('.siren-icon').innerText = "🇩🇴";
-            document.querySelector('.siren-icon').style.animation = "none";
+            // 3. Close Modal with animation
+            const modalContent = document.querySelector('.cedula-card');
+            modalContent.innerHTML = `
+                <div style="padding:40px 0;">
+                    <div style="font-size:4rem; animation: popIn 0.5s;">🇩🇴</div>
+                    <h2 style="margin-top:20px; color:var(--dark-green);">¡Gracias!</h2>
+                    <p>Seguimo'...</p>
+                </div>
+            `;
 
             setTimeout(() => {
                 document.getElementById('cedulaModal').style.display = 'none';
-                // El juego continúa solo
-            }, 1500);
+                // Logic to continue or finish logic if this was the last step
+                // In the original code, this modal appeared *before* showing results? 
+                // If so, just let the flow continue.
+            }, 1200);
         }
 
-        // Permitir presionar Enter
-        document.getElementById('cedulaInput').addEventListener("keypress", function (event) {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                verificarCedula();
-            }
-        });
+        
 
+        // Permitir presionar Enter
+ 
         // Función para mostrar/ocultar la descripción
         function toggleDetails(event, btnElement) {
             event.stopPropagation(); // Evita que el click afecte el drag de la carta

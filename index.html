@@ -192,6 +192,14 @@
         .btn-got-it { margin-top: 50px; background: white; color: var(--text-dark); font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 900; padding: 15px 40px; border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 5px 0 #ccc; text-transform: uppercase; }
         .btn-got-it:active { transform: translateY(3px); box-shadow: 0 2px 0 #ccc; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        /* --- NEW ARGUMENTS STYLES --- */
+        .args-container { width: 100%; margin: 10px 0; display: flex; flex-direction: column; gap: 8px; }
+        .arg-row { display: flex; align-items: flex-start; gap: 10px; font-size: 0.8rem; text-align: left; background: #fafafa; padding: 8px; border-radius: 8px; border: 1px solid #eee; }
+        .arg-icon { font-size: 1.1rem; flex-shrink: 0; line-height: 1; }
+        .arg-content { flex: 1; }
+        .arg-label { display: block; font-weight: 800; font-size: 0.7rem; text-transform: uppercase; margin-bottom: 2px; }
+        .txt-green { color: #00C853; }
+        .txt-red { color: var(--hot-pink); }
     </style>
 </head>
 
@@ -443,17 +451,17 @@
 
         // --- UPDATED INIT FUNCTION ---
         async function init() {
-
             try {
-                // 1. Fetch the data from the external file
+                // 1. Fetch the data
                 const response = await fetch('https://clement-torti.github.io/bota/propositions.html');
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
-                // 2. Parse the JSON content
-                propositions = await response.json();
+                // 2. Parse and FILTER by 'enable' property
+                const allData = await response.json();
+                propositions = allData.filter(p => p.enable === true);
 
             } catch (e) {
                 console.error("Error loading propositions:", e);
@@ -461,88 +469,105 @@
                     '<div style="text-align:center; padding:20px;">Error cargando las preguntas.<br>Verifica el archivo propositions.html</div>';
                 return;
             }
-            // 1. Shuffle
+
+            // 3. Shuffle
             shuffleArray(propositions);
 
             const totalCards = propositions.length;
 
-            // 2. Prepare Data
+            // 4. Prepare Data
             const cardsData = [...propositions].reverse().map((prop, index) => {
                 const realIndex = propositions.length - 1 - index;
                 const displayNum = totalCards - index;
                 return { prop, realIndex, displayNum };
             });
 
-            // 3. Build DOM
+            // 5. Build DOM
             for (const item of cardsData) {
 
-                // --- GENERATE CANDIDATE OPINIONS HTML ---
-                // We map through the global 'candidates' array to create the rows
+                // Generate Candidate Opinions HTML (Back of card)
                 const candidateOpinionsHTML = candidates.map(c => `
-            <div class="opinion-row">
-                <div class="opinion-avatar" style="border-color: ${c.color}">
-                    <img src="${c.avatar}.png" alt="${c.name}">
-                </div>
-                <div class="opinion-text">
-                    <strong style="color:${c.color}">${c.name}</strong><br>
-                    ${item.prop.candidateOpinions && item.prop.candidateOpinions[c.id]
-                        ? item.prop.candidateOpinions[c.id]
-                        : "Sin comentarios específicos."}
-                </div>
-            </div>
-        `).join('');
+                    <div class="opinion-row">
+                        <div class="opinion-avatar" style="border-color: ${c.color}">
+                            <img src="${c.avatar}.png" alt="${c.name}">
+                        </div>
+                        <div class="opinion-text">
+                            <strong style="color:${c.color}">${c.name}</strong><br>
+                            ${item.prop.candidateOpinions && item.prop.candidateOpinions[c.id]
+                                ? item.prop.candidateOpinions[c.id]
+                                : "Sin comentarios específicos."}
+                        </div>
+                    </div>
+                `).join('');
 
                 const card = document.createElement('div');
                 card.classList.add('card');
                 card.dataset.index = item.realIndex;
 
                 card.innerHTML = `
-            <div class="overlay overlay-yes">¡CLARO!</div>
-            <div class="overlay overlay-no">¡NUNCA!</div>
-            <div class="overlay overlay-maybe">NI IDEA</div>
-            
-            <div class="card-counter">${item.displayNum} / ${totalCards}</div>
+                    <div class="overlay overlay-yes">¡CLARO!</div>
+                    <div class="overlay overlay-no">¡NUNCA!</div>
+                    <div class="overlay overlay-maybe">NI IDEA</div>
+                    
+                    <div class="card-counter">${item.displayNum} / ${totalCards}</div>
 
-            <div class="card-image-wrapper" style="width:100%; height:45%; background:#ddd; position:relative; overflow:hidden;">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" 
-                        class="card-image" 
-                        id="img-${item.realIndex}"
-                        style="width:100%; height:100%; object-fit:contain; padding:50px;"
-                        alt="Cargando...">
-            </div>
-            
-            <div class="card-content">
-                <div class="category-badge">${item.prop.category}</div>
-                <div class="proposition-text">${item.prop.text}</div>
-                
-                <!-- NEW: Description displayed on the card front -->
-                <div class="proposition-description">
-                    ${item.prop.description}
-                </div>
-                
-                <button class="saber-mas" 
-                        onclick="toggleDetails(event, this)" 
-                        style="background:none; cursor:pointer;">
-                    Saber más +
-                </button>
-            </div>
+                    <div class="card-image-wrapper" style="width:100%; height:45%; background:#ddd; position:relative; overflow:hidden;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" 
+                                class="card-image" 
+                                id="img-${item.realIndex}"
+                                style="width:100%; height:100%; object-fit:contain; padding:50px;"
+                                alt="Cargando...">
+                    </div>
+                    
+                    <div class="card-content">
+                        <div class="category-badge">${item.prop.category}</div>
+                        <div class="proposition-text">${item.prop.text}</div>
+                        
+                        <!-- Description -->
+                        <div class="proposition-description" style="margin-bottom:10px;">
+                            ${item.prop.description}
+                        </div>
 
-            <!-- DETAILS VIEW (BACK) -->
-            <div class="card-details">
-                <h3 class="details-title" style="margin-bottom:20px; font-size:1.1rem;">
-                    ${item.prop.text}
-                </h3>
-                
-                <div class="details-text">
-                    <!-- NEW: Injected Candidate Opinions -->
-                    ${candidateOpinionsHTML}
-                </div>
+                        <!-- NEW: For/Against Arguments -->
+                        <div class="args-container">
+                            <div class="arg-row">
+                                <div class="arg-icon">👍</div>
+                                <div class="arg-content">
+                                    <span class="arg-label txt-green">A Favor</span>
+                                    ${item.prop.for}
+                                </div>
+                            </div>
+                            <div class="arg-row">
+                                <div class="arg-icon">👎</div>
+                                <div class="arg-content">
+                                    <span class="arg-label txt-red">En Contra</span>
+                                    ${item.prop.against}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="saber-mas" 
+                                onclick="toggleDetails(event, this)" 
+                                style="background:none; cursor:pointer; margin-top:auto;">
+                            Saber más +
+                        </button>
+                    </div>
 
-                <button class="btn-close-details" onclick="toggleDetails(event, this)">
-                    Volver a votar
-                </button>
-            </div>
-        `;
+                    <!-- DETAILS VIEW (BACK) -->
+                    <div class="card-details">
+                        <h3 class="details-title" style="margin-bottom:20px; font-size:1.1rem;">
+                            ${item.prop.text}
+                        </h3>
+                        
+                        <div class="details-text">
+                            ${candidateOpinionsHTML}
+                        </div>
+
+                        <button class="btn-close-details" onclick="toggleDetails(event, this)">
+                            Volver a votar
+                        </button>
+                    </div>
+                `;
 
                 addTouchLogic(card);
                 stackElement.appendChild(card);

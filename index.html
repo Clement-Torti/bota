@@ -393,33 +393,8 @@
 
         // --- WIKIPEDIA IMAGE FETCHER ---
         // This is 100% free, open, and has no rate limits or keys.
-        async function fetchWikiImage(keyword) {
-            try {
-                // 1. We ask Wikipedia for 3 images related to the keyword
-                // origin=* fixes CORS issues on localhost
-                const url = `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(keyword)}&gsrlimit=3&prop=pageimages&pithumbsize=400&format=json&origin=*`;
-
-                const response = await fetch(url);
-                const data = await response.json();
-
-                // 2. Extract pages from the result
-                const pages = data.query && data.query.pages ? Object.values(data.query.pages) : [];
-
-                // 3. Filter only results that actually have a thumbnail image
-                const validImages = pages.filter(page => page.thumbnail && page.thumbnail.source);
-
-                if (validImages.length > 0) {
-                    // 4. Pick a random image from the results to make it dynamic
-                    const randomImage = validImages[Math.floor(Math.random() * validImages.length)];
-                    return randomImage.thumbnail.source;
-                } else {
-                    throw new Error("No wiki image found");
-                }
-            } catch (error) {
-                console.error("Wiki load failed", error);
-                // Fallback to a solid color text placeholder if Wikipedia fails
-                return `https://placehold.co/600x450/EEE/31343C?text=${encodeURIComponent(keyword)}`;
-            }
+        async function fetchWikiImage(id) {
+            return "https://clement-torti.github.io/bota/" + id + ".jpg"
         }
 
         // --- INIT ---
@@ -573,7 +548,7 @@
                 addTouchLogic(card);
                 stackElement.appendChild(card);
 
-                fetchWikiImage(item.prop.keyword).then(url => {
+                fetchWikiImage(item.prop.id).then(url => {
                     const img = document.getElementById(`img-${item.realIndex}`);
                     if (img) {
                         img.src = url;

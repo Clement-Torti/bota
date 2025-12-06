@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOTA - Strict Sequential Loader</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        .image-container {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+            background-color: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none; /* Hidden by default */
+        }
+        .image-container img.loaded {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Status Text */
+        .status-msg {
+            text-align: center;
+            padding: 1rem;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        /* Active Card Border */
+        .active-card {
+            border: 2px solid #4f46e5;
+            box-shadow: 0 0 15px rgba(79, 70, 229, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <!-- Dashboard Header -->
+        <div class="sticky top-0 z-50 bg-gray-100 pt-2 pb-6 mb-6 border-b border-gray-200">
+            <div class="flex flex-col md:flex-row justify-between items-end gap-4">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Strict Image Loader</h1>
+                    <p class="text-sm text-gray-600">
+                        Status: <span id="global-status" class="font-bold text-indigo-600">Initializing...</span>
+                    </p>
+                </div>
+                <div class="w-full md:w-1/3">
+                    <div class="flex justify-between text-xs font-bold text-indigo-600 mb-1">
+                        <span id="progress-count">0/40</span>
+                        <span id="progress-percent">0%</span>
+                    </div>
+                    <div class="w-full bg-gray-300 rounded-full h-3 overflow-hidden">
+                        <div id="progress-bar" class="bg-indigo-600 h-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grid -->
+        <div id="app" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+    </div>
+
+    <script>
+        // --- DATA ---
+        const propositions = [
+            { "id": 1, "text": "¿Construcción del Muro Fronterizo?", "category": "Soberanía", "keyword": "border wall construction concrete", "description": "Continuar y endurecer la verja física en la frontera con vigilancia militar.", "enable": true },
+            { "id": 2, "text": "¿Deportaciones masivas?", "category": "Soberanía", "keyword": "deportation immigration police truck", "description": "Operativos constantes para repatriar indocumentados sin excepciones.", "enable": true },
+            { "id": 3, "text": "¿Campos de Refugiados en RD?", "category": "Soberanía", "keyword": "refugee camp tents un humanitarian", "description": "Aceptar petición de la ONU de zonas de refugio para haitianos.", "enable": true },
+            { "id": 4, "text": "¿Modelo 'Bukele' de seguridad?", "category": "Seguridad", "keyword": "bukele salvador style prison security", "description": "Aplicar mano dura extrema, estados de excepción y encarcelamiento masivo.", "enable": true },
+            { "id": 5, "text": "¿Reforma Fiscal (Más Impuestos)?", "category": "Economía", "keyword": "tax increase forms money government", "description": "Aumentar/Ampliar impuestos para cubrir el déficit del gobierno.", "enable": true },
+            { "id": 6, "text": "¿Eliminar el Anticipo?", "category": "Economía", "keyword": "small business tax burden accounting", "description": "Quitar el impuesto adelantado que ahoga a las PYMES.", "enable": true },
+            { "id": 7, "text": "¿Fideicomisos Públicos?", "category": "Economía", "keyword": "public private partnership construction contract", "description": "Alianzas público-privadas para gestionar bienes del Estado (Pedernales/Pro-Pedernales).", "enable": true },
+            { "id": 8, "text": "¿Eliminar las AFP/ARS?", "category": "Economía", "keyword": "pension money elderly protest", "description": "Cambiar el sistema de pensiones privado por uno de reparto o público.", "enable": true },
+            { "id": 9, "text": "¿Las 3 Causales del aborto?", "category": "Derechos", "keyword": "womens rights protest medical health", "description": "Permitir aborto en caso de riesgo de vida, inviabilidad o violación.", "enable": true },
+            { "id": 10, "text": "¿Educación Sexual/Género?", "category": "Educación", "keyword": "sex education classroom students", "description": "Incluir perspectiva de género y educación sexual integral en escuelas.", "enable": true },
+            { "id": 11, "text": "¿Lectura de la Biblia en escuelas?", "category": "Educación", "keyword": "bible in school classroom student reading", "description": "Hacer obligatoria la lectura bíblica en el sistema público.", "enable": true },
+            { "id": 12, "text": "¿Independencia del Ministerio Público?", "category": "Justicia", "keyword": "judge gavel justice blindfold", "description": "Blindar constitucionalmente que el Presidente no elija al Procurador.", "enable": true },
+            { "id": 13, "text": "¿Reducción de Diputados?", "category": "Política", "keyword": "congress empty seats parliament", "description": "Bajar la cantidad de legisladores (de 190 a 137).", "enable": true },
+            { "id": 14, "text": "¿Ley de Extinción de Dominio?", "category": "Justicia", "keyword": "seized luxury cars money corruption", "description": "Quitar bienes ilícitos sin necesidad de condena penal previa.", "enable": true },
+            { "id": 15, "text": "¿Renegociar contrato Aerodom?", "category": "Infraestructura", "keyword": "airport terminal airplane construction", "description": "Extender concesión de aeropuertos hasta 2060 por pago anticipado.", "enable": true },
+            { "id": 16, "text": "¿Presa de Cola Barrick Gold?", "category": "Medio Ambiente", "keyword": "mining waste dam environmental", "description": "Permitir expansión de residuos mineros en Monte Plata/Sánchez Ramírez.", "enable": true },
+            { "id": 17, "text": "¿Explotación Minera en San Juan?", "category": "Medio Ambiente", "keyword": "green mountains agriculture vs mining", "description": "Mina de oro subterránea en la cordillera central (GoldQuest).", "enable": true },
+            { "id": 18, "text": "¿Reforma Policial?", "category": "Seguridad", "keyword": "police training academy professional", "description": "Proceso lento de educación y limpieza de la policía.", "enable": true },
+            { "id": 19, "text": "¿Ley del DNI (Inteligencia)?", "category": "Derechos", "keyword": "surveillance camera cyber security spy", "description": "Obligar a privados a entregar datos al DNI por seguridad.", "enable": true },
+            { "id": 20, "text": "¿Tasa Cero a importaciones?", "category": "Agricultura", "keyword": "imported food supermarket cargo ship container", "description": "Quitar aranceles a comida extranjera para bajar precios.", "enable": true },
+            { "id": 21, "text": "¿Privatización del Agua?", "category": "Recursos", "keyword": "water faucet money meter", "description": "Concesionar gestión de agua o cobro a empresas.", "enable": true },
+            { "id": 22, "text": "¿Eliminar 'El Barrilito'?", "category": "Política", "keyword": "stacks of cash corruption senate", "description": "Fondo millonario de asistencia social que manejan los senadores.", "enable": true },
+            { "id": 23, "text": "¿Financiamiento a Partidos?", "category": "Política", "keyword": "political campaign money vote", "description": "Dinero que la JCE da a los partidos políticos.", "enable": true },
+            { "id": 24, "text": "¿Matrimonio Igualitario?", "category": "Derechos", "keyword": "lgbt pride flag wedding rings", "description": "Legalizar unión entre personas del mismo sexo.", "enable": true },
+            { "id": 25, "text": "¿Subsidios Combustibles?", "category": "Economía", "keyword": "gas station pump nozzle price", "description": "Gobierno paga deuda para congelar precio de gasolina.", "enable": true },
+            { "id": 26, "text": "¿Cesantía Laboral?", "category": "Laboral", "keyword": "office worker fired cardboard box", "description": "Eliminar o limitar el auxilio de cesantía en el Código Laboral.", "enable": true },
+            { "id": 27, "text": "¿Regulación Airbnb?", "category": "Turismo", "keyword": "modern apartment phone app booking", "description": "Cobrar impuestos al alquiler de corta estancia.", "enable": true },
+            { "id": 28, "text": "¿Pena de Muerte/Cadena Perpetua?", "category": "Justicia", "keyword": "prison cell bars dark handcuffs", "description": "Modificar constitución para aplicar penas extremas a criminales.", "enable": true },
+            { "id": 29, "text": "¿Incentivos al Turismo?", "category": "Economía", "keyword": "luxury beach resort hotel paradise", "description": "Seguir perdonando impuestos a grandes hoteles por 15+ años.", "enable": true },
+            { "id": 30, "text": "¿Alianzas Público-Privadas?", "category": "Estado", "keyword": "bridge construction handshake business", "description": "Modelo donde el privado construye y cobra servicios públicos.", "enable": true },
+            { "id": 31, "text": "¿Trabajo Doméstico Regulado?", "category": "Laboral", "keyword": "domestic worker cleaning home apron", "description": "Salario mínimo y horarios fijos para trabajadoras del hogar.", "enable": true },
+            { "id": 32, "text": "¿Protección Valle Nuevo?", "category": "Medio Ambiente", "keyword": "pine forest mountains agriculture fog", "description": "Sacar la agricultura del parque nacional para salvar aguas.", "enable": true },
+            { "id": 33, "text": "¿Voto Obligatorio?", "category": "Política", "keyword": "ballot box voting fine punishment", "description": "Multar a quien no vote para reducir abstención.", "enable": true },
+            { "id": 34, "text": "¿Reelección Presidencial?", "category": "Política", "keyword": "presidential podium reelection sign", "description": "El sistema actual permite 2 periodos y nunca más.", "enable": true },
+            { "id": 35, "text": "¿Impuestos a Servicios Digitales?", "category": "Economía", "keyword": "netflix spotify icons tax invoice", "description": "Cobrar ITBIS a Netflix, Spotify, Amazon, Uber.", "enable": true },
+            { "id": 36, "text": "¿Tratado Libre Comercio (DR-CAFTA)?", "category": "Economía", "keyword": "cargo ship containers american flag trade", "description": "Mantener apertura total a productos de USA.", "enable": true },
+            { "id": 37, "text": "¿Seguro médico universal?", "category": "Salud", "keyword": "public hospital doctor patient", "description": "Que el Estado sea el único asegurador (Eliminar ARS privadas).", "enable": true },
+            { "id": 38, "text": "¿Auditoría a gestión COVID?", "category": "Transparencia", "keyword": "audit magnifying glass files virus mask", "description": "Investigar gastos de emergencia de pandemia (2020-2021).", "enable": true },
+            { "id": 39, "text": "¿Legalización Marihuana Medicinal?", "category": "Salud", "keyword": "cannabis leaf medicine bottle pharmacy", "description": "Permitir uso regulado de cannabis para salud.", "enable": true },
+            { "id": 40, "text": "¿Servicio Militar Obligatorio?", "category": "Seguridad", "keyword": "young soldiers marching uniform boot camp", "description": "Que los jóvenes deban servir un año en las FFAA.", "enable": true }
+        ];
+
+        // --- UI & STATE ---
+        const appContainer = document.getElementById('app');
+        const statusLabel = document.getElementById('global-status');
+        const progressCount = document.getElementById('progress-count');
+        const progressPercent = document.getElementById('progress-percent');
+        const progressBar = document.getElementById('progress-bar');
+        
+        // --- HELPERS ---
+        const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+        
+        const getImageUrl = (keyword, seed) => {
+            // Using Flux model via Pollinations
+            const prompt = encodeURIComponent(`${keyword} photorealistic, documentary style, 4k`);
+            return `https://image.pollinations.ai/prompt/${prompt}?width=600&height=400&nologo=true&seed=${seed}&model=flux`;
+        };
+
+        // --- 1. RENDER SCAFFOLD ---
+        function renderScaffold() {
+    appContainer.innerHTML = '';
+    propositions.forEach(prop => {
+        if(prop.enable === false) return;
+
+        const card = document.createElement('div');
+        card.id = `card-${prop.id}`;
+        card.className = 'bg-white rounded-lg shadow border border-gray-200 overflow-hidden flex flex-col h-full';
+        
+        const seed = Math.floor(Math.random() * 10000);
+        const url = getImageUrl(prop.keyword, seed);
+
+        card.innerHTML = `
+            <div class="image-container relative">
+                <div id="status-${prop.id}" class="status-msg">
+                    <i class="fas fa-hourglass-half mb-2"></i><br>Waiting...
+                </div>
+                <img 
+                    id="img-${prop.id}" 
+                    data-url="${url}" 
+                    alt="${prop.keyword}"
+                    referrerpolicy="no-referrer"
+                    crossorigin="anonymous" 
+                >
+                <div class="absolute top-2 right-2 z-20">
+                    <span class="bg-black/60 text-white text-xs px-2 py-1 rounded">#${prop.id}</span>
+                </div>
+            </div>
+            <div class="p-4 flex-grow flex flex-col">
+                <div class="mb-1">
+                    <span class="text-[10px] font-bold uppercase text-indigo-600 bg-indigo-50 px-2 py-1 rounded">${prop.category}</span>
+                </div>
+                <h3 class="text-md font-bold text-gray-900 leading-tight mb-2">${prop.text}</h3>
+                <p class="text-xs text-gray-500 mb-4 flex-grow">${prop.description}</p>
+                
+                <div class="border-t pt-3 flex gap-2">
+                    <button onclick="retryImage(${prop.id})" class="flex-1 text-xs bg-gray-100 hover:bg-gray-200 py-2 rounded text-gray-700">
+                        <i class="fas fa-sync"></i> Retry
+                    </button>
+                    <button onclick="downloadImage(${prop.id})" id="btn-${prop.id}" class="flex-1 text-xs bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded flex justify-center items-center gap-1">
+                        <i class="fas fa-download"></i> Save
+                    </button>
+                </div>
+            </div>
+        `;
+        appContainer.appendChild(card);
+    });
+}
+
+async function downloadImage(id) {
+    const img = document.getElementById(`img-${id}`);
+    const btn = document.getElementById(`btn-${id}`);
+    const originalText = btn.innerHTML;
+    
+    // Check if image is loaded
+    if (!img.complete || img.naturalWidth === 0) {
+        alert("Wait for image to finish generating.");
+        return;
+    }
+
+    btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>`;
+    btn.disabled = true;
+
+    try {
+        // Fetch the image data directly
+        const response = await fetch(img.src);
+        const blob = await response.blob();
+        
+        // Create an invisible link to trigger download
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        // Naming format: <id>.jpg
+        a.download = `${id}.jpg`;
+        
+        document.body.appendChild(a);
+        a.click();
+        
+        // Cleanup
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+        
+        btn.innerHTML = `<i class="fas fa-check"></i>`;
+        setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }, 1500);
+
+    } catch (error) {
+        console.error(error);
+        alert('Download failed. Try right-clicking the image and selecting "Save Image As".');
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }
+}
+
+        // --- 2. THE STRICT PROCESSOR ---
+        async function loadOneImage(img) {
+    return new Promise((resolve) => {
+        const container = img.parentElement;
+        const statusDiv = container.querySelector('.status-msg');
+        const card = document.getElementById(`card-${img.id.split('-')[1]}`);
+        
+        card.classList.add('active-card');
+        statusDiv.innerHTML = `<i class="fas fa-circle-notch fa-spin text-2xl text-indigo-500 mb-2"></i><br>Generating...`;
+
+        const cleanup = () => {
+            img.onload = null;
+            img.onerror = null;
+            card.classList.remove('active-card');
+        };
+
+        img.onload = () => {
+            cleanup();
+            statusDiv.style.display = 'none';
+            img.classList.add('loaded');
+            resolve(true); 
+        };
+
+        img.onerror = () => {
+            cleanup();
+            statusDiv.style.display = 'block';
+            statusDiv.innerHTML = `<i class="fas fa-exclamation-triangle text-red-500 text-xl mb-1"></i><br>Failed`;
+            resolve(false); 
+        };
+
+        img.src = img.dataset.url;
+
+        // TIMEOUT CHANGED TO 250000ms
+        setTimeout(() => {
+            if (!img.complete || img.naturalWidth === 0) {
+                cleanup();
+                statusDiv.innerHTML = `<span class="text-orange-500">Timeout (250s)</span>`;
+                resolve(false);
+            }
+        }, 250000);
+    });
+}
+
+        async function startQueue() {
+            const images = document.querySelectorAll('#app img[data-url]');
+            const total = images.length;
+            
+            for (let i = 0; i < total; i++) {
+                const img = images[i];
+                
+                // Update UI
+                statusLabel.innerText = `Processing ID ${propositions[i].id}...`;
+                progressCount.innerText = `${i + 1}/${total}`;
+                const pct = ((i + 1) / total) * 100;
+                progressBar.style.width = `${pct}%`;
+                progressPercent.innerText = `${Math.floor(pct)}%`;
+
+                // --- CRITICAL: AWAIT LOADING ---
+                const success = await loadOneImage(img);
+                
+                // --- CRITICAL: COOLDOWN ---
+                // Wait 4 seconds regardless of success or failure
+                // to let the server "forget" our burst.
+                if (i < total - 1) {
+                    statusLabel.innerText = `Cooldown (4s)...`;
+                    await sleep(4000); 
+                }
+            }
+            
+            statusLabel.innerHTML = `<span class="text-green-600"><i class="fas fa-check"></i> All Done</span>`;
+        }
+
+        // --- 3. RETRY LOGIC (Manual) ---
+        window.retryImage = async (id) => {
+            const img = document.getElementById(`img-${id}`);
+            const link = document.getElementById(`link-${id}`);
+            const statusDiv = document.getElementById(`status-${id}`);
+            
+            // Reset
+            img.classList.remove('loaded');
+            statusDiv.style.display = 'block';
+            statusDiv.innerHTML = 'Retrying...';
+            
+            // New Seed
+            const keyword = img.alt; // we stored keyword in alt
+            const newSeed = Math.floor(Math.random() * 99999);
+            const newUrl = getImageUrl(keyword, newSeed);
+            
+            img.dataset.url = newUrl;
+            link.href = newUrl;
+            
+            // Process immediately
+            await loadOneImage(img);
+        };
+
+        // Init
+        renderScaffold();
+        startQueue();
+
+    </script>
+</body>
+</html>
